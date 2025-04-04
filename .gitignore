@@ -1,0 +1,14 @@
+# Angular
+/client/node_modules
+/client/dist
+
+# ASP.NET
+/server/bin
+/server/obj
+/server/.vs/
+
+# Uploads
+/uploads
+
+# Environment
+*.env
