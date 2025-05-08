@@ -1,8 +1,8 @@
 /* Navigation Styling */
 .nav {
-  background-color: #f8f9fa;  /* Hintergrundfarbe */
-  border-radius: 10px;  /* Abgerundete Ecken */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Leichter Schatten für Tiefe */
+  background-color: transparent;  /* Keine Hintergrundfarbe, um mit dem Hintergrund zu verschmelzen */
+  border-radius: 0;  /* Keine abgerundeten Ecken */
+  box-shadow: none;  /* Kein Schatten */
   padding: 20px; /* Padding für bessere Struktur */
   width: 100%;  /* Volle Breite nutzen */
   margin-top: 20px;
@@ -24,6 +24,9 @@
   border-radius: 5px;  /* Abgerundete Ecken für die Links */
   transition: all 0.3s ease; /* Sanfter Übergang für Hover und Aktivierung */
   text-decoration: none;  /* Entfernt den Unterstrich */
+  background-color: transparent; /* Keine Hintergrundfarbe */
+  border: none; /* Keine Ränder */
+  outline: none; /* Keine Umrandung */
   pointer-events: auto;  /* Sicherstellen, dass der Button anklickbar ist */
 }
 
@@ -46,4 +49,7 @@
   }
 }
 
-
+.nav-link {
+  position: relative;
+  z-index: 10;
+}
