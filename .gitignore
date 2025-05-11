@@ -6,6 +6,7 @@
 /server/bin
 /server/obj
 /server/.vs/
+/server/appsettings.Development.json
 
 # Uploads
 /uploads
