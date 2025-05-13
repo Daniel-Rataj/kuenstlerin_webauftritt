@@ -1,5 +1,3 @@
-contact.component.ts
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
