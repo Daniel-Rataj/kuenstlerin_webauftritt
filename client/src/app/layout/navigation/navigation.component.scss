@@ -1,55 +1,25 @@
-/* Navigation Styling */
 .nav {
-  background-color: transparent;  /* Keine Hintergrundfarbe, um mit dem Hintergrund zu verschmelzen */
-  border-radius: 0;  /* Keine abgerundeten Ecken */
-  box-shadow: none;  /* Kein Schatten */
-  padding: 20px; /* Padding für bessere Struktur */
-  width: 100%;  /* Volle Breite nutzen */
+  background-color: transparent;
+  padding: 20px;
   margin-top: 20px;
-  
-  /* Sicherstellen, dass die Navigation über anderen Elementen liegt */
-  position: relative;
-  z-index: 10; /* Höherer z-index, um über anderen Elementen zu liegen */
 }
 
 .nav-item {
-  margin-bottom: 15px;  /* Abstand zwischen den Links */
+  margin-bottom: 15px;
 }
 
 .nav-link {
-  color: #333;  /* Standardfarbe für den Text */
-  font-size: 1.1rem;  /* Schriftgröße */
-  font-weight: 500;  /* Etwas fetterer Text für bessere Lesbarkeit */
-  padding: 10px 15px;  /* Mehr Platz für jedes Element */
-  border-radius: 5px;  /* Abgerundete Ecken für die Links */
-  transition: all 0.3s ease; /* Sanfter Übergang für Hover und Aktivierung */
-  text-decoration: none;  /* Entfernt den Unterstrich */
-  background-color: transparent; /* Keine Hintergrundfarbe */
-  border: none; /* Keine Ränder */
-  outline: none; /* Keine Umrandung */
-  pointer-events: auto;  /* Sicherstellen, dass der Button anklickbar ist */
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  text-decoration: none;
 }
 
-.nav-link:hover {
-  background-color: #007bff;  /* Blau beim Hover */
-  color: white;  /* Weißer Text beim Hover */
-}
-
+.nav-link:hover,
 .nav-link.active {
-  background-color: #0056b3;  /* Dunkleres Blau für aktive Links */
-  color: white;  /* Weißer Text für aktive Links */
-}
-
-/* Responsive Anpassungen */
-@media (max-width: 768px) {
-  .nav {
-    width: auto;  /* Für kleinere Bildschirme */
-    margin-top: 10px;
-    padding: 15px;
-  }
-}
-
-.nav-link {
-  position: relative;
-  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #333;
 }

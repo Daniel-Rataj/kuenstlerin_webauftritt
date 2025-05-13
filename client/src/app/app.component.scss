@@ -1,74 +1,70 @@
+/* Hero Section Container */
 .hero-section {
-  position: relative;
+  position: fixed; /* Fixiert die Hero-Section, damit sie immer sichtbar bleibt */
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 60vh; /* Passt die Höhe an */
-  background-image: url('/images/Hero.jpg'); /* Dein Bild hier */
+  height: 300px;
   background-size: cover;
   background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white; /* Weißer Text für besseren Kontrast */
-  text-align: center;
-  overflow: hidden; /* Verhindert das Überlaufen von Inhalten */
-
-  /* Optional: Füge einen transparenten Overlay hinzu, um den Text besser lesbar zu machen */
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Dunkler Overlay-Effekt */
-    z-index: 1;
-  }
-
-  /* Setze die Z-Index-Reihenfolge, um sicherzustellen, dass der Text vor dem Overlay liegt */
-  .hero-overlay {
-    position: relative;
-    z-index: 2;
-  }
-
-  h1 {
-    font-size: 3rem; /* Größerer Titel */
-    margin: 0;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Optionaler Textschatten für besseren Kontrast */
-  }
-
-  p {
-    font-size: 1.25rem;
-    margin-top: 10px;
-    font-weight: 300;
-  }
+  z-index: 10;
+  transition: top 0.3s ease-in-out;
 }
 
-/* Responsive Anpassungen */
-@media (max-width: 768px) {
-  .hero-section {
-    height: 50vh; /* Kleinere Höhe auf mobilen Geräten */
-  }
-
-  .hero-section h1 {
-    font-size: 2rem; /* Kleinere Schrift auf mobilen Geräten */
-  }
-
-  .hero-section p {
-    font-size: 1rem; /* Kleinere Schrift auf mobilen Geräten */
-  }
+/* Toggle Button für Sidebar */
+.navbar-toggler {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 200;
+  background-color: white;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  color: #333;
 }
 
-@media (max-width: 480px) {
-  .hero-section {
-    height: 40vh; /* Noch kleinere Höhe für sehr kleine Geräte */
-  }
+.navbar-toggler:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 
-  .hero-section h1 {
-    font-size: 1.5rem; /* Noch kleinere Schrift für kleine Geräte */
-  }
+/* Sidebar Standard */
+.sidebar {
+  position: fixed;
+  width: 250px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  background-color: white;
+  height: 100%;
+  z-index: 5;
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
+  margin-top: 300px; /* Abstand von der fixierten Hero-Section */
+}
 
-  .hero-section p {
-    font-size: 0.9rem; /* Noch kleinere Schrift */
-  }
+/* Geklappt (wird per Button gesteuert) */
+.sidebar.collapsed {
+  transform: translateX(-100%); /* Sidebar wird aus dem Sichtbereich verschoben */
+  visibility: hidden;
+  opacity: 0;
+  z-index: -1;
+}
+
+/* Main Content */
+main {
+  flex-grow: 1;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+  margin-top: 300px; /* Abstand zur fixierten Hero-Section */
+}
+
+.sidebar.collapsed + main {
+  margin-left: 0;
+}
+
+.sidebar:not(.collapsed) + main {
+  margin-left: 250px;
 }

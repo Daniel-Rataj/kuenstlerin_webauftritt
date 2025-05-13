@@ -1,34 +1,39 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { RouterModule } from '@angular/router';  // RouterModule für Routing
-import { GalleryComponent } from './pages/gallery/gallery.component';
+import { filter } from 'rxjs';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavigationComponent } from './layout/navigation/navigation.component';
 import { HomeComponent } from './pages/home/home.component';
+import { GalleryComponent } from './pages/gallery/gallery.component';
 import { AboutmeComponent } from './pages/aboutme/aboutme.component';
 import { ContactComponent } from './pages/contact/contact.component';
-
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterModule,  // Hier RouterModule importieren
+    CommonModule,
+    RouterModule,
     HeaderComponent,
+    FooterComponent,
     NavigationComponent,
     HomeComponent,
-    FooterComponent,
-    GalleryComponent, 
+    GalleryComponent,
     AboutmeComponent,
     ContactComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'Altrock Art';
+  isNavCollapsed = false;
 
+  heroText: string = 'Willkommen bei der Künstlerin!';
   images = [
     '/images/Hero1.jpg',
     '/images/Hero2.jpg',
@@ -36,13 +41,58 @@ export class AppComponent implements OnInit {
   ];
   currentImageIndex = 0;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       setInterval(() => {
         this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
       }, 5000);
+    }
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.updateHeroText();
+      });
+  }
+
+  ngAfterViewInit(): void {
+    this.updateHeroText();
+  }
+
+  toggleNav() {
+    this.isNavCollapsed = !this.isNavCollapsed;
+  }
+
+  // Methode zum Scrollen hinzufügen
+  onScroll() {
+    const scrollPosition = window.scrollY;
+    const heroSection = document.querySelector('.hero-section') as HTMLElement;
+
+    if (scrollPosition > 0) {
+      heroSection.style.top = `-${scrollPosition}px`; // Hero-Section verschiebt sich beim Scrollen
+    } else {
+      heroSection.style.top = '0'; // Setze die Position zurück, wenn der Scrollwert 0 ist
+    }
+  }
+
+  private updateHeroText() {
+    const path = this.router.url;
+
+    if (path === '/' || path === '' || path.includes('home')) {
+      this.heroText = 'Willkommen bei der Künstlerin!';
+    } else if (path.includes('gallery')) {
+      this.heroText = 'Entdecke die Galerie!';
+    } else if (path.includes('aboutme')) {
+      this.heroText = 'Erfahre mehr über mich!';
+    } else if (path.includes('contact')) {
+      this.heroText = 'Kontaktieren Sie mich!';
+    } else {
+      this.heroText = ' Art – Kunst mit Herz.';
     }
   }
 }

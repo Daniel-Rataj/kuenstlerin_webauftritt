@@ -1,4 +1,4 @@
-<div class="d-flex flex-column min-vh-100">
+<div class="d-flex flex-column min-vh-100" (scroll)="onScroll()">
   <!-- Header -->
   <app-header></app-header>
 
@@ -6,23 +6,26 @@
   <div class="d-flex flex-column flex-grow-1">
     
     <!-- Hero Section -->
-    <section class="hero-section" style="height: 300px; background-image: url({{ images[currentImageIndex] }}); background-size: cover; background-position: center;">
+    <section class="hero-section"
+      [ngStyle]="{ 'background-image': 'url(' + images[currentImageIndex] + ')' }">
       <div class="hero-overlay d-flex flex-column align-items-center justify-content-center h-100 text-white text-center">
-        <h1>Willkommen bei der Künstlerin!</h1>
-        <p>Entdecke die Welt der Kunst und Inspiration</p>
+        <h1>{{ heroText }}</h1> <!-- Dynamischer Text -->
       </div>
+      
+      <!-- Der Button bleibt unten links im Bild -->
+      <button class="navbar-toggler" (click)="toggleNav()">☰</button>
     </section>
 
-    <!-- Content: Nav + Main -->
+    <!-- Content: Sidebar + Main -->
     <div class="d-flex flex-grow-1">
-      <!-- Navigation links -->
-      <aside class="bg-light p-3 border-end" style="min-width: 200px;">
+      <!-- Navigation Sidebar -->
+      <aside class="sidebar bg-light p-3 border-end" [class.collapsed]="isNavCollapsed">
         <app-navigation></app-navigation>
       </aside>
 
       <!-- Main Content rechts -->
       <main class="flex-grow-1 p-4">
-        <router-outlet></router-outlet> <!-- Hier wird die Galerie oder eine andere Seite geladen -->
+        <router-outlet></router-outlet>
       </main>
     </div>
   </div>
