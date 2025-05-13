@@ -35,7 +35,9 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
@@ -104,5 +106,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "5ce7df62-3c4d-482a-9186-dd7abd7fa48b"
   }
 }
