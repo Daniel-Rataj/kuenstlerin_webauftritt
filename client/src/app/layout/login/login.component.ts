@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router} from '@angular/router';
 import { LoginRequest } from '../../models/requests/login.request';
+import { UserRole } from '../../models/enums/user.role';
 
 @Component({
   selector: 'app-login',
@@ -43,11 +44,26 @@ export class LoginComponent {
       next: (res) => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
-        this.router.navigate(['/admin']);
-      },
-      error: () => {
-        this.errorMessage.set('Invalid username or password');
-      }
+        // Get the numeric role from response
+        const userRole: UserRole = res.user.role;
+        
+        // Route based on role
+        switch (userRole) {
+          case UserRole.Admin:
+            this.router.navigate(['/dashboard/home']);
+            break;
+          case UserRole.Moderator:
+            this.router.navigate(['/dashboard/home']);
+            break;
+          default:
+            // Fallback for unexpected roles
+            this.router.navigate(['/dashboard']);
+            console.warn(`Unknown role: ${userRole}`);
+        }
+    },
+    error: () => {
+      this.errorMessage.set('Invalid username or password');
+    }
     });
   }
 }
