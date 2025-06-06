@@ -8,6 +8,10 @@
 /server/.vs/
 /server/appsettings.Development.json
 
+# Test-Projekt
+/server.Tests/bin
+/server.Tests/obj
+
 # Uploads
 /uploads
 
