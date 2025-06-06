@@ -1,32 +1,61 @@
-// src/app/services/base.service.ts
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-export class BaseService<T> {
+export class BaseService<TRead, TWrite = TRead> {
   protected baseUrl: string;
 
   constructor(protected http: HttpClient, endpoint: string) {
     this.baseUrl = `${environment.apiUrl}/${endpoint}`;
   }
 
-  getAll(): Observable<T[]> {
-    return this.http.get<T[]>(this.baseUrl);
+  async getAllAsync(): Promise<TRead[]> {
+    try {
+      return await firstValueFrom(this.http.get<TRead[]>(this.baseUrl));
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
-  getById(id: number): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl}/${id}`);
+  async getByIdAsync(id: number): Promise<TRead> {
+    try {
+      return await firstValueFrom(this.http.get<TRead>(`${this.baseUrl}/${id}`));
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
-  create(item: T): Observable<T> {
-    return this.http.post<T>(this.baseUrl, item);
+  async createAsync(item: TWrite): Promise<TRead> {
+    try {
+      debugger;
+      return await firstValueFrom(this.http.post<TRead>(this.baseUrl, item));
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
-  update(id: number, item: T): Observable<T> {
-    return this.http.put<T>(`${this.baseUrl}/${id}`, item);
+  async updateAsync(id: string, item: TWrite): Promise<TRead> {
+    try {
+      return await firstValueFrom(this.http.put<TRead>(`${this.baseUrl}/${id}`, item));
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  async deleteAsync(id: string): Promise<void> {
+    try {
+      return await firstValueFrom(this.http.delete<void>(`${this.baseUrl}/${id}`));
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  protected handleError(error: unknown): never {
+    if (error instanceof HttpErrorResponse) {
+      console.error(`HTTP Error (${error.status}): ${error.message}`);
+    } else {
+      console.error('Unbekannter Fehler:', error);
+    }
+    throw error;
   }
 }

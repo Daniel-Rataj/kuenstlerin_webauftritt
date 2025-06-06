@@ -3,33 +3,32 @@ using server.Repositories;
 using System.Security.Cryptography;
 using System.Text;
 using server.Logic.Base;
+using dataTransfer = server.Models.DataTransfer;
+using dataAccess = server.Models.DataAccess;
 using server.Models.DataAccess;
+using server.Helpers;
 
-public class UserLogic : BaseLogic<User>, IUserLogic
+public class UserLogic : BaseLogic<dataAccess.User, dataTransfer.User>, IUserLogic
 {
     private readonly IUserRepository _userRepository;
 
-    public UserLogic(IUserRepository userRepository) : base(userRepository)
+    public UserLogic(IUserRepository repository) : base(repository)
     {
-        _userRepository = userRepository;
+        _userRepository = repository;
     }
 
-    public async Task<User?> GetByUsernameAsync(string username)
+    protected override dataAccess.User MapToEntity(dataTransfer.User dto)
     {
-        return await _userRepository.GetByUsernameAsync(username);
+        return UserHelper.ToEntity(dto);
     }
 
-    public bool VerifyPassword(string password, byte[] storedHash, byte[] storedSalt)
+    protected override dataTransfer.User MapToDto(dataAccess.User entity)
     {
-        using var hmac = new HMACSHA512(storedSalt);
-        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-        return computedHash.SequenceEqual(storedHash);
+        return UserHelper.ToDto(entity);
     }
 
-    public void CreatePasswordHash(string password, out byte[] hash, out byte[] salt)
+    public Task<User?> GetByUsernameAsync(string username)
     {
-        using var hmac = new HMACSHA512();
-        salt = hmac.Key;
-        hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return this._userRepository.GetByUsernameAsync(username);
     }
 }

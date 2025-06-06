@@ -1,4 +1,5 @@
-﻿using server.Models.DataTransfer.Responses;
+﻿using server.Models.DataAccess;
+using server.Models.DataTransfer.Responses;
 
 namespace server.Logic.Interfaces
 {
@@ -16,5 +17,6 @@ namespace server.Logic.Interfaces
         /// A JWT or session token as a string if authentication is successful; otherwise, null.
         /// </returns>
         Task<LoginResponse?> LoginAsync(string username, string password);
+        Task<RefreshTokenResponse?> RefreshTokenAsync(string token);
     }
 }

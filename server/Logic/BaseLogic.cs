@@ -4,23 +4,50 @@ using server.Repositories.Interfaces.Base;
 
 namespace server.Logic.Base
 {
-    public class BaseLogic<T> : IBaseLogic<T> where T : class
+    public abstract class BaseLogic<TEntity, TDto> : IBaseLogic<TDto>
+    where TEntity : class
+    where TDto : class
     {
-        protected readonly IBaseRepository<T> _repository;
+        protected readonly IBaseRepository<TEntity> _repository;
 
-        public BaseLogic(IBaseRepository<T> repository)
+        protected BaseLogic(IBaseRepository<TEntity> repository)
         {
             _repository = repository;
         }
 
-        public Task<IEnumerable<T>> GetAllAsync() => _repository.GetAllAsync();
+        public virtual async Task<IEnumerable<TDto>> GetAllAsync()
+        {
+            var entities = await _repository.GetAllAsync();
+            return entities.Select(MapToDto);
+        }
 
-        public Task<T?> GetByIdAsync(int id) => _repository.GetByIdAsync(id);
+        public virtual async Task<TDto?> GetByIdAsync(int id)
+        {
+            var entity = await _repository.GetByIdAsync(id);
+            return entity == null ? null : MapToDto(entity);
+        }
 
-        public Task<T> CreateAsync(T entity) => _repository.CreateAsync(entity);
+        public virtual async Task<TDto> CreateAsync(TDto dto)
+        {
+            var entity = MapToEntity(dto);
+            var created = await _repository.CreateAsync(entity);
+            return MapToDto(created);
+        }
 
-        public Task<T> UpdateAsync(T entity) => _repository.UpdateAsync(entity);
+        public virtual async Task<TDto> UpdateAsync(TDto dto)
+        {
+            var entity = MapToEntity(dto);
+            var updated = await _repository.UpdateAsync(entity);
+            return MapToDto(updated);
+        }
 
-        public Task<bool> DeleteAsync(int id) => _repository.DeleteAsync(id);
+        public virtual async Task<bool> DeleteAsync(int id)
+        {
+            return await _repository.DeleteAsync(id);
+        }
+
+        protected abstract TEntity MapToEntity(TDto dto);
+        protected abstract TDto MapToDto(TEntity entity);
     }
+
 }

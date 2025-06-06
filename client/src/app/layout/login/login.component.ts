@@ -41,11 +41,11 @@ export class LoginComponent {
 
   login(): void {
     this.authService.login(this.credentials()).subscribe({
-      next: (res) => {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('user', JSON.stringify(res.user));
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
         // Get the numeric role from response
-        const userRole: UserRole = res.user.role;
+        const userRole: UserRole = response.user.role;
         
         // Route based on role
         switch (userRole) {

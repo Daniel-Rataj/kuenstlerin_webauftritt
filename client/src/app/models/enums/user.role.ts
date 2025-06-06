@@ -1,6 +1,8 @@
 export enum UserRole {
-  Admin = 0,
-  Moderator = 1
+  Initialized = 0,
+  Admin = 1,
+  Moderator = 2,
+  Editor = 3,
 }
 
 // Utility functions for type conversion

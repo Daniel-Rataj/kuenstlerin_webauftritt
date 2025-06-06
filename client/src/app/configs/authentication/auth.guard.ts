@@ -1,16 +1,25 @@
+// src/app/guards/auth.guard.ts
 import { inject } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
 import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
-// This guard checks if a user is logged in (any role)
 export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (!authService.isAuthenticated()) {
-    console.info('isAuthenticated: ' + authService.isAuthenticated())
-    router.navigate(['/login']); // Redirect to login if not authenticated
+  try {
+    if (!authService.isAuthenticated()) {
+      router.navigate(['/login']);
+      return false;
+    }
+
+    // Try get user to validate login (throws if invalid)
+    authService.getUser();
+    return true;
+
+  } catch (error) {
+    console.warn('AuthGuard blockiert Zugriff:', error);
+    router.navigate(['/login']);
     return false;
   }
-  return true;
 };

@@ -3,7 +3,6 @@ using server.Data;
 using server.Models;
 using server.Repositories.Base;
 using server.Repositories.Interfaces.Base;
-using server.Models.DataAccess.Enums;
 using dataAccess = server.Models.DataAccess;
 using dataTransfer = server.Models.DataTransfer;
 using server.Logic.Interfaces;
@@ -12,6 +11,8 @@ using server.Logic.Interfaces.Base;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using server.Models.Enums;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,25 +25,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            // Validate the security key used to sign the token
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
-            ),
-
-            // Skip issuer and audience validation
             ValidateIssuer = false,
-            ValidateAudience = false
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
         };
     });
 
 // Register (business)-logic services for dependendency injection
-builder.Services.AddScoped(typeof(IBaseLogic<>), typeof(BaseLogic<>));
+builder.Services.AddScoped<IBaseLogic<dataTransfer.User>, UserLogic>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 
 // Register generic repository services for dependency injection.
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 // Register specific repository implementations.
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -71,32 +69,47 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    // Resolve the application database context from the DI container
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    // Ensure the database is created and migrations are applied
+    // Apply migrations
     db.Database.Migrate();
 
-    // Check if any users already exist in the database
+    // Only seed if no users exist
     if (!db.Users.Any())
     {
-        // Create password hash and salt for the default admin user
-        using var hmac = new System.Security.Cryptography.HMACSHA512();
-        var password = "admin123"; // Default password – change this after first login
+        var username = "admin";
+        var password = "admin123";
 
-        dataAccess.User admin = new dataAccess.User
+        using var hmac = new System.Security.Cryptography.HMACSHA512();
+        var passwordSalt = hmac.Key;
+        var passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+
+        var admin = new dataAccess.User
         {
-            Username = "admin",
-            PasswordSalt = hmac.Key,
-            PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)),
+            Id = Guid.NewGuid(),
+            Username = username,
+            PasswordSalt = passwordSalt,
+            PasswordHash = passwordHash,
             Role = UserRole.Admin
         };
 
-        // Add the admin user to the database and save changes
+        var refreshToken = new dataAccess.RefreshToken
+        {
+            Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+            ExpiresAt = DateTime.UtcNow.AddDays(7),
+            IsRevoked = false,
+            UserId = admin.Id
+        };
+
+        // Attach user and refresh token
         db.Users.Add(admin);
+        db.RefreshTokens.Add(refreshToken);
         db.SaveChanges();
 
-        Console.WriteLine("Admin user seeded successfully: username = 'admin', password = 'admin123'");
+        Console.WriteLine("Admin user seeded with refresh token:");
+        Console.WriteLine($" - Username: {username}");
+        Console.WriteLine($" - Password: {password}");
+        Console.WriteLine($" - RefreshToken: {refreshToken.Token}");
     }
     else
     {
@@ -104,8 +117,8 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configures the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+    // Configures the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
 {
     Console.WriteLine("Development environment is active");
     app.UseCors("DevCors");

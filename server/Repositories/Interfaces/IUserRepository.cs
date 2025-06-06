@@ -3,9 +3,11 @@ using server.Data;
 using server.Models.DataAccess;
 using server.Repositories.Base;
 using server.Repositories.Interfaces.Base;
+using dataAccess = server.Models.DataAccess;
 
-public interface IUserRepository : IBaseRepository<User>
+
+public interface IUserRepository : IBaseRepository<dataAccess.User>
 {
-    Task<User?> GetByUsernameAsync(string username);
+    Task<dataAccess.User?> GetByUsernameAsync(string username);
 }
 
