@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 300px;
+  height: 150px;
   background-size: cover;
   background-position: center;
   z-index: 10;
@@ -42,7 +42,7 @@
   visibility: visible;
   opacity: 1;
   transform: translateX(0);
-  margin-top: 300px; /* Abstand von der fixierten Hero-Section */
+  margin-top: 150px; /* Abstand von der fixierten Hero-Section */
 }
 
 /* Geklappt (wird per Button gesteuert) */
@@ -58,7 +58,7 @@ main {
   flex-grow: 1;
   transition: margin-left 0.3s ease;
   padding: 20px;
-  margin-top: 300px; /* Abstand zur fixierten Hero-Section */
+  margin-top: 80px; /* Abstand zur fixierten Hero-Section */
 }
 
 .sidebar.collapsed + main {
