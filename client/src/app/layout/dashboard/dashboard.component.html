@@ -1,0 +1,25 @@
+<header class="content-header mb-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="mb-0">Welcome, {{ userName }}!</h1>
+    <button *ngIf="isAuthenticated()" class="btn btn-outline-danger" (click)="logout()">
+      <i class="fas fa-sign-out-alt me-2"></i> Abmelden
+    </button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let card of dashboardCards">
+      <div class="card h-100 text-center shadow-sm">
+        <div class="card-body">
+          <i class="{{ card.icon }} fa-3x text-primary mb-3"></i>
+          <h5 class="card-title">{{ card.title }}</h5>
+          <p class="card-text">{{ card.description }}</p>
+          <button class="btn btn-outline-primary" (click)="navigate(card.route)">
+            Öffnen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

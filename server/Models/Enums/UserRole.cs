@@ -1,9 +1,10 @@
 ﻿namespace server.Models.Enums
 {
     public enum UserRole
-    {
-        Admin = 0,
-        Moderator = 1,
-        Visitor = 2
+    {   
+        Initialized = 0,
+        Admin = 1,
+        Moderator = 2,
+        Editor = 3,
     }
 }
