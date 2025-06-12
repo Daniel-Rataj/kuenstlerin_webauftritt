@@ -8,6 +8,8 @@
 /server/.vs/
 /server/appsettings.Development.json
 /server/*.db
+/server/*.db-shm
+/server/*.db-wal
 
 # Test-Projekt
 /server.Tests/bin
