@@ -1,0 +1,40 @@
+<div class="container mt-5" style="max-width: 400px;">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Login</h3>
+  
+        <form (ngSubmit)="login()">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              required
+              [(ngModel)]="username"
+            />
+          </div>
+  
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              required
+              [(ngModel)]="password"
+            />
+          </div>
+  
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+  
+          <div *ngIf="errorMessage()" class="alert alert-danger mt-3">
+            {{ errorMessage() }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

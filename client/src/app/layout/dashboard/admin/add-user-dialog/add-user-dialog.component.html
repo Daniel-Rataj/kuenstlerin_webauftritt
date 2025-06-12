@@ -1,0 +1,48 @@
+<!-- Modal Background -->
+<div class="modal-backdrop show"></div>
+
+<!-- Modal Content -->
+<div class="modal d-block" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-4">
+      <h5 class="modal-title mb-4">Neuen Benutzer hinzufügen</h5>
+
+      <!-- Username -->
+      <div class="mb-3">
+        <label class="form-label">
+          Benutzername
+          <input class="form-control" [(ngModel)]="username" />
+        </label>
+        <div class="text-danger mt-1" *ngIf="isUsernameEmpty()">Benutzername darf nicht leer sein.</div>
+        <div class="text-danger mt-1" *ngIf="!isUsernameEmpty() && isUsernameTaken()">Der Benutzername ist bereits vergeben.</div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label class="form-label">
+          Passwort
+          <input class="form-control" type="password" [(ngModel)]="password" />
+        </label>
+        <div class="text-danger mt-1" *ngIf="isPasswordTooShort()">Das Passwort muss mindestens 6 Zeichen lang sein.</div>
+      </div>
+
+      <!-- Role -->
+      <div class="mb-4">
+        <label class="form-label">
+          Rolle
+          <select class="form-select" [(ngModel)]="role">
+            <option [value]="UserRole.Admin">Admin</option>
+            <option [value]="UserRole.Moderator">Moderator</option>
+            <option [value]="UserRole.Editor">Editor</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- Buttons -->
+      <div class="d-flex justify-content-end gap-2">
+        <button class="btn btn-secondary" (click)="close.emit()">Abbrechen</button>
+        <button class="btn btn-primary" [disabled]="!isValid()" (click)="submit()">Erstellen</button>
+      </div>
+    </div>
+  </div>
+</div>

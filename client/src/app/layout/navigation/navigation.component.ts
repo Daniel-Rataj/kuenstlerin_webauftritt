@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; // ⬅️ Hier importieren
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  imports: [RouterModule], // ⬅️ RouterModule hinzufügen
+  imports: [RouterModule],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss'
 })
-export class NavigationComponent {}
+
+export class NavigationComponent {
+
+}
