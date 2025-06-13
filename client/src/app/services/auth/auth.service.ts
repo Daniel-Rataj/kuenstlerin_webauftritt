@@ -3,15 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError, throwError, map } from 'rxjs';
 import { BaseService } from '../base/base.service';
 import { User } from '../../models/user';
-import { LoginRequest } from '../../models/requests/login.request';
-import { LoginResponse } from '../../models/responses/login.response';
+import { LoginRequestDto } from '../../models/dto/login-request.dto';
+import { UserSession } from '../../models/user-session';
 import { UserRole } from '../../models/enums/user.role';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService<User> {
   
   // Holds the currently logged-in user and token as a reactive signal
-  private readonly currentUserAuth = signal<LoginResponse | null>(null);
+  private readonly currentUserAuth = signal<UserSession | null>(null);
 
   constructor(http: HttpClient) {
     super(http, 'auth');
@@ -58,9 +58,9 @@ export class AuthService extends BaseService<User> {
     }
   }
 
-  public login(credentials: LoginRequest): Observable<LoginResponse> {
+  public login(credentials: LoginRequestDto): Observable<UserSession> {
     // Sends login request and stores token and user on success
-    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, credentials).pipe(
+    return this.http.post<UserSession>(`${this.baseUrl}/login`, credentials).pipe(
       tap(response => {
         this.currentUserAuth.set(response);
         localStorage.setItem('token', response.token);
@@ -93,7 +93,7 @@ export class AuthService extends BaseService<User> {
       return throwError(() => new Error('Kein Refresh Token vorhanden.'));
     }
 
-    return this.http.post<LoginResponse>(`${this.baseUrl}/refresh`, { refreshToken }).pipe(
+    return this.http.post<UserSession>(`${this.baseUrl}/refresh`, { refreshToken }).pipe(
       tap(response => {
         this.currentUserAuth.set(response);
         localStorage.setItem('token', response.token);

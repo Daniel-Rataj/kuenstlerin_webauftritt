@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router} from '@angular/router';
-import { LoginRequest } from '../../models/requests/login.request';
+import { LoginRequestDto } from '../../models/dto/login-request.dto';
 import { UserRole } from '../../models/enums/user.role';
 
 @Component({
@@ -14,7 +14,7 @@ import { UserRole } from '../../models/enums/user.role';
 })
 export class LoginComponent {
   // Signal für die Login-Daten
-  private readonly credentials = signal<LoginRequest>({
+  private readonly credentials = signal<LoginRequestDto>({
     username: '',
     password: ''
   });
