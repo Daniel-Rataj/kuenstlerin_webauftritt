@@ -16,8 +16,8 @@
 /server.Tests/obj
 
 # Uploads
-/uploads/*
-!/uploads/.gitkeep
+/client/src/assets/uploads/*
+!client/src/assets/uploads/.gitkeep
 
 # Environment
 *.env

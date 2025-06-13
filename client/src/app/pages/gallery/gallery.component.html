@@ -1,1 +1,35 @@
-<p>gallery works!</p>
+<div class="accordion" id="exhibitionAccordion">
+  <div class="accordion-item" *ngFor="let exhibition of exhibitions">
+    <h2 class="accordion-header" (click)="toggleExhibition(exhibition.id)">
+      <button class="accordion-button" [class.collapsed]="!isExhibitionOpen(exhibition.id)" type="button">
+        {{ exhibition.title }} – {{ exhibition.date | date:'mediumDate' }}
+      </button>
+    </h2>
+    <div class="accordion-collapse collapse show" *ngIf="isExhibitionOpen(exhibition.id)">
+      <div class="accordion-body">
+        <div class="row">
+          <div class="col-md-4 mb-3" *ngFor="let element of exhibition.exhibitionElements">
+            <div class="card h-100">
+              <img [src]="element.imageUrl" class="card-img-top" [alt]="element.name">
+              <div class="card-body">
+                <h5 class="card-title">{{ element.name }}</h5>
+                <p class="card-text">{{ element.description }}</p>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="mb-0 d-flex align-items-center gap-2">
+                    <i class="fas fa-circle" [ngClass]="element.availableToBuy ? 'text-success' : 'text-danger'"></i>
+                    {{ element.availableToBuy ? 'Verfügbar' : 'Nicht verfügbar' }}
+                  </p>
+                  <p *ngIf="element.availableToBuy" class="mb-0">
+                    <strong>Preis:</strong> {{ element.priceTag }} €
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
