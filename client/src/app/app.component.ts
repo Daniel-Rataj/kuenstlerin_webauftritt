@@ -14,7 +14,7 @@ import { ContactComponent } from './pages/contact/contact.component';
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterModule,  // Hier RouterModule importieren
+    RouterModule,
     HeaderComponent,
     NavigationComponent,
     HomeComponent,
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
   ];
   currentImageIndex = 0;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private readonly platformId: Object) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {

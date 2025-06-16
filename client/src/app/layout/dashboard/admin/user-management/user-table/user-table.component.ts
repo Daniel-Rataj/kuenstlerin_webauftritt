@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../../../models/user';
 import { AuthService } from '../../../../../services/auth/auth.service';
-import { UserRole } from '../../../../../models/enums/user.role';
+import { UserRole } from '../../../../../models/enums/user-role';
 import { CommonModule } from '@angular/common';
 import { AddUserDialogComponent } from '../../add-user-dialog/add-user-dialog.component';
 import { UserService } from '../../../../../services/user/user.service';

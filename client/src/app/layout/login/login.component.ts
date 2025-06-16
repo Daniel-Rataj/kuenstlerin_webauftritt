@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router} from '@angular/router';
 import { LoginRequestDto } from '../../models/dto/login-request.dto';
-import { UserRole } from '../../models/enums/user.role';
+import { UserRole } from '../../models/enums/user-role';
 
 @Component({
   selector: 'app-login',

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UserRole } from '../../../../models/enums/user.role';
+import { UserRole } from '../../../../models/enums/user-role';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserDto } from '../../../../models/dto/user.dto';
