@@ -3,12 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using server.Data;
+using server.Logic;
 using server.Logic.Base;
 using server.Logic.Interfaces;
 using server.Logic.Interfaces.Base;
 using server.Models;
 using server.Models.Enums;
+using server.Repositories;
 using server.Repositories.Base;
+using server.Repositories.Interfaces;
 using server.Repositories.Interfaces.Base;
 using System.Security.Cryptography;
 using System.Text;
@@ -38,13 +41,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IBaseLogic<dataTransfer.User>, UserLogic>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
+builder.Services.AddScoped<IExhibitionLogic, ExhibitionLogic>();
 
 // Register generic repository services for dependency injection.
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 // Register specific repository implementations.
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<IExhibitionRepository, ExhibitionRepository>();
+builder.Services.AddScoped<IExhibitionElementRepository, ExhibitionElementRepository>();
 
 // Register the application's database context and configure it to use SQLite.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
