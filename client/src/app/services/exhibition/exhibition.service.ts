@@ -1,49 +1,51 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../base/base.service';
-import { Exhibition } from '../../models/exhibition';
 import { ExhibitionDto } from '../../models/dto/exhibition.dto';
 import { HttpClient } from '@angular/common/http';
+import { ExhibitionStatus } from '../../models/enums/exhibition-status';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class ExhibitionService extends BaseService<Exhibition, ExhibitionDto> {
+export class ExhibitionService extends BaseService<ExhibitionDto, ExhibitionDto> {
   
   constructor(http: HttpClient) {
     super(http, 'exhibition');
   }
 
-  getExhibitionsDummy(): Exhibition[] {
+  getExhibitionsDummy(): ExhibitionDto[] {
     // Dummy Exhibition 1
-    let exh1: Exhibition = {
+    let exh1: ExhibitionDto = {
       id: 1,
       title: "Ausstellung 1",
       date: new Date(2025, 1, 1),
+      status: ExhibitionStatus.Public,
       exhibitionElements: [
         {
-            id: 1,
-            name: 'Bild 1 (A1)',
-            description: 'Testbeschreibung: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-            imageUrl: '/uploads/exhibition1/1.jpg',
-            availableToBuy: true,
-            priceTag: 100
-          },
-          {
-            id: 2,
-            name: 'Bild 2 (A1)',
-            description: 'Testbeschreibung: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-            imageUrl: '/uploads/exhibition1/2.jpg',
-            availableToBuy: false,
-          }
-      ] 
+          id: 1,
+          name: 'Bild 1 (A1)',
+          description: 'Testbeschreibung: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+          imageUrl: '/uploads/exhibition1/1.jpg',
+          availableToBuy: true,
+          priceTag: 100
+        },
+        {
+          id: 2,
+          name: 'Bild 2 (A1)',
+          description: 'Testbeschreibung: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+          imageUrl: '/uploads/exhibition1/2.jpg',
+          availableToBuy: false,
+        }
+      ],
     };
 
     // Dummy Exhibition 2
-    let exh2: Exhibition = {
+    let exh2: ExhibitionDto = {
       id: 2,
       title: "Ausstellung 2",
       date: new Date(2025, 4, 20),
+      status: ExhibitionStatus.Public,
       exhibitionElements: [
         {
             id: 1,
@@ -65,10 +67,11 @@ export class ExhibitionService extends BaseService<Exhibition, ExhibitionDto> {
     };
 
     // Dummy Exhibition 2
-    let exh3: Exhibition = {
+    let exh3: ExhibitionDto = {
       id: 3,
       title: "Ausstellung 3",
       date: new Date(2025, 4, 20),
+      status: ExhibitionStatus.Public,
       exhibitionElements: [
         {
             id: 1,

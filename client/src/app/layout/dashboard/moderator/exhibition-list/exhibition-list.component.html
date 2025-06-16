@@ -1,0 +1,11 @@
+<div *ngIf="exhibitions().length > 0; else noData">
+  <div *ngFor="let exhibition of exhibitions()">
+    <h3>{{ exhibition.title }}</h3>
+    <p>{{ exhibition.date | date }}</p>
+    <p>Status: {{ exhibition.status }}</p>
+  </div>
+</div>
+
+<ng-template #noData>
+  <p>Keine Ausstellungen gefunden.</p>
+</ng-template>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ExhibitionService } from '../../services/exhibition/exhibition.service';
-import { Exhibition } from '../../models/exhibition';
+import { ExhibitionDto } from '../../models/dto/exhibition.dto';
 
 @Component({
   selector: 'app-gallery',
@@ -10,7 +10,7 @@ import { Exhibition } from '../../models/exhibition';
   styleUrl: './gallery.component.scss'
 })
 export class GalleryComponent {
-  exhibitions: Exhibition[] = [];
+  exhibitions: ExhibitionDto[] = [];
 
   constructor(private readonly exhibitionService: ExhibitionService) {}
 
