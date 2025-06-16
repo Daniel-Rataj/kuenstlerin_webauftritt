@@ -1,18 +1,19 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using server.Data;
+using server.Logic.Base;
+using server.Logic.Interfaces;
+using server.Logic.Interfaces.Base;
 using server.Models;
+using server.Models.Enums;
 using server.Repositories.Base;
 using server.Repositories.Interfaces.Base;
+using System.Security.Cryptography;
+using System.Text;
 using dataAccess = server.Models.DataAccess;
 using dataTransfer = server.Models.DataTransfer;
-using server.Logic.Interfaces;
-using server.Logic.Base;
-using server.Logic.Interfaces.Base;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using server.Models.Enums;
-using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,7 +64,11 @@ builder.Services.AddCors(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Künstlerin_Website API´s", Version = "v1" });
+    c.OperationFilter<FormFileOperationFilter>();
+});
 
 var app = builder.Build();
 
