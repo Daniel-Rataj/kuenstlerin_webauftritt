@@ -1,0 +1,69 @@
+
+h2 {
+  font-weight: 700;
+  color: #1c1c1c;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  font-size: 1rem;
+}
+
+
+.btn-primary {
+  background-color: #1c1c1c;
+  border-color: #1c1c1c;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 0.5rem 1.5rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.btn-primary:hover {
+  background-color: #333333;
+  border-color: #333333;
+}
+
+
+form.bg-white {
+  background-color: #fff !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+/* Inputfelder + Textarea */
+input.form-control,
+textarea.form-control {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+input.form-control:focus,
+textarea.form-control:focus {
+  border-color: #1c1c1c;
+  box-shadow: 0 0 0 0.2rem rgba(28, 28, 28, 0.2);
+  outline: none;
+}
+
+
+.ratio.shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 1rem;
+  overflow: hidden;
+  margin: 2rem 0;
+}
