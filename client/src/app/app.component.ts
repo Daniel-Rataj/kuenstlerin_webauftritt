@@ -35,7 +35,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   heroText: string = 'Willkommen bei der Künstlerin!';
   images = [
-    '/images/Hero1.jpg',
     '/images/Hero2.jpg',
     '/images/Hero3.jpg'
   ];
