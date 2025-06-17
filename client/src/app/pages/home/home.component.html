@@ -1,7 +1,46 @@
-<section class="hero">
-  <h1 class="title">Die Künstlerin</h1>
+<section class="intro container centered">
+  <h2>Willkommen</h2>
+  <p>
+    Ich bin eine Künstlerin mit Leidenschaft für abstrakte Malerei. Meine Werke entstehen aus Emotionen und Erinnerungen und erzählen Geschichten, die das Herz berühren. Entdecken Sie meine farbenfrohen Kompositionen, die zum Nachdenken und Fühlen einladen.
+  </p>
+
+  <p class="subtitle">
+    Farben mit Seele – abstrakte Malerei, die berührt.
+  </p>
+  <a routerLink="/gallery" class="btn-primary">Zur Galerie</a>
 </section>
 
-<section class="intro">
-  <p>Willkommen auf meiner Kunstseite. Ich zeige abstrakte Malerei mit Seele.</p>
+<section class="portfolio-preview container">
+  <h2>Ausgewählte Werke</h2>
+  <div class="art-grid">
+    <div class="art-item" *ngFor="let art of artWorks" (click)="openImage(art.img)">
+      <img [src]="art.img" [alt]="art.title" />
+      <h3>{{ art.title }}</h3>
+    </div>
+  </div>
+  <div class="btn-wrapper">
+    <a routerLink="/gallery" class="btn-secondary">Mehr Kunstwerke ansehen</a>
+  </div>
 </section>
+
+<!-- Neue Sektion: Ausstellungen & Neuigkeiten -->
+<section class="info-grid container">
+  <div class="info-item">
+    <h3>Ausstellungen</h3>
+    <p>
+      Informieren Sie sich über aktuelle und vergangene Ausstellungen meiner Werke in verschiedenen Galerien und Kunsthäusern.
+    </p>
+  </div>
+  <div class="info-item">
+    <h3>Neuigkeiten</h3>
+    <p>
+      Bleiben Sie auf dem Laufenden über neue Projekte, kommende Events oder Veröffentlichungen rund um meine Kunst.
+    </p>
+  </div>
+</section>
+
+<!-- Bildvergrößerung Overlay -->
+<div class="img-overlay" *ngIf="selectedImage" (click)="closeImage()">
+  <span class="img-close" (click)="closeImage($event)">&times;</span>
+  <img [src]="selectedImage" alt="Großes Kunstwerk" (click)="$event.stopPropagation()" />
+</div>

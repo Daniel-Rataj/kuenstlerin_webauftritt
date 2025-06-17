@@ -10,6 +10,8 @@
 /server/*.db
 /server/*.db-shm
 /server/*.db-wal
+/server/uploads/*
+/server!/uploads/.gitkeep
 
 # Test-Projekt
 /server.Tests/bin
@@ -18,6 +20,9 @@
 # Uploads
 /client/src/assets/uploads/*
 !client/src/assets/uploads/.gitkeep
+
+uploads/*
+!/uploads/.gitkeep
 
 # Environment
 *.env

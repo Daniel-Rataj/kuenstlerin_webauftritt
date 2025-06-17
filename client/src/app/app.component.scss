@@ -1,74 +1,171 @@
+body {
+  margin: 0;
+  background-color: #f9f9f9; /* Hellerer, modernerer Hintergrund */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Hero bleibt fixed und 20vh */
 .hero-section {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 60vh; /* Passt die Höhe an */
-  background-image: url('/images/Hero.jpg'); /* Dein Bild hier */
+  height: 20vh;
   background-size: cover;
   background-position: center;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white; /* Weißer Text für besseren Kontrast */
   text-align: center;
-  overflow: hidden; /* Verhindert das Überlaufen von Inhalten */
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3); /* Leicht dunkler Overlay */
+  transition: background 0.3s ease;
+}
 
-  /* Optional: Füge einen transparenten Overlay hinzu, um den Text besser lesbar zu machen */
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Dunkler Overlay-Effekt */
-    z-index: 1;
-  }
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15); /* leichter Overlay */
+  z-index: 1;
+}
 
-  /* Setze die Z-Index-Reihenfolge, um sicherzustellen, dass der Text vor dem Overlay liegt */
-  .hero-overlay {
-    position: relative;
-    z-index: 2;
-  }
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  color: #f1f1f1;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  user-select: none;
+}
 
-  h1 {
-    font-size: 3rem; /* Größerer Titel */
-    margin: 0;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Optionaler Textschatten für besseren Kontrast */
-  }
+/* Sidebar – Größe & Position beibehalten, moderner Look */
+.fixed-sidebar {
+  position: fixed;
+  top: 20vh;
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 20vh);
+  overflow-y: auto;
+  background-color: #fff;
+  border-right: 1px solid #e0e0e0; /* helleres Grau */
+  box-shadow: 2px 0 8px rgba(0,0,0,0.05); /* sanfter Schatten */
+  z-index: 1000;
+  transition: width 0.3s ease;
+  padding-top: 1rem;
+  font-size: 0.95rem;
+  color: #555;
+}
 
-  p {
-    font-size: 1.25rem;
-    margin-top: 10px;
-    font-weight: 300;
-  }
+.fixed-sidebar.collapsed {
+  width: 0;
+  overflow: hidden;
+  display: none;
+}
+
+/* Toggle Button moderner, kleiner Schatten */
+.sidebar-toggle {
+  position: fixed;
+  top: calc(20vh + 10px);
+  left: 250px;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+  background: #007bff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.5);
+  transition: left 0.3s ease, background 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+  background: #0056b3;
+}
+
+.fixed-sidebar.collapsed + .sidebar-toggle {
+  left: 5px;
+  transform: none;
+}
+
+/* Hauptinhalt mit Padding-Top für hero */
+.main-content {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  padding: 2rem 2rem 3rem 2rem;
+  padding-top: 20vh; /* Abstand unter Hero */
+  background-color: #fff; /* Weißer Hintergrund für Inhalt */
+  box-shadow: 0 0 12px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  transition: margin-left 0.3s ease, width 0.3s ease, background-color 0.3s ease;
+  min-height: 100vh;
+  color: #444;
+}
+
+.main-content.expanded {
+  margin-left: 0;
+  width: 100%;
+  padding-top: 20vh;
+}
+
+/* Footer modern & schlicht */
+app-footer {
+  background-color: #fff;
+  width: 100%;
+  height: 60px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  padding: 0 1rem;
+  color: #888;
+  user-select: none;
+  margin-top: auto;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,0.05);
 }
 
 /* Responsive Anpassungen */
 @media (max-width: 768px) {
+  .hero-section,
+  .main-content {
+    padding-top: 40vh; /* hero höher */
+  }
+
   .hero-section {
-    height: 50vh; /* Kleinere Höhe auf mobilen Geräten */
+    height: 40vh;
   }
 
-  .hero-section h1 {
-    font-size: 2rem; /* Kleinere Schrift auf mobilen Geräten */
+  .fixed-sidebar {
+    top: 40vh;
+    height: calc(100vh - 40vh);
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: none;
+    padding-top: 0.5rem;
   }
 
-  .hero-section p {
-    font-size: 1rem; /* Kleinere Schrift auf mobilen Geräten */
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-section {
-    height: 40vh; /* Noch kleinere Höhe für sehr kleine Geräte */
+  .sidebar-toggle {
+    top: 40vh;
+    left: 10px;
+    transform: none !important;
   }
 
-  .hero-section h1 {
-    font-size: 1.5rem; /* Noch kleinere Schrift für kleine Geräte */
-  }
-
-  .hero-section p {
-    font-size: 0.9rem; /* Noch kleinere Schrift */
+  .main-content,
+  .main-content.expanded {
+    margin-left: 0;
+    width: 100%;
+    background-color: #fff;
   }
 }
