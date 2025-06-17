@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { ExhibitionListComponent } from '../exhibition-list/exhibition-list.component';
+import { ExhibitionListComponent } from './exhibition-list/exhibition-list.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-gallery-post',
   standalone: true,
-  imports: [ExhibitionListComponent],
+  imports: [RouterModule, ExhibitionListComponent],
   templateUrl: './gallery-post.component.html',
   styleUrl: './gallery-post.component.scss'
 })
