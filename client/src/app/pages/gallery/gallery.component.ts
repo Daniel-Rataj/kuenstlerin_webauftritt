@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ExhibitionService } from '../../services/exhibition/exhibition.service';
 import { Exhibition } from '../../models/exhibition';
+import { ExhibitionDto, ExhibitionElement } from '../../models/dto/exhibition.dto';
 import { NgFor, NgIf, DatePipe, NgClass } from '@angular/common';
 
 @Component({
@@ -8,11 +9,12 @@ import { NgFor, NgIf, DatePipe, NgClass } from '@angular/common';
   standalone: true,
   imports: [NgFor, NgIf, DatePipe, NgClass],
   templateUrl: './gallery.component.html',
-  styleUrl: './gallery.component.scss'
+  styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent {
   exhibitions: Exhibition[] = [];
-  openedExhibitionId: number | null = null;
+  openExhibitions: { [id: number]: boolean } = {};
+  selectedElement: ExhibitionElement | null = null;
 
   constructor(private readonly exhibitionService: ExhibitionService) {}
 
@@ -21,10 +23,20 @@ export class GalleryComponent {
   }
 
   toggleExhibition(id: number): void {
-    this.openedExhibitionId = this.openedExhibitionId === id ? null : id;
+    this.openExhibitions[id] = !this.openExhibitions[id];
   }
 
   isExhibitionOpen(id: number): boolean {
-    return this.openedExhibitionId === id;
+    return !!this.openExhibitions[id];
+  }
+
+  // Modal öffnen mit Bildinfos
+  openModal(element: ExhibitionElement): void {
+    this.selectedElement = element;
+  }
+
+  // Modal schließen
+  closeModal(): void {
+    this.selectedElement = null;
   }
 }
