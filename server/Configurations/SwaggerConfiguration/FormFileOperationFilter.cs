@@ -1,15 +1,13 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 public class FormFileOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        // Find the first parameter explicitly marked with [FromForm]
+        // Suche den Parameter mit [FromForm] und einem komplexen Typ (DTO)
         var dtoParam = context.MethodInfo.GetParameters()
             .FirstOrDefault(p => p.GetCustomAttribute<Microsoft.AspNetCore.Mvc.FromFormAttribute>() != null);
 
@@ -22,15 +20,31 @@ public class FormFileOperationFilter : IOperationFilter
         {
             var propSchema = new OpenApiSchema();
 
-            // Map .NET property types to OpenAPI schema types
-            if (prop.PropertyType == typeof(IFormFile))
+            if (prop.PropertyType == typeof(IFormFile) || typeof(IEnumerable<IFormFile>).IsAssignableFrom(prop.PropertyType))
             {
-                propSchema.Type = "string";
-                propSchema.Format = "binary"; // Required for file uploads
+                propSchema.Type = "array";
+                propSchema.Items = new OpenApiSchema
+                {
+                    Type = "string",
+                    Format = "binary"
+                };
             }
             else if (prop.PropertyType == typeof(string))
             {
                 propSchema.Type = "string";
+                if (prop.Name.ToLower().Contains("metadata"))
+                {
+                    // Beispiel JSON einfügen
+                    propSchema.Example = new OpenApiString(
+                        "[\n" +
+                        "  {\n" +
+                        "    \"name\": \"Bild 1\",\n" +
+                        "    \"description\": \"Erklärung zum Bild\",\n" +
+                        "    \"availableToBuy\": true,\n" +
+                        "    \"exhibitionId\": 1\n" +
+                        "  }\n" +
+                        "]");
+                }
             }
             else if (prop.PropertyType == typeof(bool))
             {
@@ -40,29 +54,25 @@ public class FormFileOperationFilter : IOperationFilter
             {
                 propSchema.Type = "integer";
             }
-            else if (prop.PropertyType == typeof(float) || prop.PropertyType == typeof(double) || prop.PropertyType == typeof(decimal))
-            {
-                propSchema.Type = "number";
-            }
             else
             {
-                // Skip unsupported or complex types
-                continue;
+                continue; // Nicht unterstützte Typen überspringen
             }
 
-            schemaProps.Add(prop.Name, propSchema);
+            schemaProps[prop.Name] = propSchema;
         }
 
-        // Inject the constructed schema into the request body for Swagger
         operation.RequestBody = new OpenApiRequestBody
         {
-            Content = {
+            Content =
+            {
                 ["multipart/form-data"] = new OpenApiMediaType
                 {
                     Schema = new OpenApiSchema
                     {
                         Type = "object",
-                        Properties = schemaProps
+                        Properties = schemaProps,
+                        Required = schemaProps.Keys.ToHashSet()
                     }
                 }
             }

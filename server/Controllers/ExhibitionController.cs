@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using server.Controllers.Base;
 using server.Logic.Interfaces;
+using server.Models.DataTransfer;
 using server.Models.Enums;
 using dataAccess = server.Models.DataAccess;
 using dataTransfer = server.Models.DataTransfer;
@@ -20,12 +21,12 @@ namespace server.Controllers
             _logic = logic;
         }
 
-        [HttpPost("{id}/elements")]
-        public async Task<ActionResult<server.Models.DataTransfer.ExhibitionElement>> UploadImage(int id, [FromForm] dataTransfer.ExhibitionElement exhibitionElement)
+        [HttpPost("{id}/elements/bulk")]
+        public async Task<ActionResult<dataTransfer.Exhibition>> UploadExhibitionBulkAsync([FromRoute] int id, [FromForm] ExhibitionBulkUpload dto)
         {
             try
             {
-                var result = await _logic.UploadImageAsync(id, exhibitionElement);
+                var result = await _logic.UploadBulkAsync(id, dto.Files, dto.ExhibitionElementsJson);
                 return Ok(result);
             }
             catch (Exception e)

@@ -6,6 +6,7 @@ using server.Models.DataTransfer;
 using server.Models.Enums;
 using server.Repositories;
 using server.Repositories.Interfaces;
+using System.Text.Json;
 using dataAccess = server.Models.DataAccess;
 using dataTransfer = server.Models.DataTransfer;
 
@@ -23,9 +24,45 @@ namespace server.Logic
             _env = env;
         }
 
-        public async Task<dataTransfer.ExhibitionElement> UploadImageAsync(int exhibitionId, dataTransfer.ExhibitionElement exhibitionElement)
+        public async Task<dataTransfer.Exhibition> UploadBulkAsync(int exhibitionId, List<IFormFile> files, string exhibitionElementsJson)
         {
-            var file = exhibitionElement.ImageFile;
+            // JSON deserialisieren
+            var exhibitionElements = JsonSerializer.Deserialize<List<dataTransfer.ExhibitionElement>>(exhibitionElementsJson, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (exhibitionElements == null || exhibitionElements.Count != files.Count)
+            {
+                throw new ArgumentException("Die Anzahl der Metadaten stimmt nicht mit der Anzahl der Dateien überein.");
+            }
+
+            var exhibition = await _repository.GetByIdAsync(exhibitionId);
+            if (exhibition == null)
+            {
+                throw new KeyNotFoundException($"Exhibition mit ID {exhibitionId} wurde nicht gefunden.");
+            }
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                var file = files[i];
+                var exhibitionElement = exhibitionElements[i];
+
+                await SaveExhibitionElementAsync(exhibitionId, file, exhibitionElement);
+            }
+
+            // Erneut laden, um die ExhibitionElements mitzuladen
+            var updated = await _repository.GetByIdAsync(exhibitionId);
+            if (updated == null)
+            {
+                throw new Exception("Fehler beim Neuladen der aktualisierten Exhibition.");
+            }
+
+            return MapToDto(updated);
+        }
+
+        private async Task<dataAccess.ExhibitionElement> SaveExhibitionElementAsync(int exhibitionId, IFormFile file, dataTransfer.ExhibitionElement exhibitionElement)
+        {
             var folderPath = Path.Combine(_env.ContentRootPath, "uploads", $"Exhibition_{exhibitionId}");
             if (!Directory.Exists(folderPath))
             {
@@ -47,9 +84,7 @@ namespace server.Logic
                 ImageUrl = $"/uploads/Exhibition_{exhibitionId}/{fileName}",
             };
 
-            var created = await _exhibitionElementRepository.CreateAsync(element);
-
-            return MapExhibitionElementToDto(created);
+            return await _exhibitionElementRepository.CreateAsync(element);
         }
 
         public async Task<Exhibition> PublishAsync(int exhibitionId)

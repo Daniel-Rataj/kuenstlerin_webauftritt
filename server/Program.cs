@@ -42,6 +42,7 @@ builder.Services.AddScoped<IBaseLogic<dataTransfer.User>, UserLogic>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 builder.Services.AddScoped<IExhibitionLogic, ExhibitionLogic>();
+builder.Services.AddScoped<IExhibitionElementLogic, ExhibitionElementLogic>(); 
 
 // Register generic repository services for dependency injection.
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
