@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']  // nur wenn die Datei existiert
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
   artWorks = [
@@ -15,6 +15,11 @@ export class HomeComponent {
     { img: 'images/kunst2.jpg', title: 'Lebendige Formen' },
     { img: 'images/kunst3.jpg', title: 'Emotionen in Rot' }
   ];
+
+  favoriteArt = {
+    img: 'images/favoriteArt.jpg',
+    title: 'Mein Lieblingsbild'
+  };
 
   selectedImage: string | null = null;
 

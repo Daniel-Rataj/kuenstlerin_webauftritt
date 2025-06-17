@@ -1,19 +1,30 @@
-<section class="intro container centered">
-  <h2>Willkommen</h2>
-  <p>
-    Ich bin eine Künstlerin mit Leidenschaft für abstrakte Malerei. Meine Werke entstehen aus Emotionen und Erinnerungen und erzählen Geschichten, die das Herz berühren. Entdecken Sie meine farbenfrohen Kompositionen, die zum Nachdenken und Fühlen einladen.
-  </p>
+<section class="favorite container centered">
+  <div class="favorite-art">
+    <div class="art-item favorite" (click)="openImage(favoriteArt.img)">
+      <img [src]="favoriteArt.img" [alt]="favoriteArt.title" />
+    </div>
+  </div>
 
-  <p class="subtitle">
-    Farben mit Seele – abstrakte Malerei, die berührt.
-  </p>
-  <a routerLink="/gallery" class="btn-primary">Zur Galerie</a>
+  <div class="info-item favorite-text-block">
+    <h3>Mein Lieblingsbild</h3>
+    <p>
+      Dieses Werk ist mein persönliches Lieblingsbild. Es entstand in einer besonders intensiven Phase meines Lebens und vereint Erinnerungen, Emotionen und Farben, die mir sehr am Herzen liegen. Jede Linie und jeder Farbton erzählt meine Geschichte – kraftvoll und zugleich verletzlich.
+    </p>
+  </div>
+
+  <div class="btn-wrapper">
+    <a routerLink="/aboutme" class="btn-secondary">Erfahre mehr über mich</a>
+  </div>
 </section>
 
 <section class="portfolio-preview container">
   <h2>Ausgewählte Werke</h2>
   <div class="art-grid">
-    <div class="art-item" *ngFor="let art of artWorks" (click)="openImage(art.img)">
+    <div
+      class="art-item"
+      *ngFor="let art of artWorks"
+      (click)="openImage(art.img)"
+    >
       <img [src]="art.img" [alt]="art.title" />
       <h3>{{ art.title }}</h3>
     </div>
@@ -23,24 +34,28 @@
   </div>
 </section>
 
-<!-- Neue Sektion: Ausstellungen & Neuigkeiten -->
 <section class="info-grid container">
   <div class="info-item">
     <h3>Ausstellungen</h3>
     <p>
-      Informieren Sie sich über aktuelle und vergangene Ausstellungen meiner Werke in verschiedenen Galerien und Kunsthäusern.
+      Informieren Sie sich über aktuelle und vergangene Ausstellungen meiner
+      Werke in verschiedenen Galerien und Kunsthäusern.
     </p>
   </div>
   <div class="info-item">
     <h3>Neuigkeiten</h3>
     <p>
-      Bleiben Sie auf dem Laufenden über neue Projekte, kommende Events oder Veröffentlichungen rund um meine Kunst.
+      Bleiben Sie auf dem Laufenden über neue Projekte, kommende Events oder
+      Veröffentlichungen rund um meine Kunst.
     </p>
   </div>
 </section>
 
-<!-- Bildvergrößerung Overlay -->
 <div class="img-overlay" *ngIf="selectedImage" (click)="closeImage()">
   <span class="img-close" (click)="closeImage($event)">&times;</span>
-  <img [src]="selectedImage" alt="Großes Kunstwerk" (click)="$event.stopPropagation()" />
+  <img
+    [src]="selectedImage"
+    alt="Großes Kunstwerk"
+    (click)="$event.stopPropagation()"
+  />
 </div>

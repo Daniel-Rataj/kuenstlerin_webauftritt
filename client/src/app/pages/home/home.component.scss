@@ -9,7 +9,7 @@
 
 .hero {
   padding: 4rem 1rem;
-  background: #fff; // angepasst: kein hässlicher Hintergrund mehr
+  background: #fff; /* angepasst: kein hässlicher Hintergrund mehr */
   text-align: center;
   border-bottom: 1px solid #e5e5e0;
 }
@@ -48,6 +48,16 @@
 .btn-primary:hover,
 .btn-secondary:hover {
   background-color: #333333;
+}
+
+.btn-secondary {
+  margin: 0;
+}
+
+.btn-wrapper {
+  text-align: center;
+  margin-top: 1.5rem; /* Abstand über dem Button */
+  margin-bottom: 4rem; /* Abstand darunter, falls nötig */
 }
 
 .intro {
@@ -95,16 +105,16 @@
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
   background: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  h3 {
-    margin: 0.75rem 0 1.2rem 0;
-    font-weight: 500;
-    font-size: 1.1rem;
-    color: #222222;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.art-item h3 {
+  margin: 0.75rem 0 1.2rem 0;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: #222222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .art-item img {
@@ -113,15 +123,6 @@
   object-fit: cover;
   display: block;
   border-bottom: 1px solid #f0f0f0;
-}
-
-.btn-wrapper {
-  text-align: center;
-  margin-top: 3rem; // mehr Abstand zu Bildern
-}
-
-.btn-secondary {
-  margin: 0;
 }
 
 /* Overlay für Bildvergrößerung */
@@ -178,20 +179,104 @@
   flex: 1 1 320px;
   max-width: 500px;
   text-align: center;
+}
 
-  h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #1c1c1c;
-    font-weight: 600;
-    text-align: center;
+.info-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1c1c1c;
+  font-weight: 600;
+  text-align: center;
+}
+
+.info-item p {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.6;
+  font-weight: 300;
+  text-align: left;
+}
+
+/* Lieblingsbild-Sektion */
+.favorite-art {
+  position: relative;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.art-item.favorite {
+  width: 340px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.art-item.favorite img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-bottom: none;
+}
+
+/* NEU: Textblock für 'Mein Lieblingsbild' wie Ausstellungen */
+.info-item.favorite-text-block {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+  max-width: 500px;
+  margin: 1.5rem auto 0 auto;
+  text-align: center; /* zentriert den Block, Text ist links */
+}
+
+.info-item.favorite-text-block h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1c1c1c;
+  font-weight: 600;
+  text-align: center;
+}
+
+.info-item.favorite-text-block p {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.6;
+  font-weight: 300;
+  text-align: left; /* Linksbündig im Block */
+  margin: 0;
+}
+
+/* Button bleibt unverändert und separat */
+.btn-wrapper {
+  text-align: center;
+  margin-top: 1.5rem; /* Abstand über dem Button */
+  margin-bottom: 4rem; /* Abstand darunter, falls nötig */
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.6em 2em;
+  background-color: #1c1c1c;
+  color: white;
+  font-weight: 600;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #333333;
+}
+
+@media (max-width: 768px) {
+  .favorite-text-overlay {
+    position: static;
+    transform: none;
+    margin-top: 1rem;
   }
 
-  p {
-    font-size: 1.05rem;
-    color: #444;
-    line-height: 1.6;
-    font-weight: 300;
-    text-align: left;
+  .art-item.favorite {
+    width: 90%;
   }
 }
