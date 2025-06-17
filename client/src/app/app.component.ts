@@ -56,6 +56,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
+        if (isPlatformBrowser(this.platformId)) {
+          window.scrollTo({ top: 0, behavior: 'smooth' }); // Scrollt nach oben bei Seitenwechsel
+        }
         this.updateHeroText();
       });
   }
