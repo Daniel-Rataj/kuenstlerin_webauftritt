@@ -10,6 +10,8 @@
 /server/*.db
 /server/*.db-shm
 /server/*.db-wal
+/server/uploads/*
+/server!/uploads/.gitkeep
 
 # Test-Projekt
 /server.Tests/bin
