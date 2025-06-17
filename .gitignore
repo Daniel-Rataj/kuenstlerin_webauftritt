@@ -21,6 +21,9 @@
 /client/src/assets/uploads/*
 !client/src/assets/uploads/.gitkeep
 
+uploads/*
+!/uploads/.gitkeep
+
 # Environment
 *.env
 client/public/images/Hero2.jpg
