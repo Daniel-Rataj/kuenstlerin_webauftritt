@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ExhibitionService } from '../../services/exhibition/exhibition.service';
-import { Exhibition } from '../../models/exhibition';
 import { ExhibitionDto, ExhibitionElement } from '../../models/dto/exhibition.dto';
 import { NgFor, NgIf, DatePipe, NgClass } from '@angular/common';
 
@@ -13,30 +12,19 @@ import { NgFor, NgIf, DatePipe, NgClass } from '@angular/common';
 })
 export class GalleryComponent {
   exhibitions: Exhibition[] = [];
+  private readonly exhibitionsSignal = signal<ExhibitionDto[]>([]);
   openExhibitions: { [id: number]: boolean } = {};
   selectedElement: ExhibitionElement | null = null;
 
   constructor(private readonly exhibitionService: ExhibitionService) {}
 
   ngOnInit(): void {
-    this.exhibitions = this.exhibitionService.getExhibitionsDummy();
+    this.initialize();
+    console.log('Gallery component initialized');
   }
 
-  toggleExhibition(id: number): void {
-    this.openExhibitions[id] = !this.openExhibitions[id];
-  }
-
-  isExhibitionOpen(id: number): boolean {
-    return !!this.openExhibitions[id];
-  }
-
-  // Modal öffnen mit Bildinfos
-  openModal(element: ExhibitionElement): void {
-    this.selectedElement = element;
-  }
-
-  // Modal schließen
-  closeModal(): void {
-    this.selectedElement = null;
+  async initialize(): Promise<void> {
+    const data = await this.exhibitionService.getAllAsync();
+    this.exhibitionsSignal.set(data);
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
-import { UserRole } from '../../models/enums/user.role';
+import { UserRole } from '../../models/enums/user-role';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({

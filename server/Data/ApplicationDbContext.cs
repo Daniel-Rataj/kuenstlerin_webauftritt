@@ -13,6 +13,8 @@ namespace server.Data
 
         public DbSet<dataAccess.User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Exhibition> Exhibitions { get; set; }
+        public DbSet<ExhibitionElement> ExhibitionElements { get; set; }
 
         // Weitere DbSets hier, z. B.:
         // public DbSet<Post> Posts { get; set; }

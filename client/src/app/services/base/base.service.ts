@@ -27,14 +27,13 @@ export class BaseService<TRead, TWrite = TRead> {
 
   async createAsync(item: TWrite): Promise<TRead> {
     try {
-      debugger;
       return await firstValueFrom(this.http.post<TRead>(this.baseUrl, item));
     } catch (error) {
       return this.handleError(error);
     }
   }
 
-  async updateAsync(id: string, item: TWrite): Promise<TRead> {
+  async updateAsync(id: number, item: TWrite): Promise<TRead> {
     try {
       return await firstValueFrom(this.http.put<TRead>(`${this.baseUrl}/${id}`, item));
     } catch (error) {
@@ -42,7 +41,7 @@ export class BaseService<TRead, TWrite = TRead> {
     }
   }
 
-  async deleteAsync(id: string): Promise<void> {
+  async deleteAsync(id: number): Promise<void> {
     try {
       return await firstValueFrom(this.http.delete<void>(`${this.baseUrl}/${id}`));
     } catch (error) {

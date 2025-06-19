@@ -16,7 +16,6 @@ import { CommonModule } from '@angular/common';
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     HeaderComponent,
     FooterComponent,
@@ -43,8 +42,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   showCookieBanner = false;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
+    @Inject(PLATFORM_ID) private readonly platformId: Object,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {

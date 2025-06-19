@@ -1,1 +1,8 @@
-<p>gallery-post works!</p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Ausstellungen</h2>
+  <button class="btn btn-primary" (click)="navigateToCreateWizard()">
+    <i class="fa-regular fa-plus"></i> Neue Ausstellung erstellen
+  </button>
+</div>
+<app-exhibition-list></app-exhibition-list>
+<router-outlet></router-outlet>

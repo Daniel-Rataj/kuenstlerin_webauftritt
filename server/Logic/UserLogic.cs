@@ -1,7 +1,4 @@
 ﻿using server.Logic.Interfaces;
-using server.Repositories;
-using System.Security.Cryptography;
-using System.Text;
 using server.Logic.Base;
 using dataTransfer = server.Models.DataTransfer;
 using dataAccess = server.Models.DataAccess;
