@@ -27,7 +27,6 @@ export class AddUserDialogComponent {
 
   submit() {
     // initialize fields
-    debugger;
     const newUser: UserDto = {
       username: this.username,
       password: this.password,

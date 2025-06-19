@@ -55,7 +55,7 @@ export class UserTableComponent implements OnInit {
   async deleteUser(user: User) {
     if (!confirm(`Benutzer "${user.username}" wirklich löschen?`)) return;
 
-    await this.userService.deleteAsync(user.id);
+    await this.userService.delete(user.id);
     await this.loadUsers();
   }
 
