@@ -33,3 +33,12 @@
   <!-- Footer -->
   <app-footer></app-footer>
 </div>
+
+<!-- Cookie-Banner -->
+<div *ngIf="showCookieBanner" class="cookie-banner" role="region" aria-label="Cookie Hinweis">
+  <p>
+    Diese Website verwendet nur technisch notwendige Cookies.
+    Mehr dazu findest du in der <a routerLink="/datenschutz" tabindex="0">Datenschutzerklärung</a>.
+  </p>
+  <button class="cookie-btn" (click)="acceptCookies()" aria-label="Cookies akzeptieren">Verstanden</button>
+</div>

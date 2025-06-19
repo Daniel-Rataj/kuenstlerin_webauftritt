@@ -40,6 +40,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   ];
   currentImageIndex = 0;
 
+  showCookieBanner = false;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router
@@ -50,13 +52,17 @@ export class AppComponent implements OnInit, AfterViewInit {
       setInterval(() => {
         this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
       }, 5000);
+
+      // Cookie-Zustimmung prüfen (localStorage)
+      const consent = localStorage.getItem('cookie-consent');
+      this.showCookieBanner = consent !== 'true';
     }
 
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         if (isPlatformBrowser(this.platformId)) {
-          window.scrollTo({ top: 0, behavior: 'smooth' }); // Scrollt nach oben bei Seitenwechsel
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         this.updateHeroText();
       });
@@ -68,6 +74,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   toggleNav() {
     this.isNavCollapsed = !this.isNavCollapsed;
+  }
+
+  acceptCookies(): void {
+    localStorage.setItem('cookie-consent', 'true');
+    this.showCookieBanner = false;
   }
 
   private updateHeroText() {
