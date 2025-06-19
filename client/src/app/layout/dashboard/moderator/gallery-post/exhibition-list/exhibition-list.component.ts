@@ -24,6 +24,7 @@ export class ExhibitionListComponent {
 
   ngOnInit(): void {
     this.initialize();
+    console.log('Gallery component initialized');
   }
 
   async initialize(): Promise<void> {
@@ -53,12 +54,12 @@ export class ExhibitionListComponent {
     return ExhibitionStatus.toString(status);
   }
 
-  getFormattedDate(date: Date): string {
-    return new Date(date).toLocaleDateString('de-DE', {
+  getFormattedDate(date?: Date): string {
+    return date ? new Date(date).toLocaleDateString('de-DE', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
-    });
+    }) : "";
   }
 
   getElementCount(exhibition: ExhibitionDto): number {

@@ -12,6 +12,7 @@ import { GalleryComponent } from './pages/gallery/gallery.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutmeComponent } from './pages/aboutme/aboutme.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { ExhibitionCreateWizardComponent } from './layout/dashboard/moderator/gallery-post/exhibition-formular/exhibition-create-wizard/exhibition-create-wizard.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -42,7 +43,8 @@ export const routes: Routes = [
                 canActivate: [roleGuard([UserRole.Moderator])],
                 children: [
                     { path: 'gallery', component: GalleryPostComponent },
-                    { path: 'latest', component: HomePostComponent }
+                    { path: 'latest', component: HomePostComponent },
+                    { path: 'exhibition/create', component: ExhibitionCreateWizardComponent }
                 ]
             },
 

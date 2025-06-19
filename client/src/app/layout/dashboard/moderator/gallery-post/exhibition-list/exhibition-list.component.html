@@ -12,7 +12,7 @@
     >
       <div>
         <strong>{{ exhibition.title }}</strong>
-        <div class="text-muted small">{{ getFormattedDate(exhibition.date) }}</div>
+        <div class="text-muted small">{{ getFormattedDate(exhibition?.date) }}</div>
       </div>
       <div>
         <span class="badge bg-secondary me-2">{{ getStatusLabel(exhibition.status) }}</span>
@@ -44,7 +44,7 @@
     >
       <div>
         <strong>{{ exhibition.title }}</strong>
-        <div class="text-muted small">{{ getFormattedDate(exhibition.date) }}</div>
+        <div class="text-muted small">{{ getFormattedDate(exhibition?.date) }}</div>
       </div>
       <div>
         <span class="badge bg-success me-2">{{ getStatusLabel(exhibition.status) }}</span>
