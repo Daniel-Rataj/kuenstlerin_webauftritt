@@ -11,7 +11,7 @@ import { NgFor, NgIf, DatePipe, NgClass } from '@angular/common';
   styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent {
-  exhibitions: Exhibition[] = [];
+  exhibitions: ExhibitionDto[] = [];
   private readonly exhibitionsSignal = signal<ExhibitionDto[]>([]);
   openExhibitions: { [id: number]: boolean } = {};
   selectedElement: ExhibitionElement | null = null;
