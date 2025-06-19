@@ -41,8 +41,8 @@ export class GalleryComponent {
     this.selectedElement = null;
   }
 
-  async initialize(): Promise<void> {
-    const data = await this.exhibitionService.getAllAsync();
-    this.exhibitionsSignal.set(data);
+  initialize(): void {
+    const data = this.exhibitionService.getExhibitionsDummy();
+    this.exhibitions = data;
   }
 }
