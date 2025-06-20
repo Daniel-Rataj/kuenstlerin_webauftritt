@@ -17,6 +17,58 @@ namespace server.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
 
+            modelBuilder.Entity("server.Models.DataAccess.Exhibition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exhibitions");
+                });
+
+            modelBuilder.Entity("server.Models.DataAccess.ExhibitionElement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("AvailableToBuy")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ExhibitionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExhibitionId");
+
+                    b.ToTable("ExhibitionElements");
+                });
+
             modelBuilder.Entity("server.Models.DataAccess.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
@@ -69,6 +121,15 @@ namespace server.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("server.Models.DataAccess.ExhibitionElement", b =>
+                {
+                    b.HasOne("server.Models.DataAccess.Exhibition", null)
+                        .WithMany("ExhibitionElements")
+                        .HasForeignKey("ExhibitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("server.Models.DataAccess.RefreshToken", b =>
                 {
                     b.HasOne("server.Models.DataAccess.User", "User")
@@ -78,6 +139,11 @@ namespace server.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("server.Models.DataAccess.Exhibition", b =>
+                {
+                    b.Navigation("ExhibitionElements");
                 });
 
             modelBuilder.Entity("server.Models.DataAccess.User", b =>

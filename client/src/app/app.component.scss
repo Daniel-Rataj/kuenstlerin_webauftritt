@@ -169,3 +169,57 @@ app-footer {
     background-color: #fff;
   }
 }
+
+/* Cookie-Banner-Stil */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  background-color: #343a40;
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+  user-select: none;
+
+  p {
+    margin: 0;
+    max-width: 80%;
+  }
+
+  a {
+    color: #ffc107;
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+      color: #ffdb58;
+      outline: none;
+    }
+  }
+}
+
+/* Spezielles Button-Styling */
+.cookie-btn {
+  background-color: #ffc107;
+  border: none;
+  padding: 0.4rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #212529;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+
+  &:hover,
+  &:focus {
+    background-color: #e0a800;
+    outline: none;
+    box-shadow: 0 0 5px #e0a800;
+  }
+}

@@ -5,7 +5,7 @@ import { BaseService } from '../base/base.service';
 import { User } from '../../models/user';
 import { LoginRequestDto } from '../../models/dto/login-request.dto';
 import { UserSession } from '../../models/user-session';
-import { UserRole } from '../../models/enums/user.role';
+import { UserRole } from '../../models/enums/user-role';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService<User> {

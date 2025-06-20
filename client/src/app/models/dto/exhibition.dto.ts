@@ -1,10 +1,23 @@
-import { ExhibitionElement } from "../exhibition-element";
+import { ExhibitionStatus } from "../enums/exhibition-status";
+import { ExhibitionElement } from "./exhibition-element.dto";
 
 
 export { ExhibitionElement };
 export interface ExhibitionDto {
   id?: number;
   title: string;
-  date: Date;
+  date?: Date;
   exhibitionElements: ExhibitionElement[];
+  status: ExhibitionStatus;
+}
+
+export namespace ExhibitionDto {
+  export function createEmptyExhibition(): ExhibitionDto {
+    const empty: ExhibitionDto = {
+      status: ExhibitionStatus.Draft,
+      title: '',
+      exhibitionElements: [],
+    };
+    return empty;
+  }
 }

@@ -16,6 +16,16 @@
   height: auto;
 }
 
+.accordion-button:focus,
+.accordion-button:active {
+  background-color: inherit;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
 // Für Tablets
 @media (max-width: 768px) {
   .modal-image {
