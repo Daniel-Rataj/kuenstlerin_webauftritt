@@ -24,7 +24,6 @@ export class ExhibitionListComponent {
 
   ngOnInit(): void {
     this.initialize();
-    console.log('Gallery component initialized');
   }
 
   async initialize(): Promise<void> {

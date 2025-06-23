@@ -32,10 +32,10 @@
 
 <!-- Section: Published -->
 <div *ngIf="published().length > 0">
-  <h4 class="mb-3">
+  <div class="mb-3">
     <i class="fa-solid fa-arrow-up-from-bracket" style="color: #008000"></i>
     Veröffentlicht
-  </h4>
+  </div>
   <div class="list-group">
     <a
       *ngFor="let exhibition of getPagedPublished()"

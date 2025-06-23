@@ -54,7 +54,9 @@ export class ExhibitionElementsUploadComponent {
   }
 
   isUploadAllowed(): boolean {
-    if (this.metadataList.length === 0) return false;
+    if (this.metadataList.length === 0) {
+      return false;
+    }
     return this.metadataList.every((el) => this.isValidElement(el));
   }
 
