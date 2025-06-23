@@ -9,6 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { AboutmeComponent } from './pages/aboutme/aboutme.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { BrowserStorageService } from './services/browser-storage/browser-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +43,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   constructor(
     @Inject(PLATFORM_ID) private readonly platformId: Object,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly browserStorageService: BrowserStorageService
   ) {}
 
   ngOnInit(): void {
@@ -51,8 +53,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
       }, 5000);
 
-      // Cookie-Zustimmung prüfen (localStorage)
-      const consent = localStorage.getItem('cookie-consent');
+      // Use BrowserStorageService to check cookie consent
+      const consent = this.browserStorageService.getItem('cookie-consent');
       this.showCookieBanner = consent !== 'true';
     }
 
@@ -66,6 +68,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       });
   }
 
+
   ngAfterViewInit(): void {
     this.updateHeroText();
   }
@@ -75,7 +78,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   acceptCookies(): void {
-    localStorage.setItem('cookie-consent', 'true');
+    this.browserStorageService.setItem('cookie-consent', 'true');
     this.showCookieBanner = false;
   }
 

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserRole } from '../../models/enums/user-role';
 import { AuthService } from '../../services/auth/auth.service';
+import { BrowserStorageService } from '../../services/browser-storage/browser-storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -74,13 +75,14 @@ export class DashboardComponent {
 
   // Access the current user's name from localStorage (fallback if signal not used)
   get userName(): string {
-    const user = JSON.parse(localStorage.getItem('user') ?? '{}');
+    const user = JSON.parse(this.browserStorageService.getItem('user') ?? '{}');
     return user.username ?? 'Guest';
   }
 
   constructor(
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly browserStorageService: BrowserStorageService
   ) {}
 
   // Navigate to the selected route when a card is clicked

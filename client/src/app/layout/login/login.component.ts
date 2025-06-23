@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router} from '@angular/router';
 import { LoginRequestDto } from '../../models/dto/login-request.dto';
 import { UserRole } from '../../models/enums/user-role';
+import { BrowserStorageService } from '../../services/browser-storage/browser-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -37,33 +38,30 @@ export class LoginComponent {
   // Fehlertext als Signal
   errorMessage = signal<string | null>(null);
 
-  constructor(private readonly authService: AuthService, private readonly router: Router) {}
+  constructor(private readonly authService: AuthService, private readonly browserStorageService: BrowserStorageService, private readonly router: Router) {}
 
-  login(): void {
-    this.authService.login(this.credentials()).subscribe({
-      next: (response) => {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
-        // Get the numeric role from response
-        const userRole: UserRole = response.user.role;
-        
-        // Route based on role
-        switch (userRole) {
-          case UserRole.Admin:
-            this.router.navigate(['/dashboard/home']);
-            break;
-          case UserRole.Moderator:
-            this.router.navigate(['/dashboard/home']);
-            break;
-          default:
-            // Fallback for unexpected roles
-            this.router.navigate(['/dashboard']);
-            console.warn(`Unknown role: ${userRole}`);
-        }
-    },
-    error: () => {
-      this.errorMessage.set('Invalid username or password');
+  async login(): Promise<void> {
+    try {
+      const response = await this.authService.loginAsync(this.credentials());
+
+      // Speichern der Token-Daten wurde bereits im AuthService erledigt
+
+      const userRole: UserRole = response.user.role;
+
+      switch (userRole) {
+        case UserRole.Admin:
+        case UserRole.Moderator:
+          await this.router.navigate(['/dashboard/home']);
+          break;
+        default:
+          await this.router.navigate(['/dashboard']);
+          console.warn(`Unknown role: ${userRole}`);
+          break;
+      }
+    } catch (error) {
+      this.errorMessage.set('Fehler beim Login');
+      console.error(this.errorMessage)
+      throw error;
     }
-    });
   }
 }
