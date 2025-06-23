@@ -24,7 +24,6 @@ export class GalleryComponent {
 
   async initialize(): Promise<void> {
     try {
-      debugger;
       const data = await this.exhibitionService.getAllPublishedAsync();
 
       this.exhibitions = data;
