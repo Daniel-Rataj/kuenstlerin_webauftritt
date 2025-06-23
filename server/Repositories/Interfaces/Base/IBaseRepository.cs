@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using server.Models.DataAccess;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace server.Repositories.Interfaces.Base

@@ -14,12 +14,14 @@ namespace server.Logic
 {
     public class ExhibitionLogic : BaseLogic<dataAccess.Exhibition, dataTransfer.Exhibition>, IExhibitionLogic
     {
+        private readonly IExhibitionRepository _exhibitionRepository;
         private readonly IExhibitionElementRepository _exhibitionElementRepository;
         private readonly IWebHostEnvironment _env;
 
         public ExhibitionLogic(IExhibitionRepository repository, IExhibitionElementRepository exhibitionElementRepository, IWebHostEnvironment env)
             : base(repository)
         {
+            _exhibitionRepository = repository;
             _exhibitionElementRepository = exhibitionElementRepository;
             _env = env;
         }
@@ -82,9 +84,23 @@ namespace server.Logic
                 AvailableToBuy = exhibitionElement.AvailableToBuy,
                 ExhibitionId = exhibitionId,
                 ImageUrl = $"/uploads/Exhibition_{exhibitionId}/{fileName}",
+                PriceTag = exhibitionElement.PriceTag,
             };
 
             return await _exhibitionElementRepository.CreateAsync(element);
+        }
+
+        public async Task<IEnumerable<dataTransfer.Exhibition>> GetAllPublishedAsync()
+        {
+            var result = new List<dataAccess.Exhibition>();
+
+            var publishedExhibitions = await _exhibitionRepository.GetAllPublishedAsync();
+            if(publishedExhibitions.Any())
+            {
+                result = publishedExhibitions.ToList();
+            }
+            return result.Select(MapToDto);
+
         }
 
         public async Task<Exhibition> PublishAsync(int exhibitionId)

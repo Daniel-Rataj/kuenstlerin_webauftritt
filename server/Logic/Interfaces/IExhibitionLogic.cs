@@ -1,4 +1,5 @@
-﻿using server.Logic.Interfaces.Base;
+﻿using Microsoft.AspNetCore.Mvc;
+using server.Logic.Interfaces.Base;
 using System.Data;
 using dataAccess = server.Models.DataAccess;
 using dataTransfer = server.Models.DataTransfer;
@@ -9,5 +10,6 @@ namespace server.Logic.Interfaces
     {
         Task<dataTransfer.Exhibition> UploadBulkAsync(int exhibitionId, List<IFormFile> files, string exhibitionElementsJson);
         Task<dataTransfer.Exhibition> PublishAsync(int exhibitionId);
+        Task<IEnumerable<dataTransfer.Exhibition>> GetAllPublishedAsync();
     }
 }

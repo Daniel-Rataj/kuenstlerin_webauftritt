@@ -10,5 +10,6 @@
         public string ImageUrl { get; set; } = string.Empty;
         public bool AvailableToBuy { get; set; }
         public int ExhibitionId { get; set; }
+        public int PriceTag { get; set; }
     }
 }

@@ -23,5 +23,13 @@ namespace server.Repositories
                 .Include(e => e.ExhibitionElements)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<Exhibition>> GetAllPublishedAsync()
+        {
+            return await _dbSet
+                .Where(e => e.Status == Models.Enums.ExhibitionStatus.Public)
+                .Include(e => e.ExhibitionElements)
+                .ToListAsync();
+        }
     }
 }

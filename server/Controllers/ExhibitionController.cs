@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Web;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
 using server.Controllers.Base;
 using server.Logic.Interfaces;
@@ -9,9 +10,9 @@ using dataTransfer = server.Models.DataTransfer;
 
 namespace server.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class ExhibitionController : CrudBaseController<server.Models.DataTransfer.Exhibition>
+    [Route("api/[controller]")]
+    public class ExhibitionController : CrudBaseController<dataTransfer.Exhibition>
     {
 
         private readonly IExhibitionLogic _logic;
@@ -22,11 +23,26 @@ namespace server.Controllers
         }
 
         [HttpPost("{id}/elements/bulk")]
-        public async Task<ActionResult<dataTransfer.Exhibition>> UploadExhibitionBulkAsync([FromRoute] int id, [FromForm] ExhibitionBulkUpload dto)
+        public async Task<ActionResult<IEnumerable<dataTransfer.Exhibition>>> UploadExhibitionBulkAsync([FromRoute] int id, [FromForm] ExhibitionBulkUpload dto)
         {
             try
             {
                 var result = await _logic.UploadBulkAsync(id, dto.Files, dto.ExhibitionElementsJson);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { error = e.Message });
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("getAllPublished")]
+        public async Task<ActionResult<IEnumerable<dataTransfer.Exhibition>>> GetAllPublishedAsync()
+        {
+            try
+            {
+                var result = await _logic.GetAllPublishedAsync();
                 return Ok(result);
             }
             catch (Exception e)

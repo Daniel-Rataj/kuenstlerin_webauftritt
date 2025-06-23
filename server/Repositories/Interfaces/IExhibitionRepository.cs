@@ -3,5 +3,8 @@ using server.Repositories.Interfaces.Base;
 
 namespace server.Repositories.Interfaces
 {
-    public interface IExhibitionRepository : IBaseRepository<Exhibition> { }
+    public interface IExhibitionRepository : IBaseRepository<Exhibition> 
+    {
+        Task<IEnumerable<Exhibition>> GetAllPublishedAsync();
+    }
 }

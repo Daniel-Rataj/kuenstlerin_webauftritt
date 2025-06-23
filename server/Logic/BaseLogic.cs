@@ -8,7 +8,7 @@ namespace server.Logic.Base
     where TEntity : class
     where TDto : class
     {
-        protected readonly IBaseRepository<TEntity> _repository;
+        protected IBaseRepository<TEntity> _repository;
 
         protected BaseLogic(IBaseRepository<TEntity> repository)
         {
