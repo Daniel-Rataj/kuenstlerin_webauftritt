@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+ï»¿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using server.Data;
@@ -73,11 +74,23 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Künstlerin_Website API´s", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "KÃ¼nstlerin_Website APIÂ´s", Version = "v1" });
     c.OperationFilter<FormFileOperationFilter>();
 });
 
 var app = builder.Build();
+
+// Enable public access to uploaded image files stored outside wwwroot.
+app.UseStaticFiles();
+
+// This maps the physical "uploads" folder to the virtual "/uploads" URL path,
+// allowing images like /uploads/Exhibition_2/xyz.jpg to be served directly.
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "uploads")),
+    RequestPath = "/uploads"
+});
 
 using (var scope = app.Services.CreateScope())
 {
@@ -125,7 +138,7 @@ using (var scope = app.Services.CreateScope())
     }
     else
     {
-        Console.WriteLine("Users already exist in the database – skipping admin seeding.");
+        Console.WriteLine("Users already exist in the database â€“ skipping admin seeding.");
     }
 }
 
