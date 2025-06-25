@@ -1,61 +1,38 @@
 body {
   margin: 0;
-  background-color: #f9f9f9; /* Hellerer, modernerer Hintergrund */
+  background-color: #f9f9f9;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
 
-/* Hero bleibt fixed und 20vh */
+/* Header */
 .hero-section {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 20vh;
+  height: 40vh;
   background-size: cover;
   background-position: center;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3); /* Leicht dunkler Overlay */
-  transition: background 0.3s ease;
+  z-index: 1100;
+  margin: 0;
+  padding: 0;
 }
 
-.hero-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.15); /* leichter Overlay */
-  z-index: 1;
-}
-
-.hero-overlay {
-  position: relative;
-  z-index: 2;
-  color: #f1f1f1;
-  font-weight: 700;
-  font-size: 1.8rem;
-  letter-spacing: 0.05em;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-  user-select: none;
-}
-
-/* Sidebar – Größe & Position beibehalten, moderner Look */
+/* Sidebar */
 .fixed-sidebar {
   position: fixed;
-  top: 20vh;
+  top: 15vh;
   left: 0;
   width: 250px;
-  height: calc(100vh - 20vh);
+  height: calc(150vh - 20vh);
   overflow-y: auto;
   background-color: #fff;
-  border-right: 1px solid #e0e0e0; /* helleres Grau */
-  box-shadow: 2px 0 8px rgba(0,0,0,0.05); /* sanfter Schatten */
+  border-right: 1px solid #e0e0e0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
   z-index: 1000;
   transition: width 0.3s ease;
-  padding-top: 1rem;
+  padding-top: 0;
   font-size: 0.95rem;
   color: #555;
 }
@@ -66,45 +43,82 @@ body {
   display: none;
 }
 
-/* Toggle Button moderner, kleiner Schatten */
+/* Toggle Button */
 .sidebar-toggle {
   position: fixed;
-  top: calc(20vh + 10px);
+  top: 15vh;
   left: 250px;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 30px;
-  background: #007bff;
+  width: 20px;
+  height: calc(100vh - 15vh);
+  background-color: transparent;
   border: none;
-  border-radius: 50%;
   cursor: pointer;
   z-index: 1100;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  color: white;
-  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.5);
-  transition: left 0.3s ease, background 0.3s ease;
+  padding: 0;
+  transition: background-color 0.3s ease, width 0.3s ease, left 0.3s ease;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
-.sidebar-toggle:hover {
-  background: #0056b3;
+.sidebar-toggle:hover,
+.sidebar-toggle:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 30px;
 }
 
+.sidebar-toggle .arrow-icon {
+  display: block;
+  color: #333;
+  font-size: 1.2rem;
+  user-select: none;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+  transform: rotate(0deg);
+}
+
+/* Eingeklappt: Pfeil gedreht */
+.fixed-sidebar.collapsed + .sidebar-toggle .arrow-icon {
+  transform: rotate(480deg);
+}
+
+/* Eingeklappt: Toggle sichtbar links */
 .fixed-sidebar.collapsed + .sidebar-toggle {
-  left: 5px;
-  transform: none;
+  left: 0;
+  width: 20px;
+  height: calc(100vh - 15vh);
+  background-color: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 1100;
+  transition: background-color 0.3s ease, width 0.3s ease;
 }
 
-/* Hauptinhalt mit Padding-Top für hero */
+/* Hover bei eingeklappter Sidebar */
+.fixed-sidebar.collapsed + .sidebar-toggle:hover,
+.fixed-sidebar.collapsed + .sidebar-toggle:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 30px;
+}
+
+/* Optional: Pfeil auch mit Hover highlighten */
+.fixed-sidebar.collapsed + .sidebar-toggle:hover .arrow-icon {
+  color: #000;
+}
+
+/* Main Content */
 .main-content {
   margin-left: 250px;
   width: calc(100% - 250px);
   padding: 2rem 2rem 3rem 2rem;
-  padding-top: 20vh; /* Abstand unter Hero */
-  background-color: #fff; /* Weißer Hintergrund für Inhalt */
-  box-shadow: 0 0 12px rgba(0,0,0,0.05);
+  padding-top: 15vh;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
   border-radius: 8px;
   transition: margin-left 0.3s ease, width 0.3s ease, background-color 0.3s ease;
   min-height: 100vh;
@@ -117,7 +131,7 @@ body {
   padding-top: 20vh;
 }
 
-/* Footer modern & schlicht */
+/* Footer */
 app-footer {
   background-color: #fff;
   width: 100%;
@@ -132,18 +146,13 @@ app-footer {
   color: #888;
   user-select: none;
   margin-top: auto;
-  box-shadow: inset 0 1px 0 rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.05);
 }
 
-/* Responsive Anpassungen */
+/* Responsive */
 @media (max-width: 768px) {
-  .hero-section,
   .main-content {
-    padding-top: 40vh; /* hero höher */
-  }
-
-  .hero-section {
-    height: 40vh;
+    padding-top: 40vh;
   }
 
   .fixed-sidebar {
@@ -158,7 +167,8 @@ app-footer {
 
   .sidebar-toggle {
     top: 40vh;
-    left: 10px;
+    left: 100%;
+    display: none;
     transform: none !important;
   }
 
@@ -167,10 +177,11 @@ app-footer {
     margin-left: 0;
     width: 100%;
     background-color: #fff;
+    padding-top: 40vh;
   }
 }
 
-/* Cookie-Banner-Stil */
+/* Cookie Banner */
 .cookie-banner {
   position: fixed;
   bottom: 0;
@@ -186,25 +197,24 @@ app-footer {
   font-size: 0.9rem;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
   user-select: none;
-
-  p {
-    margin: 0;
-    max-width: 80%;
-  }
-
-  a {
-    color: #ffc107;
-    text-decoration: underline;
-
-    &:hover,
-    &:focus {
-      color: #ffdb58;
-      outline: none;
-    }
-  }
 }
 
-/* Spezielles Button-Styling */
+.cookie-banner p {
+  margin: 0;
+  max-width: 80%;
+}
+
+.cookie-banner a {
+  color: #ffc107;
+  text-decoration: underline;
+}
+
+.cookie-banner a:hover,
+.cookie-banner a:focus {
+  color: #ffdb58;
+  outline: none;
+}
+
 .cookie-btn {
   background-color: #ffc107;
   border: none;
@@ -215,11 +225,11 @@ app-footer {
   color: #212529;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   user-select: none;
+}
 
-  &:hover,
-  &:focus {
-    background-color: #e0a800;
-    outline: none;
-    box-shadow: 0 0 5px #e0a800;
-  }
+.cookie-btn:hover,
+.cookie-btn:focus {
+  background-color: #e0a800;
+  outline: none;
+  box-shadow: 0 0 5px #e0a800;
 }
