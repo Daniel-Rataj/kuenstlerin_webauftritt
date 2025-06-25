@@ -13,12 +13,16 @@ import { HomeComponent } from './pages/home/home.component';
 import { AboutmeComponent } from './pages/aboutme/aboutme.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ExhibitionCreateWizardComponent } from './layout/dashboard/moderator/gallery-post/exhibition-formular/exhibition-create-wizard/exhibition-create-wizard.component';
+import { ImpressumComponent } from './pages/impressum/impressum.component';
+import { DatenschutzComponent } from './pages/datenschutz/datenschutz.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'gallery', component: GalleryComponent },
     { path: 'aboutme', component: AboutmeComponent },
     { path: 'contact', component: ContactComponent },
+    { path: 'impressum', component: ImpressumComponent },
+    { path: 'datenschutz', component: DatenschutzComponent },
     { path: 'login', component: LoginComponent },
     {
         path: 'dashboard',
