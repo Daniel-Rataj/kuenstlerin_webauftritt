@@ -21,6 +21,11 @@
                             [ngClass]="element.availableToBuy ? 'text-success' : 'text-danger'"></i>
                         {{ element.availableToBuy ? 'Verfügbar' : 'Nicht verfügbar' }}
                     </small>
+                    <small class="text-muted d-flex align-items-center gap-1">
+                        <i class="fa-solid fa-ruler"></i>
+                        {{ element.length }} cm x {{ element.width }} cm
+                    </small>
+
                 </div>
             </div>
         </div>

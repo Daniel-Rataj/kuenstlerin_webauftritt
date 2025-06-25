@@ -15,7 +15,9 @@ namespace server.Helper
                 AvailableToBuy = dto.AvailableToBuy,
                 ImageUrl = dto.ImageUrl,
                 PriceTag = dto.PriceTag,
-                ExhibitionId = dto.ExhibitionId
+                Length = dto.Length,
+                Width = dto.Width,
+                ExhibitionId = dto.ExhibitionId,
             };
 
         }
@@ -31,7 +33,9 @@ namespace server.Helper
                 AvailableToBuy = entity.AvailableToBuy,
                 ImageUrl = entity.ImageUrl,
                 PriceTag = entity.PriceTag,
-                ExhibitionId = entity.ExhibitionId
+                Length = entity.Length,
+                Width = entity.Width,
+                ExhibitionId = entity.ExhibitionId,
             };
         }
     }

@@ -46,10 +46,8 @@ export class ExhibitionElementsUploadComponent {
   isValidElement(element: ExhibitionElement): boolean {
     if (!element.name || element.name.trim() === '') return false;
     if (!element.description || element.description.trim() === '') return false;
-    if (
-      element.availableToBuy &&
-      (element.priceTag === undefined || element.priceTag === null))
-      return false;
+    if (element.length == null || element.length === 0) return false;
+    if (element.width == null || element.width === 0) return false;
     return true;
   }
 
@@ -60,11 +58,12 @@ export class ExhibitionElementsUploadComponent {
     return this.metadataList.every((el) => this.isValidElement(el));
   }
 
-  shouldShowPriceError(element: ExhibitionElement): boolean {
-    return (
-      element.availableToBuy &&
-      (element.priceTag === undefined || element.priceTag === null)
-    );
+  showLengthError(element: ExhibitionElement): boolean {
+    return (element.length == null || element.length === 0)
+  }
+
+  showWidthError(element: ExhibitionElement): boolean {
+    return (element.width == null || element.width === 0)
   }
 }
 
@@ -77,5 +76,7 @@ function createEmptyElement(file: File): ExhibitionElement {
     imageUrl: '',
     exhibitionId: 0,
     priceTag: undefined,
+    width: 0,
+    length: 0,
   };
 }
