@@ -5,11 +5,12 @@ import { ExhibitionDto } from '../../../../../models/dto/exhibition.dto';
 import { RouterModule, Router } from '@angular/router';
 import { ExhibitionStatus } from '../../../../../models/enums/exhibition-status';
 import { PaginationComponent } from '../../../../../shared/pagination/pagination.component';
+import { ConfirmDialogComponent } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-exhibition-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, PaginationComponent],
+  imports: [CommonModule, RouterModule, PaginationComponent, ConfirmDialogComponent],
   templateUrl: './exhibition-list.component.html',
   styleUrls: ['./exhibition-list.component.scss']
 })
@@ -97,6 +98,6 @@ export class ExhibitionListComponent {
   }
 
   navigateToEdit(id: number): void {
-    this.router.navigate(['/dashboard/moderator/exhibitions', id]);
+    this.router.navigate(['/dashboard/moderator/exhibition', id]);
   }
 }

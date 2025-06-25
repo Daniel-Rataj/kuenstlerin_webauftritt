@@ -12,10 +12,34 @@ import { ExhibitionDto } from '../../../../../../models/dto/exhibition.dto';
   imports: [CommonModule, FormsModule],
 })
 export class ExhibitionElementsUploadComponent {
-  @Input() exhibitionDraft!: Partial<ExhibitionDto>; // exhibitionDraft from Wizard/Parent
-  @Output() exhibitionElementsSubmitted = new EventEmitter<ExhibitionElement[]>();
+  private _exhibitionDraft!: Partial<ExhibitionDto>;
 
-  metadataList: ExhibitionElement[] = [];
+  @Input()
+  set exhibitionDraft(value: Partial<ExhibitionDto>) {
+    this._exhibitionDraft = value;
+
+    if (value && value.id && value.exhibitionElements && value.exhibitionElements.length > 0) {
+      console.log('ExhibitionElements loaded:', value.exhibitionElements);
+
+      value.exhibitionElements.forEach((el, index) => {
+        console.log(`Element ${index}: length=${el.length}, width=${el.width}`);
+      });
+
+      this.metadataList = value.exhibitionElements.map(el => ({
+        ...el,
+        imageFile: undefined, // Backend liefert keine Dateiobjekte
+      }));
+    } else {
+      this.metadataList = [];
+    }
+  }
+  get exhibitionDraft(): Partial<ExhibitionDto> {
+    return this._exhibitionDraft;
+  }
+
+  @Input() metadataList: ExhibitionElement[] = [];
+
+  @Output() exhibitionElementsSubmitted = new EventEmitter<ExhibitionElement[]>();
 
   constructor(private readonly exhibitionService: ExhibitionService) {}
 
@@ -27,7 +51,7 @@ export class ExhibitionElementsUploadComponent {
       this.metadataList.push(createEmptyElement(file));
     });
 
-    input.value = ''; // Reset file input
+    input.value = '';
   }
 
   remove(index: number): void {
@@ -35,7 +59,7 @@ export class ExhibitionElementsUploadComponent {
   }
 
   nextStep(): void {
-    if (!this.metadataList.length) {
+    if (this.metadataList.length === 0) {
       console.warn('Keine Bilder ausgewählt.');
       return;
     }
@@ -46,8 +70,9 @@ export class ExhibitionElementsUploadComponent {
   isValidElement(element: ExhibitionElement): boolean {
     if (!element.name || element.name.trim() === '') return false;
     if (!element.description || element.description.trim() === '') return false;
-    if (element.length == null || element.length === 0) return false;
-    if (element.width == null || element.width === 0) return false;
+    if (element.length == null || element.length <= 0) return false;
+    if (element.width == null || element.width <= 0) return false;
+    if (!element.imageFile && !element.imageUrl) return false;
     return true;
   }
 
@@ -59,11 +84,11 @@ export class ExhibitionElementsUploadComponent {
   }
 
   showLengthError(element: ExhibitionElement): boolean {
-    return (element.length == null || element.length === 0)
+    return element.length == null || element.length <= 0;
   }
 
   showWidthError(element: ExhibitionElement): boolean {
-    return (element.width == null || element.width === 0)
+    return element.width == null || element.width <= 0;
   }
 }
 

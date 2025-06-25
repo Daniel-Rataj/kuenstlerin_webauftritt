@@ -5,72 +5,69 @@ import { ExhibitionService } from '../../../../../../services/exhibition/exhibit
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ExhibitionElement } from '../../../../../../models/dto/exhibition-element.dto';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-exhibition-publish',
   templateUrl: './exhibition-publish.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class ExhibitionPublishComponent {
   @Input() exhibitionDraft!: ExhibitionDto;
-  @Input() metadataList!: ExhibitionElement[]; // exhibitionDraft from Wizard/Parent
+  @Input() metadataList!: ExhibitionElement[];
   @Output() submitFinishedExhibition = new EventEmitter<ExhibitionDto>();
+  @Output() finished = new EventEmitter<void>();
+
   ExhibitionStatus = ExhibitionStatus;
   isLoading = false;
 
-  private createdExhibition: ExhibitionDto
+  private createdExhibition: ExhibitionDto;
 
-  constructor(private readonly exhibitionService: ExhibitionService) {
-    this.createdExhibition = ExhibitionDto.createEmptyExhibition()
-  } 
+  constructor(
+    private readonly exhibitionService: ExhibitionService, private readonly router: Router
+  ) {
+    this.createdExhibition = ExhibitionDto.createEmptyExhibition();
+  }
 
   async saveExhibition(status: ExhibitionStatus): Promise<void> {
     if (!this.exhibitionDraft) return;
     this.isLoading = true;
 
     try {
-      // 1. Setze Status
       this.exhibitionDraft.status = status;
 
-      // 2. Erstelle Exhibition, falls keine ID vorhanden
       if (!this.exhibitionDraft.id) {
         this.createdExhibition = await this.exhibitionService.createAsync({
           ...this.exhibitionDraft,
-          exhibitionElements: [], // wichtig: ohne imageFile
+          exhibitionElements: [],
         });
       } else {
-        this.createdExhibition = this.exhibitionDraft;
+        this.createdExhibition = await this.exhibitionService.updateAsync(
+          this.exhibitionDraft.id,
+          {
+            ...this.exhibitionDraft,
+            exhibitionElements: [],
+            status: status
+          }
+        );
       }
 
-      // 3. Upload ExhibitionElements (FormData mit Bildern)
       if (this.metadataList?.length) {
-        console.log('Elemente vor Backend während publish component:', this.metadataList);
         await this.exhibitionService.uploadElementsBulk(
           this.createdExhibition.id!,
           this.metadataList
         );
       }
 
-      // 4. Update oder Publish je nach Status
-      if (status === ExhibitionStatus.Public) {
-        await this.exhibitionService.publishAsync(
-          this.createdExhibition.id!,
-          this.createdExhibition
-        );
-      } else {
-        this.createdExhibition = await this.exhibitionService.updateAsync(
-          this.createdExhibition.id!,
-          { ...this.createdExhibition, status }
-        );
-      }
-
-      // 5. Rückmeldung
       this.submitFinishedExhibition.emit(this.createdExhibition);
+      this.finished.emit();
+
     } catch (error) {
-      console.error('Fehler bei der Speicherung der Ausstellung mit AusstellungsElementen:', error);
+      console.error('Fehler beim Speichern der Ausstellung:', error);
     } finally {
       this.isLoading = false;
+      this.router.navigate(["dashboard/moderator/gallery"]);
     }
   }
 }

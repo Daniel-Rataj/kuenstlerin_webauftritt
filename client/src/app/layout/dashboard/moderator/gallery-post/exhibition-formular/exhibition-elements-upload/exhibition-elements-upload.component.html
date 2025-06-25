@@ -36,10 +36,9 @@
 
       <div class="col-md-6 mb-3">
         <label class="form-label">
-          Länge in cm 
+          Länge in cm
           <input type="number" class="form-control" [(ngModel)]="element.length" />
-          <div class="form-text text-danger"
-            *ngIf="showLengthError(element)">
+          <div class="form-text text-danger" *ngIf="showLengthError(element)">
             Länge ist erforderlich
           </div>
         </label>
@@ -49,8 +48,7 @@
         <label class="form-label">
           Breite in cm
           <input type="number" class="form-control" [(ngModel)]="element.width" />
-          <div class="form-text text-danger"
-            *ngIf="showWidthError(element)">
+          <div class="form-text text-danger" *ngIf="showWidthError(element)">
             Breite ist erforderlich
           </div>
         </label>
@@ -73,8 +71,10 @@
         </label>
       </div>
 
-      <div *ngIf="element.imageFile" class="col-12 mt-2">
-        <strong>Datei:</strong> {{ element.imageFile.name }}
+      <div *ngIf="element.imageFile || element.imageUrl" class="col-12 mt-2">
+        <strong>Datei:</strong>
+        <span *ngIf="element.imageFile">{{ element.imageFile.name }}</span>
+        <span *ngIf="!element.imageFile && element.imageUrl">{{ element.imageUrl }}</span>
       </div>
     </div>
   </div>
