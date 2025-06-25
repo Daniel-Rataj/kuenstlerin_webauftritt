@@ -82,9 +82,11 @@ namespace server.Logic
                 Name = exhibitionElement.Name,
                 Description = exhibitionElement.Description,
                 AvailableToBuy = exhibitionElement.AvailableToBuy,
-                ExhibitionId = exhibitionId,
                 ImageUrl = $"/uploads/Exhibition_{exhibitionId}/{fileName}",
                 PriceTag = exhibitionElement.PriceTag,
+                Length = exhibitionElement.Length,
+                Width = exhibitionElement.Width,
+                ExhibitionId = exhibitionId,
             };
 
             return await _exhibitionElementRepository.CreateAsync(element);

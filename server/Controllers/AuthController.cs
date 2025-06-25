@@ -16,6 +16,7 @@ public class AuthController : ControllerBase
         _authLogic = authLogic;
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] server.Models.DataTransfer.Requests.LoginRequest request)
     {

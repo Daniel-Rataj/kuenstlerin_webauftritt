@@ -7,4 +7,6 @@ export interface ExhibitionElement {
   availableToBuy: boolean;
   priceTag?: number;
   exhibitionId?: number;
+  width: number;
+  length: number;
 }

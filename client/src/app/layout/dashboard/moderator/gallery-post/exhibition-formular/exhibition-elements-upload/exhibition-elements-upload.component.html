@@ -31,9 +31,27 @@
         <label class="form-label">
           Preis (€)
           <input type="number" class="form-control" [(ngModel)]="element.priceTag" placeholder="Optional" />
+        </label>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">
+          Länge in cm 
+          <input type="number" class="form-control" [(ngModel)]="element.length" />
           <div class="form-text text-danger"
-            *ngIf="shouldShowPriceError(element)">
-            Preis ist erforderlich, wenn das Werk verkauft werden soll.
+            *ngIf="showLengthError(element)">
+            Länge ist erforderlich
+          </div>
+        </label>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">
+          Breite in cm
+          <input type="number" class="form-control" [(ngModel)]="element.width" />
+          <div class="form-text text-danger"
+            *ngIf="showWidthError(element)">
+            Breite ist erforderlich
           </div>
         </label>
       </div>

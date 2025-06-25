@@ -1,0 +1,23 @@
+.modal-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 90%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+}
+
+// Für Tablets
+@media (max-width: 768px) {
+  .modal-image {
+    max-height: 60vh;
+  }
+}
+
+// Für Handys
+@media (max-width: 480px) {
+  .modal-image {
+    max-height: 50vh;
+    max-width: 95%;
+  }
+}

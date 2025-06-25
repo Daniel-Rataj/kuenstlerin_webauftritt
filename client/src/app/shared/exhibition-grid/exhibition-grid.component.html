@@ -1,0 +1,33 @@
+<div class="exhibition-grid mb-5">
+    <div class="exhibition-header d-flex justify-content-between align-items-center mb-3" (click)="toggleOpen()" (keydown.enter)="toggleOpen()"
+        style="cursor: pointer;">
+        <h5 class="fw-semibold mb-0">
+            {{ exhibition.title }} – {{ exhibition.date | date: 'mediumDate' }}
+        </h5>
+        <i class="fas" [ngClass]="isOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </div>
+
+    <div class="row" *ngIf="isOpen">
+        <div class="col-6 col-md-4 col-lg-3 mb-4" *ngFor="let element of exhibition.exhibitionElements">
+            <div class="gallery-item" tabindex="0" role="button" (click)="onElementClick(element)"
+                (keydown.enter)="onElementClick(element)">
+                <div class="image-wrapper">
+                    <img [src]="element.imageUrl" [alt]="element.name" (error)="onImageError($event)">
+                </div>
+                <div class="gallery-caption">
+                    <h6 class="mb-1 text-truncate">{{ element.name }}</h6>
+                    <small class="text-muted d-flex align-items-center gap-1">
+                        <i class="fas fa-circle"
+                            [ngClass]="element.availableToBuy ? 'text-success' : 'text-danger'"></i>
+                        {{ element.availableToBuy ? 'Verfügbar' : 'Nicht verfügbar' }}
+                    </small>
+                    <small class="text-muted d-flex align-items-center gap-1">
+                        <i class="fa-solid fa-ruler"></i>
+                        {{ element.length }} cm x {{ element.width }} cm
+                    </small>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

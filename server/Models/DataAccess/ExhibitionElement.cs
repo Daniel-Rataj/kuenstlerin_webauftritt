@@ -9,5 +9,7 @@
         public bool AvailableToBuy { get; set; }
         public int ExhibitionId { get; set; }
         public int PriceTag { get; set; }
+        public int Length { get; set; }
+        public int Width { get; set; }
     }
 }

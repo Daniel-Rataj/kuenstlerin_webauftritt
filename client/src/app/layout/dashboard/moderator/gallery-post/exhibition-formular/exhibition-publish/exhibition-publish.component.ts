@@ -45,6 +45,7 @@ export class ExhibitionPublishComponent {
 
       // 3. Upload ExhibitionElements (FormData mit Bildern)
       if (this.metadataList?.length) {
+        console.log('Elemente vor Backend während publish component:', this.metadataList);
         await this.exhibitionService.uploadElementsBulk(
           this.createdExhibition.id!,
           this.metadataList

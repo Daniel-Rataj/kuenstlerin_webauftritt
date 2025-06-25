@@ -62,6 +62,8 @@ export class ExhibitionService extends BaseService<
       description: el.description,
       availableToBuy: el.availableToBuy,
       priceTag: el.priceTag,
+      length: el.length,
+      width: el.width,
     }));
 
     formData.append('exhibitionElementsJson', JSON.stringify(metadata));
