@@ -1,0 +1,11 @@
+<div class="dashboard-toolbar d-flex align-items-center mb-4">
+  <button *ngIf="!isOnDashboardRoot" class="btn btn-outline-secondary me-3" (click)="goBack()">
+    <i class="fas fa-arrow-left me-1"></i> Zurück
+  </button>
+
+  <nav class="breadcrumb mb-0">
+    <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
+      <span class="breadcrumb-item" [class.active]="last">{{ crumb }}</span>
+    </ng-container>
+  </nav>
+</div>

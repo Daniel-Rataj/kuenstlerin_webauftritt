@@ -1,36 +1,30 @@
-import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
-import { Router, NavigationEnd, RouterModule } from '@angular/router';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
-import { HeaderComponent } from './layout/header/header.component';
-import { FooterComponent } from './layout/footer/footer.component';
-import { NavigationComponent } from './layout/navigation/navigation.component';
-import { HomeComponent } from './pages/home/home.component';
-import { GalleryComponent } from './pages/gallery/gallery.component';
-import { AboutmeComponent } from './pages/aboutme/aboutme.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { BrowserStorageService } from './services/browser-storage/browser-storage.service';
-
-
+import { BrowserStorageService } from '../../services/browser-storage/browser-storage.service';
+import { NavigationComponent } from '../navigation/navigation.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-public-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './app.component.html',
+  imports: [
+    CommonModule,
+    RouterModule,
+    NavigationComponent,
+    FooterComponent
+  ],
+  templateUrl: './public-layout.component.html',
+  styleUrls: ['./public-layout.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  title = 'Altrock Art';
+export class PublicLayoutComponent implements OnInit {
   isNavCollapsed = false;
+  showCookieBanner = false;
 
   heroText: string = 'Willkommen bei der Künstlerin!';
-  images = [
-    '/images/Hero2.jpg',
-    '/images/Hero3.jpg'
-  ];
+  images = ['/images/Hero2.jpg', '/images/Hero3.jpg'];
   currentImageIndex = 0;
-
-  showCookieBanner = false;
 
   constructor(
     @Inject(PLATFORM_ID) private readonly platformId: Object,
@@ -56,10 +50,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
         this.updateHeroText();
       });
-  }
-
-  ngAfterViewInit(): void {
-    this.updateHeroText();
   }
 
   toggleNav() {

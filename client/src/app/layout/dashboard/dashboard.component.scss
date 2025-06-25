@@ -1,0 +1,36 @@
+.content-header {
+    padding: 20px;
+}
+
+.card {
+  border-radius: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); // leichter Standard-Schatten
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .card-title {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-text {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1.25rem;
+  }
+
+  button {
+    font-weight: 500;
+  }
+}
+
+

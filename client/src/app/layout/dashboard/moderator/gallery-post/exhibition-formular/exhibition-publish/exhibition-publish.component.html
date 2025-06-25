@@ -1,17 +1,15 @@
-<div class="mt-4">
-  <p>Du kannst die Ausstellung nun veröffentlichen oder zunächst als Entwurf speichern.</p>
+<p>Du kannst die Ausstellung nun veröffentlichen oder zunächst als Entwurf speichern.</p>
 
-  <div class="d-flex gap-2">
-    <button class="btn btn-outline-secondary" (click)="saveExhibition(ExhibitionStatus.Draft)" [disabled]="isLoading">
-        <i class="fa-solid fa-floppy-disk"></i>
-        Nur speichern
-    </button>
+<div class="d-flex gap-2 mt-3">
+  <button class="btn btn-outline-secondary" (click)="saveExhibition(ExhibitionStatus.Draft)" [disabled]="isLoading">
+    <i class="fa-solid fa-floppy-disk"></i>
+    Nur speichern
+  </button>
 
-    <button class="btn btn-success" (click)="saveExhibition(ExhibitionStatus.Public)" [disabled]="isLoading">
-        <i class="fa-solid fa-upload"></i>
-        Veröffentlichen
-    </button>
-  </div>
-
-  <div *ngIf="isLoading" class="mt-2 text-muted small">Wird gespeichert...</div>
+  <button class="btn btn-success" (click)="saveExhibition(ExhibitionStatus.Public)" [disabled]="isLoading">
+    <i class="fa-solid fa-upload"></i>
+    Veröffentlichen
+  </button>
 </div>
+
+<div *ngIf="isLoading" class="text-muted small mt-2">Wird gespeichert...</div>

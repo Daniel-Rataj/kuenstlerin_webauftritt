@@ -1,0 +1,22 @@
+.dashboard-toolbar {
+  background-color: #f8f9fa;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  font-size: 0.9rem;
+
+  .breadcrumb {
+    background: transparent;
+    margin: 0;
+    padding: 0;
+
+    .breadcrumb-item {
+      color: #6c757d;
+
+      &.active {
+        color: #343a40;
+        font-weight: 500;
+      }
+    }
+  }
+}
