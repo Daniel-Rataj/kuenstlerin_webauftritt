@@ -1,12 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { ExhibitionService } from '../../services/exhibition/exhibition.service';
 import { ExhibitionDto, ExhibitionElement } from '../../models/dto/exhibition.dto';
-import { NgFor, NgIf, DatePipe, NgClass, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { ExhibitionGridComponent } from '../../shared/exhibition-grid/exhibition-grid.component';
+import { ExhibitionElementsModalComponent } from '../../shared/exhibition-elements-modal/exhibition-elements-modal.component';
+
 
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, DatePipe, NgClass],
+  imports: [CommonModule, ExhibitionGridComponent, ExhibitionElementsModalComponent],
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss']
 })
@@ -54,10 +57,5 @@ export class GalleryComponent {
   // Modal schließen
   closeModal(): void {
     this.selectedElement = null;
-  }
-
-  onImageError(event: Event): void {
-    console.log('Bildfehler:', (event.target as HTMLImageElement).src);
-    (event.target as HTMLImageElement).src = 'assets/fallback.jpg';
   }
 }

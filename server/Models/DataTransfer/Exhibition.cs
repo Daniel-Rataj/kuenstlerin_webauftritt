@@ -9,6 +9,5 @@ namespace server.Models.DataTransfer
         public DateTime Date { get; set; }
         public List<ExhibitionElement> ExhibitionElements { get; set; } = new();
         public ExhibitionStatus Status { get; set; } = ExhibitionStatus.Initialized;
-
     }
 }
