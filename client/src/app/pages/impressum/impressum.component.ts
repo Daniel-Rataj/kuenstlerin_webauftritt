@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-impressum',
   standalone: true,
-  imports: [],
-  templateUrl: './impressum.component.html',
-  styleUrl: './impressum.component.scss'
+  imports: [CommonModule],
+  templateUrl: './impressum.html',
+  styleUrls: ['./impressum.scss']
 })
-export class ImpressumComponent {
-
-}
+export class ImpressumComponent {}

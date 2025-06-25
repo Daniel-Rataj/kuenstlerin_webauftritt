@@ -6,43 +6,30 @@
   padding: 3rem 1rem;
 }
 
-.container-custom {
-  max-width: 900px;
+.container-impressum {
+  max-width: 700px;
   margin: 0 auto;
   padding: 0 1rem;
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+  padding: 2rem 2.5rem;
 }
 
 h1 {
   font-weight: 700;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   color: #1c1c1c;
   margin-bottom: 1.5rem;
   text-align: center;
 }
 
-h2 {
-  font-weight: 600;
-  font-size: 1.75rem;
-  color: #1c1c1c;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-}
-
 p {
   font-size: 1.1rem;
   line-height: 1.6;
-  margin-bottom: 1.25rem;
+  margin: 0.8rem 0;
   font-weight: 300;
   color: #444;
-}
-
-ul {
-  list-style: disc inside;
-  margin: 1rem 0 1.5rem 0;
-  padding-left: 1.2rem;
-  color: #444;
-  font-size: 1.05rem;
-  line-height: 1.6;
 }
 
 a {
@@ -51,8 +38,7 @@ a {
   transition: color 0.2s ease;
 }
 
-a:hover,
-a:focus {
+a:hover {
   color: #0056b3;
   text-decoration: underline;
 }
@@ -63,17 +49,15 @@ a:focus {
     padding: 2rem 1rem;
   }
 
+  .container-impressum {
+    padding: 1.5rem 1.5rem;
+  }
+
   h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
-  h2 {
-    font-size: 1.4rem;
-    margin-top: 2rem;
-  }
-
-  p,
-  ul {
+  p {
     font-size: 1rem;
   }
 }
