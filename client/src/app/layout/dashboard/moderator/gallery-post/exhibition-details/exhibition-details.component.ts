@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ExhibitionDto } from '../../../../../models/dto/exhibition.dto';
 import { ActivatedRoute } from '@angular/router';
 import { ExhibitionService } from '../../../../../services/exhibition/exhibition.service';
