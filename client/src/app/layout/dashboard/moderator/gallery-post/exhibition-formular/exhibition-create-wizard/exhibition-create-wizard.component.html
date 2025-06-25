@@ -12,15 +12,22 @@
     <app-exhibition-basic-form
       *ngSwitchCase="1"
       [exhibition]="exhibitionDraft"
-      (exhibitionDraftSubmitted)="handleBasicDataSubmitted($event)"/>
+      (exhibitionDraftSubmitted)="handleBasicDataSubmitted($event)">
+    </app-exhibition-basic-form>
+
     <app-exhibition-elements-upload
       *ngSwitchCase="2"
       [exhibitionDraft]="exhibitionDraft"
-      (exhibitionElementsSubmitted)="assignExhibitionElements($event)"/>
+      [metadataList]="metadataList"
+      (exhibitionElementsSubmitted)="assignExhibitionElements($event)">
+    </app-exhibition-elements-upload>
+
     <app-exhibition-publish
       *ngSwitchCase="3"
-      [exhibitionDraft]="exhibitionDraft!"
-      [metadataList]="metadataList"/>
+      [exhibitionDraft]="exhibitionDraft"
+      [metadataList]="metadataList"
+      (finished)="handleFinished()"> <!-- 💡 Hier die neue Eventbindung -->
+    </app-exhibition-publish>
   </ng-container>
 
   <!-- Schritte-Navigation -->

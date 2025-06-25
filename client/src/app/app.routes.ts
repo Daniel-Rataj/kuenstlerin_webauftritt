@@ -44,7 +44,8 @@ export const routes: Routes = [
                 children: [
                     { path: 'gallery', component: GalleryPostComponent },
                     { path: 'latest', component: HomePostComponent },
-                    { path: 'exhibition/create', component: ExhibitionCreateWizardComponent }
+                    { path: 'exhibition/create', component: ExhibitionCreateWizardComponent },
+                    { path: 'exhibition/:id', component: ExhibitionCreateWizardComponent }
                 ]
             },
 

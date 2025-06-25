@@ -1,0 +1,37 @@
+<!-- Modal backdrop -->
+<div
+  class="modal-backdrop fade"
+  [class.show]="show"
+  *ngIf="show"
+></div>
+
+<!-- Modal dialog -->
+<div
+  class="modal fade"
+  tabindex="-1"
+  [class.show]="show"
+  [style.display]="show ? 'block' : 'none'"
+  (click)="onBackdropClick()"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }}</h5>
+        <button type="button" class="btn-close" aria-label="Schließen" (click)="onCancelClick()"></button>
+      </div>
+      <div class="modal-body">
+        {{ message }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary rounded-pill btn-sm" (click)="onCancelClick()">
+          {{ cancelText }}
+        </button>
+        <button type="button" class="btn btn-danger rounded-pill btn-sm" (click)="onConfirmClick()">
+          {{ confirmText }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

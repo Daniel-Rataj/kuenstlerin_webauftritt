@@ -128,30 +128,12 @@
 </ng-template>
 
 <!-- Bestätigungsmodal für Löschen -->
-<div
-  class="modal fade"
-  tabindex="-1"
-  [class.show]="showConfirmDelete"
-  [style.display]="showConfirmDelete ? 'block' : 'none'"
-  (click)="closeConfirmDeleteModal()"
-  aria-modal="true"
-  role="dialog"
->
-  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Löschen bestätigen</h5>
-        <button type="button" class="btn-close" aria-label="Schließen" (click)="closeConfirmDeleteModal()"></button>
-      </div>
-      <div class="modal-body">
-        Möchtest du die Ausstellung
-        <strong>{{ selectedExhibition?.title }}</strong>
-        wirklich löschen?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeConfirmDeleteModal()">Abbrechen</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Löschen</button>
-      </div>
-    </div>
-  </div>
-</div>
+<app-confirm-dialog
+  [show]="showConfirmDelete"
+  [title]="'Löschen bestätigen'"
+  [message]="'Möchtest du die Ausstellung ' + selectedExhibition?.title + ' wirklich löschen?'"
+  [confirmText]="'Löschen'"
+  [cancelText]="'Abbrechen'"
+  (confirm)="confirmDelete()"
+  (cancel)="closeConfirmDeleteModal()"
+></app-confirm-dialog>
