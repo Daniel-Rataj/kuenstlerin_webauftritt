@@ -1,0 +1,44 @@
+<!-- Hero-Section -->
+<section class="hero-section"
+  [ngStyle]="{ 'background-image': 'url(' + images[currentImageIndex] + ')' }">
+  <div class="hero-overlay d-flex flex-column align-items-center justify-content-center h-100 text-white text-center">
+    <h1>{{ heroText }}</h1>
+  </div>
+</section>
+
+<!-- Seitenstruktur -->
+<div class="d-flex flex-column min-vh-100">
+  <div class="d-flex flex-grow-1">
+    <!-- Sidebar -->
+    <aside class="fixed-sidebar bg-light p-3 border-end" [class.collapsed]="isNavCollapsed">
+      <app-navigation></app-navigation>
+    </aside>
+
+    <!-- Toggle Button -->
+    <button
+      class="sidebar-toggle"
+      (click)="toggleNav()"
+      aria-label="Toggle Sidebar"
+      [attr.aria-expanded]="!isNavCollapsed"
+    >
+      <span class="arrow-icon">{{ isNavCollapsed ? '▶' : '◀' }}</span>
+    </button>
+
+    <!-- Hauptinhalt -->
+    <main class="main-content" [class.expanded]="isNavCollapsed">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>
+
+<!-- Cookie-Banner -->
+<div *ngIf="showCookieBanner" class="cookie-banner" role="region" aria-label="Cookie Hinweis">
+  <p>
+    Diese Website verwendet nur technisch notwendige Cookies.
+    Mehr dazu findest du in der <a routerLink="/datenschutz" tabindex="0">Datenschutzerklärung</a>.
+  </p>
+  <button class="cookie-btn" (click)="acceptCookies()" aria-label="Cookies akzeptieren">Verstanden</button>
+</div>
