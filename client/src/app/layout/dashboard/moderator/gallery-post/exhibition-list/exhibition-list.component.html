@@ -5,20 +5,52 @@
     Entwürfe
   </div>
   <div class="list-group">
-    <a
+    <div
       *ngFor="let exhibition of getPagedDrafts()"
-      class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-      [routerLink]="['exhibitions', exhibition.id]"
+      class="list-group-item d-flex justify-content-between align-items-center"
     >
       <div>
         <strong>{{ exhibition.title }}</strong>
-        <div class="text-muted small">{{ getFormattedDate(exhibition?.date) }}</div>
+        <div class="text-muted small">
+          {{ getFormattedDate(exhibition?.date) }}
+        </div>
       </div>
-      <div>
-        <span class="badge bg-secondary me-2">{{ getStatusLabel(exhibition.status) }}</span>
-        <span class="text-muted">{{ getElementCount(exhibition) }} Elemente</span>
+      <div class="d-flex align-items-center">
+        <span class="badge bg-secondary me-2">
+          {{ getStatusLabel(exhibition.status) }}
+        </span>
+        <span class="text-muted me-3">
+          {{ getElementCount(exhibition) }} Elemente
+        </span>
+
+        <!-- Dropdown-Button -->
+        <div class="dropdown" *ngIf="exhibition.id != null">
+          <button
+            class="btn btn-sm border-0 bg-transparent px-1"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fa-solid fa-ellipsis-vertical text-secondary dropdown-icon-hover"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" (click)="navigateToEdit(exhibition.id!)">
+                <i class="fa-solid fa-pen-to-square me-2"></i> Bearbeiten
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                (click)="openConfirmDeleteModal(exhibition)"
+              >
+                <i class="fa-solid fa-trash me-2"></i> Löschen
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </a>
+    </div>
   </div>
 
   <!-- Pagination for Drafts -->
@@ -26,7 +58,8 @@
     [currentPage]="draftPage"
     [pageSize]="pageSize"
     [totalItems]="drafts().length"
-    (pageChange)="draftPage = $event">
+    (pageChange)="draftPage = $event"
+  >
   </app-pagination>
 </div>
 
@@ -37,20 +70,46 @@
     Veröffentlicht
   </div>
   <div class="list-group">
-    <a
+    <div
       *ngFor="let exhibition of getPagedPublished()"
-      class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-      [routerLink]="['exhibitions', exhibition.id]"
+      class="list-group-item d-flex justify-content-between align-items-center"
     >
       <div>
         <strong>{{ exhibition.title }}</strong>
         <div class="text-muted small">{{ getFormattedDate(exhibition?.date) }}</div>
       </div>
-      <div>
+      <div class="d-flex align-items-center">
         <span class="badge bg-success me-2">{{ getStatusLabel(exhibition.status) }}</span>
-        <span class="text-muted">{{ getElementCount(exhibition) }} Elemente</span>
+        <span class="text-muted me-3">{{ getElementCount(exhibition) }} Elemente</span>
+
+        <!-- Dropdown-Button -->
+        <div class="dropdown" *ngIf="exhibition.id != null">
+          <button
+            class="btn btn-sm border-0 bg-transparent px-1"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fa-solid fa-ellipsis-vertical text-secondary dropdown-icon-hover"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" (click)="navigateToEdit(exhibition.id!)">
+                <i class="fa-solid fa-pen-to-square me-2"></i> Bearbeiten
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                (click)="openConfirmDeleteModal(exhibition)"
+              >
+                <i class="fa-solid fa-trash me-2"></i> Löschen
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </a>
+    </div>
   </div>
 
   <!-- Pagination for Published -->
@@ -58,7 +117,8 @@
     [currentPage]="publishedPage"
     [pageSize]="pageSize"
     [totalItems]="published().length"
-    (pageChange)="publishedPage = $event">
+    (pageChange)="publishedPage = $event"
+  >
   </app-pagination>
 </div>
 
@@ -66,3 +126,32 @@
 <ng-template #noData>
   <p>Keine Ausstellungen gefunden.</p>
 </ng-template>
+
+<!-- Bestätigungsmodal für Löschen -->
+<div
+  class="modal fade"
+  tabindex="-1"
+  [class.show]="showConfirmDelete"
+  [style.display]="showConfirmDelete ? 'block' : 'none'"
+  (click)="closeConfirmDeleteModal()"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Löschen bestätigen</h5>
+        <button type="button" class="btn-close" aria-label="Schließen" (click)="closeConfirmDeleteModal()"></button>
+      </div>
+      <div class="modal-body">
+        Möchtest du die Ausstellung
+        <strong>{{ selectedExhibition?.title }}</strong>
+        wirklich löschen?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeConfirmDeleteModal()">Abbrechen</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Löschen</button>
+      </div>
+    </div>
+  </div>
+</div>
