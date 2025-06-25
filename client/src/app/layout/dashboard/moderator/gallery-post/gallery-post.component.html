@@ -1,8 +1,16 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h2>Ausstellungen</h2>
+</div>
+
+<!-- Breadcrumb and Backnavigation -->
+<app-dashboard-toolbar [breadcrumbs]="['Dashboard', 'Ausstellung Übersicht']"></app-dashboard-toolbar>
+
+<!-- Creation of new Exhibition -->
+<div class="d-flex justify-content-between align-items-center mb-3">
   <button class="btn btn-primary" (click)="navigateToCreateWizard()">
     <i class="fa-regular fa-plus"></i> Neue Ausstellung erstellen
   </button>
 </div>
+
 <app-exhibition-list></app-exhibition-list>
 <router-outlet></router-outlet>

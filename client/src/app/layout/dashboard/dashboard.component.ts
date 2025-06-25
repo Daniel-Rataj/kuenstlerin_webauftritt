@@ -4,12 +4,14 @@ import { Router, RouterOutlet } from '@angular/router';
 import { UserRole } from '../../models/enums/user-role';
 import { AuthService } from '../../services/auth/auth.service';
 import { BrowserStorageService } from '../../services/browser-storage/browser-storage.service';
+import { DashboardToolbarComponent } from './shared/dashboard-toolbar/dashboard-toolbar.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, DashboardToolbarComponent],
   templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss' 
 })
 export class DashboardComponent {
   // Expose the UserRole enum to the template

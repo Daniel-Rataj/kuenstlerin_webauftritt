@@ -1,46 +1,47 @@
-<div class="container mt-4">
-  <!-- Kopfbereich -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3 class="mb-0">Neue Ausstellung erstellen</h3>
+<h2>Neue Ausstellung erstellen</h2>
+
+<app-dashboard-toolbar [breadcrumbs]="['Dashboard', 'Ausstellung Übersicht', 'Neue Ausstellung erstellen']"></app-dashboard-toolbar>
+
+<div class="wizard-wrapper">
+  <!-- Wizard-Content -->
+  <ng-container [ngSwitch]="step">
+    <app-exhibition-basic-form
+      *ngSwitchCase="1"
+      [exhibition]="exhibitionDraft"
+      (exhibitionDraftSubmitted)="handleBasicDataSubmitted($event)" />
+    <app-exhibition-elements-upload
+      *ngSwitchCase="2"
+      [exhibitionDraft]="exhibitionDraft"
+      (exhibitionElementsSubmitted)="assignExhibitionElements($event)" />
+    <app-exhibition-publish
+      *ngSwitchCase="3"
+      [exhibitionDraft]="exhibitionDraft!"
+      [metadataList]="metadataList" />
+  </ng-container>
+
+ <!-- Step-Navigation + Abbrechen-Button -->
+<div class="mt-4 d-flex justify-content-between align-items-center">
+  <div *ngIf="step > 1">
+    <button class="btn btn-secondary me-2" (click)="goBack()">
+      <i class="fa-solid fa-arrow-left"></i> Zurück
+    </button>
+
     <button class="btn btn-outline-danger" (click)="cancelCreation()">
       <i class="fa-solid fa-xmark"></i> Abbrechen
     </button>
   </div>
 
-  <!-- Formular-Schritte -->
-  <ng-container [ngSwitch]="step">
-    <app-exhibition-basic-form
-      *ngSwitchCase="1"
-      [exhibition]="exhibitionDraft"
-      (exhibitionDraftSubmitted)="handleBasicDataSubmitted($event)"/>
-    <app-exhibition-elements-upload
-      *ngSwitchCase="2"
-      [exhibitionDraft]="exhibitionDraft"
-      (exhibitionElementsSubmitted)="assignExhibitionElements($event)"/>
-    <app-exhibition-publish
-      *ngSwitchCase="3"
-      [exhibitionDraft]="exhibitionDraft!"
-      [metadataList]="metadataList"/>
-  </ng-container>
-
-  <!-- Schritte-Navigation -->
-  <div class="mt-4 d-flex justify-content-between align-items-center">
-    <button
-      class="btn btn-secondary"
-      (click)="goBack()"
-      *ngIf="step > 1">
-      <i class="fa-solid fa-arrow-left"></i> Zurück
-    </button>
-
-    <div class="text-center flex-grow-1">
-      <p class="mb-0 fw-semibold">Schritt {{ step }} von 3</p>
-    </div>
-
-    <button
-      class="btn btn-primary"
-      (click)="submitExhibitionCreationForm()"
-      *ngIf="step === 1">
-      Weiter <i class="fa-solid fa-arrow-right ms-1"></i>
-    </button>
+  <div class="text-center flex-grow-1">
+    <p class="mb-0 fw-semibold">Schritt {{ step }} von 3</p>
   </div>
+
+  <button class="btn btn-success" (click)="submitExhibitionCreationForm()" *ngIf="step === 1">
+    Weiter zu Schritt 2
+    <i class="fa-solid fa-arrow-right ms-1"></i>
+  </button>
+
+  <button class="btn btn-success" (click)="proceedFromUploadStep()" *ngIf="step === 2" [disabled]="!uploadStepComponent?.isUploadAllowed()">
+      Weiter zu Schritt 3
+      <i class="fa-solid fa-arrow-right ms-1"></i> 
+    </button>
 </div>

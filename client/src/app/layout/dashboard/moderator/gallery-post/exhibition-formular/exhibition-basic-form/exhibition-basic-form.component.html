@@ -1,11 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
+  <div class="form-group" style="max-width: 50%;">
     <label for="title" class="form-label">Titel der Ausstellung</label>
     <input
       id="title"
       type="text"
       formControlName="title"
-      class="form-control"
+      class="form-control d-block w-200"
       [class.is-invalid]="form.get('title')?.invalid && form.get('title')?.touched"
     />
     <div class="invalid-feedback" *ngIf="form.get('title')?.hasError('required')">
@@ -13,21 +13,19 @@
     </div>
   </div>
 
-  <div class="mb-3">
+  <div class="form-group mt-3" style="max-width: 50%;">
     <label for="date" class="form-label">Datum</label>
     <input
       id="date"
       type="date"
       formControlName="date"
-      class="form-control"
+      class="form-control d-block w-200"
       [readonly]="true"
     />
-
     <div class="form-text text-muted">
       {{ form.get('date')?.value
         ? 'Datum wurde automatisch gesetzt.'
-        : 'Optional: Wird automatisch gesetzt bei fertigstellung des Entwurfs oder der Veröffentlichung.' }}
+        : 'Optional: Wird automatisch gesetzt bei Fertigstellung des Entwurfs oder der Veröffentlichung.' }}
     </div>
   </div>
-
 </form>

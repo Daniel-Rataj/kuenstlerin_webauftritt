@@ -7,6 +7,7 @@ import { ExhibitionElementsUploadComponent } from '../exhibition-elements-upload
 import { ExhibitionPublishComponent } from '../exhibition-publish/exhibition-publish.component';
 import { Router } from '@angular/router';
 import { ExhibitionElement } from '../../../../../../models/dto/exhibition-element.dto';
+import { DashboardToolbarComponent } from '../../../../shared/dashboard-toolbar/dashboard-toolbar.component';
 
 @Component({
   selector: 'app-exhibition-create-wizard',
@@ -17,12 +18,20 @@ import { ExhibitionElement } from '../../../../../../models/dto/exhibition-eleme
     ExhibitionBasicFormComponent,
     ExhibitionElementsUploadComponent,
     ExhibitionPublishComponent,
+    DashboardToolbarComponent
   ],
 })
 export class ExhibitionCreateWizardComponent {
   step = 1;
   exhibitionDraft: ExhibitionDto;
   metadataList: ExhibitionElement[] = [];
+
+  // ViewChilds
+
+  @ViewChild(ExhibitionElementsUploadComponent)
+  uploadStepComponent?: ExhibitionElementsUploadComponent;
+
+
   @ViewChild(ExhibitionBasicFormComponent)
   basicFormComponent!: ExhibitionBasicFormComponent;
 
@@ -56,6 +65,18 @@ export class ExhibitionCreateWizardComponent {
   goBack(): void {
     if (this.step > 1) this.step--;
   }
+
+  proceedFromUploadStep(): void {
+    if (!this.uploadStepComponent) return;
+
+    if (!this.uploadStepComponent.isUploadAllowed()) {
+      console.warn('Upload nicht erlaubt');
+      return;
+    }
+
+    this.uploadStepComponent.nextStep();
+  }
+
 
   // Cancel: Go back to exhibition-list view
   cancelCreation(): void {

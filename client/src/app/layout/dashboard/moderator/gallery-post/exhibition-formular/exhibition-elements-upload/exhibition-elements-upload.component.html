@@ -1,13 +1,15 @@
-<div class="mb-3">
-  <label for="fileUpload" class="form-label">Bilder auswählen</label>
-  <input id="fileUpload" type="file" class="form-control" (change)="onFilesSelected($event)" multiple />
+<div class="form-group" style="max-width: 50%;">
+  <label for="fileUpload" class="form-label">
+    Bilder auswählen
+    <input id="fileUpload" type="file" class="form-control d-block w-100" (change)="onFilesSelected($event)" multiple />
+  </label>
 </div>
 
-<div *ngIf="metadataList.length === 0" class="text-muted mb-3">
+<div *ngIf="metadataList.length === 0" class="text-muted mt-2">
   Noch keine Dateien ausgewählt.
 </div>
 
-<div *ngFor="let element of metadataList; let i = index" class="card mb-3">
+<div *ngFor="let element of metadataList; let i = index" class="card mt-4">
   <div class="card-body">
     <div class="d-flex justify-content-between">
       <h5 class="card-title">Bild {{ i + 1 }}</h5>
@@ -16,72 +18,61 @@
       </button>
     </div>
 
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label class="form-label">
-          Name
-          <input type="text" class="form-control" [(ngModel)]="element.name" />
-          <div class="form-text text-danger" *ngIf="element.name.trim() === ''">
-            Name ist erforderlich.
-          </div>
-        </label>
-      </div>
+    <!-- Name + Preis nebeneinander -->
+    <div class="d-flex flex-wrap gap-4 mt-3">
+      <label class="form-label" style="flex: 1; min-width: 250px; max-width: 300px;">
+        Name
+        <input type="text" class="form-control d-block w-100" [(ngModel)]="element.name" />
+        <div class="form-text text-danger" *ngIf="element.name.trim() === ''">
+          Name ist erforderlich.
+        </div>
+      </label>
 
-      <div class="col-md-6 mb-3">
-        <label class="form-label">
-          Preis (€)
-          <input type="number" class="form-control" [(ngModel)]="element.priceTag" placeholder="Optional" />
-        </label>
-      </div>
+      <label class="form-label" style="flex: 1; min-width: 250px; max-width: 300px;">
+        Preis (€)
+        <input type="number" class="form-control d-block w-100" [(ngModel)]="element.priceTag" placeholder="Optional" />
+      </label>
+    </div>
 
-      <div class="col-md-6 mb-3">
-        <label class="form-label">
-          Länge in cm 
-          <input type="number" class="form-control" [(ngModel)]="element.length" />
-          <div class="form-text text-danger"
-            *ngIf="showLengthError(element)">
-            Länge ist erforderlich
-          </div>
-        </label>
-      </div>
+    <!-- Länge + Breite nebeneinander -->
+    <div class="d-flex flex-wrap gap-4 mt-3">
+      <label class="form-label" style="flex: 1; min-width: 250px; max-width: 300px;">
+        Länge in cm
+        <input type="number" class="form-control d-block w-100" [(ngModel)]="element.length" />
+        <div class="form-text text-danger" *ngIf="showLengthError(element)">
+          Länge ist erforderlich
+        </div>
+      </label>
 
-      <div class="col-md-6 mb-3">
-        <label class="form-label">
-          Breite in cm
-          <input type="number" class="form-control" [(ngModel)]="element.width" />
-          <div class="form-text text-danger"
-            *ngIf="showWidthError(element)">
-            Breite ist erforderlich
-          </div>
-        </label>
-      </div>
+      <label class="form-label" style="flex: 1; min-width: 250px; max-width: 300px;">
+        Breite in cm
+        <input type="number" class="form-control d-block w-100" [(ngModel)]="element.width" />
+        <div class="form-text text-danger" *ngIf="showWidthError(element)">
+          Breite ist erforderlich
+        </div>
+      </label>
+    </div>
 
-      <div class="col-12 mb-3">
-        <label class="form-label">
-          Beschreibung
-          <textarea rows="3" class="form-control" [(ngModel)]="element.description"></textarea>
-          <div class="form-text text-danger" *ngIf="element.description.trim() === ''">
-            Beschreibung ist erforderlich.
-          </div>
-        </label>
+    <!-- Beschreibung -->
+    <label class="form-label mt-3" style="width: 100%;">
+      Beschreibung
+      <textarea rows="3" class="form-control d-block w-100" [(ngModel)]="element.description"></textarea>
+      <div class="form-text text-danger" *ngIf="element.description.trim() === ''">
+        Beschreibung ist erforderlich.
       </div>
+    </label>
 
-      <div class="col-12 form-check mb-3">
-        <label class="form-check-label" for="available-{{ i }}">
-          <input class="form-check-input" type="checkbox" [(ngModel)]="element.availableToBuy" id="available-{{ i }}" />
-          Zum Verkauf verfügbar
-        </label>
-      </div>
+    <!-- Checkbox -->
+    <div class="form-check mt-3">
+      <label class="form-check-label" for="available-{{ i }}">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="element.availableToBuy" id="available-{{ i }}" />
+        Zum Verkauf verfügbar
+      </label>
+    </div>
 
-      <div *ngIf="element.imageFile" class="col-12 mt-2">
-        <strong>Datei:</strong> {{ element.imageFile.name }}
-      </div>
+    <!-- Datei-Info -->
+    <div *ngIf="element.imageFile" class="mt-2">
+      <strong>Datei:</strong> {{ element.imageFile.name }}
     </div>
   </div>
-</div>
-
-<div class="mt-3 text-end" *ngIf="metadataList.length > 0">
-  <button class="btn btn-success" (click)="nextStep()" [disabled]="!isUploadAllowed()">
-    <i class="fa-solid fa-arrow-right ms-1"></i> Weiter
-  </button>
 </div>
