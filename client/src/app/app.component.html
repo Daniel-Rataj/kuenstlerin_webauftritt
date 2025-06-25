@@ -1,10 +1,5 @@
-<!-- Hero-Section -->
-<section class="hero-section"
-  [ngStyle]="{ 'background-image': 'url(' + images[currentImageIndex] + ')' }">
-  <div class="hero-overlay d-flex flex-column align-items-center justify-content-center h-100 text-white text-center">
-    <h1>{{ heroText }}</h1>
-  </div>
-</section>
+<!-- Hero/Header ausgelagert -->
+<app-header [heroText]="heroText" [images]="images"></app-header>
 
 <!-- Seitenstruktur -->
 <div class="d-flex flex-column min-vh-100">
@@ -15,13 +10,16 @@
     </aside>
 
     <!-- Toggle Button -->
+    <!-- ARIA-Attribute angepasst, role="button" hinzugefügt für bessere Zugänglichkeit -->
     <button
       class="sidebar-toggle"
       (click)="toggleNav()"
       aria-label="Toggle Sidebar"
       [attr.aria-expanded]="!isNavCollapsed"
+      role="button"
+      tabindex="0"
     >
-      <span class="arrow-icon">{{ isNavCollapsed ? '▶' : '◀' }}</span>
+      <span class="arrow-icon" aria-hidden="true">{{ isNavCollapsed ? '▶' : '◀' }}</span>
     </button>
 
     <!-- Hauptinhalt -->

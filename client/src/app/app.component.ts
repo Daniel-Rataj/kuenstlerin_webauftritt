@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
-import { isPlatformBrowser, CommonModule} from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -53,7 +53,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
       }, 5000);
 
-      // Use BrowserStorageService to check cookie consent
       const consent = this.browserStorageService.getItem('cookie-consent');
       this.showCookieBanner = consent !== 'true';
     }
@@ -67,7 +66,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.updateHeroText();
       });
   }
-
 
   ngAfterViewInit(): void {
     this.updateHeroText();
@@ -94,7 +92,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     } else if (path.includes('contact')) {
       this.heroText = 'Kontaktieren Sie mich!';
     } else {
-      this.heroText = ' Art – Kunst mit Herz.';
+      this.heroText = 'Art – Kunst mit Herz.';
     }
   }
 }

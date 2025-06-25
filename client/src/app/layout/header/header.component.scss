@@ -1,0 +1,47 @@
+.hero-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 15vh;
+  background-size: cover;
+  background-position: center;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  color: #f1f1f1;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  user-select: none;
+}
+
+/* Responsive Anpassungen für Hero */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 10vh;
+  }
+
+  .hero-overlay {
+    font-size: 1.5rem;
+    padding: 0 1rem;
+  }
+}
