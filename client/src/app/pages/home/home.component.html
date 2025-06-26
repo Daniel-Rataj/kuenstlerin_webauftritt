@@ -1,6 +1,6 @@
 <section class="favorite container centered">
   <div class="favorite-art">
-    <div class="art-item favorite" (click)="openImage(favoriteArt.img)">
+    <div class="art-item favorite" (click)="openFavoriteArtModal()">
       <img [src]="favoriteArt.img" [alt]="favoriteArt.title" />
     </div>
   </div>
@@ -19,16 +19,18 @@
 
 <section class="portfolio-preview container">
   <h2>Ausgewählte Werke</h2>
+
   <div class="art-grid">
-    <div
-      class="art-item"
-      *ngFor="let art of artWorks"
-      (click)="openImage(art.img)"
-    >
-      <img [src]="art.img" [alt]="art.title" />
-      <h3>{{ art.title }}</h3>
-    </div>
+    <ng-container *ngIf="exhibitions.length > 0">
+      <ng-container *ngFor="let art of exhibitions[0].exhibitionElements.slice(0, 3)">
+        <div class="art-item" (click)="openModal(art)">
+          <img [src]="art.imageUrl" [alt]="art.name" />
+          <h3>{{ art.name }}</h3>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
+
   <div class="btn-wrapper">
     <a routerLink="/gallery" class="btn-secondary">Mehr Kunstwerke ansehen</a>
   </div>
@@ -51,11 +53,8 @@
   </div>
 </section>
 
-<div class="img-overlay" *ngIf="selectedImage" (click)="closeImage()">
-  <span class="img-close" (click)="closeImage($event)">&times;</span>
-  <img
-    [src]="selectedImage"
-    alt="Großes Kunstwerk"
-    (click)="$event.stopPropagation()"
-  />
-</div>
+<app-exhibition-elements-modal
+  *ngIf="selectedElement"
+  [element]="selectedElement"
+  (close)="closeModal()">
+</app-exhibition-elements-modal>
