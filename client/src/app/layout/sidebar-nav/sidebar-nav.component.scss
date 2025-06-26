@@ -1,0 +1,40 @@
+/* Hamburger-Button Hover-Effekt */
+.nav-item button {
+  transition: all 0.3s ease;
+  &:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: scale(1.02);
+  }
+}
+
+/* Toggle-Button - Text und Icon */
+.nav-item button.btn-link {
+  color: #000 !important; /* Text schwarz */
+  
+  .fa-bars, .fa-times {
+    color: #000 !important; /* Icons schwarz */
+  }
+
+  &:hover {
+    color: #333 !important; /* Dunkelgrau bei Hover */
+    .fa-bars, .fa-times {
+      color: #333 !important;
+    }
+  }
+}
+
+/* Aktiven Zustand entfernen (falls unerwünscht) */
+.nav-item button.btn-link:active,
+.nav-item button.btn-link:focus {
+  color: #000 !important; /* Verhindert Bootstrap-Blau bei Klick */
+}
+
+/* Sidebar-Übergänge (für Parent-Komponente) */
+app-sidebar-navigation {
+  width: 250px;
+  background: #2c3e50;
+  transition: width 0.3s ease;
+  &.collapsed {
+    width: 60px;
+  }
+}

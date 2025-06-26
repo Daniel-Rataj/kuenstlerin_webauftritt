@@ -1,0 +1,18 @@
+.nav-link, 
+.nav-link i.fas, 
+.nav-item button, 
+.nav-item button i.fas {
+  color: #000 !important; /* schwarz */
+}
+
+.nav-link:hover, 
+.nav-link:hover i.fas,
+.nav-item button:hover,
+.nav-item button:hover i.fas {
+  color: #333 !important; /* Dunkelgrau */
+}
+
+.nav-link.active, 
+.nav-link.active i.fas {
+  color: #0056b3 !important; /* Blau nur für aktive Route */
+}

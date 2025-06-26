@@ -1,0 +1,8 @@
+<header class="content-header mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0"> {{ title }}</h2>
+    <button *ngIf="isAuthenticated()" class="btn btn-outline-danger" (click)="logout()">
+      <i class="fas fa-sign-out-alt me-2"></i> Abmelden
+    </button>
+  </div>
+</header>

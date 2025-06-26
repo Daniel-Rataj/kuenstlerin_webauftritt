@@ -1,8 +1,13 @@
-<div class="d-flex min-vh-100">
+<div class="d-flex vh-100">
+  <!-- Sidebar -->
   <aside class="bg-light border-end p-3">
-  <!-- <app-dashboard-navigation></app-dashboard-navigation>-->
+    <app-sidebar-navigation 
+      [isCollapsed]="isSidebarCollapsed" 
+      (toggleNav)="onSidebarToggle()">
+    </app-sidebar-navigation>
   </aside>
-  <main class="flex-grow-1 p-4">
+   <!-- Hauptinhalt -->
+  <main class="flex-grow-1 p-4 overflow-auto">
     <router-outlet></router-outlet>
   </main>
 </div>
