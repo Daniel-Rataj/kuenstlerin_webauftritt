@@ -5,11 +5,12 @@ import { UserRole } from '../../models/enums/user-role';
 import { AuthService } from '../../services/auth/auth.service';
 import { BrowserStorageService } from '../../services/browser-storage/browser-storage.service';
 import { DashboardToolbarComponent } from './shared/dashboard-toolbar/dashboard-toolbar.component';
+import { DashboardHeaderComponent } from './shared/dashboard-header/dashboard-header.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, DashboardToolbarComponent],
+  imports: [CommonModule, RouterOutlet, DashboardHeaderComponent, DashboardToolbarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss' 
 })
@@ -75,12 +76,6 @@ export class DashboardComponent {
     return this.authService.getUserRole();
   }
 
-  // Access the current user's name from localStorage (fallback if signal not used)
-  get userName(): string {
-    const user = JSON.parse(this.browserStorageService.getItem('user') ?? '{}');
-    return user.username ?? 'Guest';
-  }
-
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
@@ -90,14 +85,5 @@ export class DashboardComponent {
   // Navigate to the selected route when a card is clicked
   navigate(route: string): void {
     this.router.navigate([route]);
-  }
-
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-
-  isAuthenticated(): boolean {
-    return this.authService.isAuthenticated();
   }
 }

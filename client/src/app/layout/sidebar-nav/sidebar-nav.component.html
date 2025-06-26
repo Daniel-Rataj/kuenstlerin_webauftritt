@@ -1,0 +1,23 @@
+<ul class="nav flex-column">
+  <!-- Hamburger-Toggle-Button (immer sichtbar) -->
+  <li class="nav-item">
+    <button 
+      class="btn btn-link nav-link d-flex align-items-center gap-2 py-3"
+      (click)="onToggleClick()"
+    >
+      <i class="fas {{ isCollapsed ? 'fa-bars' : 'fa-caret-left' }} fs-5"></i>
+      <span *ngIf="!isCollapsed" class="ms-2">Menü schließen</span>
+    </button>
+  </li>
+
+  <!-- Navigationslinks -->
+  <ng-container *ngFor="let item of navItems">
+    <app-nav-item
+      [routerLink]="item.routerLink"
+      [label]="item.label"
+      [icon]="item.icon"
+      [isExact]="item.isExact || false"
+      [collapsed]="isCollapsed"
+    ></app-nav-item>
+  </ng-container>
+</ul>

@@ -8,6 +8,7 @@ import { ExhibitionPublishComponent } from '../exhibition-publish/exhibition-pub
 import { Router, ActivatedRoute } from '@angular/router';
 import { ExhibitionElement } from '../../../../../../models/dto/exhibition-element.dto';
 import { DashboardToolbarComponent } from '../../../../shared/dashboard-toolbar/dashboard-toolbar.component';
+import { DashboardHeaderComponent } from '../../../../shared/dashboard-header/dashboard-header.component';
 
 @Component({
   selector: 'app-exhibition-create-wizard',
@@ -18,6 +19,7 @@ import { DashboardToolbarComponent } from '../../../../shared/dashboard-toolbar/
     ExhibitionBasicFormComponent,
     ExhibitionElementsUploadComponent,
     ExhibitionPublishComponent,
+    DashboardHeaderComponent,
     DashboardToolbarComponent
   ],
 })

@@ -3,11 +3,16 @@ import { ExhibitionListComponent } from './exhibition-list/exhibition-list.compo
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ExhibitionCreateWizardComponent } from './exhibition-formular/exhibition-create-wizard/exhibition-create-wizard.component';
 import { DashboardToolbarComponent } from '../../shared/dashboard-toolbar/dashboard-toolbar.component';
+import { DashboardHeaderComponent } from '../../shared/dashboard-header/dashboard-header.component';
 
 @Component({
   selector: 'app-gallery-post',
   standalone: true,
-  imports: [RouterModule, ExhibitionListComponent, ExhibitionCreateWizardComponent, DashboardToolbarComponent],
+  imports: [RouterModule,
+    ExhibitionListComponent,
+    ExhibitionCreateWizardComponent,
+    DashboardHeaderComponent,
+    DashboardToolbarComponent],
   templateUrl: './gallery-post.component.html',
   styleUrl: './gallery-post.component.scss'
 })

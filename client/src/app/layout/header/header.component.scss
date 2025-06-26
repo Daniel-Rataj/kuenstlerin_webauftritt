@@ -19,18 +19,18 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.15);
+  background: #613d3d;
   z-index: 1;
 }
 
 .hero-overlay {
   position: relative;
   z-index: 2;
-  color: #f1f1f1;
+  color: #d3d4d4;
   font-weight: 700;
   font-size: 1.8rem;
   letter-spacing: 0.05em;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 2px 4px rgb(155, 144, 144);
   user-select: none;
 }
 
@@ -44,4 +44,10 @@
     font-size: 1.5rem;
     padding: 0 1rem;
   }
+}
+
+.windsong-medium {
+  font-family: "WindSong", cursive;
+  font-weight: 500;
+  font-style: normal;
 }
