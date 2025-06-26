@@ -20,7 +20,7 @@ import { HeaderComponent } from '../header/header.component';
   templateUrl: './public-layout.component.html',
   styleUrls: ['./public-layout.component.scss']
 })
-export class PublicLayoutComponent implements OnInit, AfterViewInit {
+export class PublicLayoutComponent implements OnInit {
   title = 'Altrock Art';
   isNavCollapsed = false;
 
@@ -49,6 +49,8 @@ export class PublicLayoutComponent implements OnInit, AfterViewInit {
       this.showCookieBanner = consent !== 'true';
     }
 
+    this.updateHeroText(); // Nur hier aufrufen
+
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -59,9 +61,7 @@ export class PublicLayoutComponent implements OnInit, AfterViewInit {
       });
   }
 
-  ngAfterViewInit(): void {
-    this.updateHeroText();
-  }
+  // ngAfterViewInit entfernt
 
   toggleNav() {
     this.isNavCollapsed = !this.isNavCollapsed;
