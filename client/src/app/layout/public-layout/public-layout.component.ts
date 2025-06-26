@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 import { BrowserStorageService } from '../../services/browser-storage/browser-storage.service';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-public-layout',
@@ -12,19 +13,25 @@ import { FooterComponent } from '../footer/footer.component';
   imports: [
     CommonModule,
     RouterModule,
+    HeaderComponent,
     NavigationComponent,
-    FooterComponent
+    FooterComponent,
   ],
   templateUrl: './public-layout.component.html',
   styleUrls: ['./public-layout.component.scss']
 })
-export class PublicLayoutComponent implements OnInit {
+export class PublicLayoutComponent implements OnInit, AfterViewInit {
+  title = 'Altrock Art';
   isNavCollapsed = false;
-  showCookieBanner = false;
 
   heroText: string = 'Willkommen bei der Künstlerin!';
-  images = ['/images/Hero2.jpg', '/images/Hero3.jpg'];
+  images = [
+    '/images/Hero2.jpg',
+    '/images/Hero3.jpg'
+  ];
   currentImageIndex = 0;
+
+  showCookieBanner = false;
 
   constructor(
     @Inject(PLATFORM_ID) private readonly platformId: Object,
@@ -50,6 +57,10 @@ export class PublicLayoutComponent implements OnInit {
         }
         this.updateHeroText();
       });
+  }
+
+  ngAfterViewInit(): void {
+    this.updateHeroText();
   }
 
   toggleNav() {

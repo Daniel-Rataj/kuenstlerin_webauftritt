@@ -25,13 +25,13 @@
 }
 
 .nav-link:hover {
-  background-color: rgba(0, 123, 255, 0.1); // dezenter Hover-Hintergrund
-  color: #007bff;
+  background-color: rgba(0, 0, 0, 0.1); // dezenter Hover-Hintergrund
+  color: #000000;
 }
 
 .nav-link.active {
-  background-color: rgba(0, 123, 255, 0.15); // sanfter aktiver Zustand
-  color: #0056b3;
+  background-color: rgba(0, 0, 0, 0.15); // sanfter aktiver Zustand
+  color: #000000;
 }
 
 /* Responsive Anpassungen */

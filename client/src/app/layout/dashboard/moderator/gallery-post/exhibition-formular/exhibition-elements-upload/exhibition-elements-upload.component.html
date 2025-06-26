@@ -71,8 +71,10 @@
     </div>
 
     <!-- Datei-Info -->
-    <div *ngIf="element.imageFile" class="mt-2">
-      <strong>Datei:</strong> {{ element.imageFile.name }}
+    <div *ngIf="element.imageFile || element.imageUrl" class="col-12 mt-2">
+      <strong>Datei:</strong>
+      <span *ngIf="element.imageFile">{{ element.imageFile.name }}</span>
+      <span *ngIf="!element.imageFile && element.imageUrl">{{ element.imageUrl }}</span>
     </div>
   </div>
 </div>

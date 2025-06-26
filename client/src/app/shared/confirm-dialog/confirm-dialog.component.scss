@@ -1,0 +1,37 @@
+/* Modal-Dialog runder und mit Schatten */
+.modal-content {
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Buttons runder und größer */
+.btn-sm.rounded-pill {
+  font-weight: 600;
+}
+
+/* Optional: Hover-Effekt für Icons (falls in der Nähe verwendet) */
+.dropdown-icon-hover {
+  transition: color 0.2s ease, background-color 0.2s ease;
+  padding: 4px;
+  border-radius: 0.375rem;
+}
+
+.dropdown-icon-hover:hover {
+  background-color: #f0f0f0;
+  color: #000;
+  cursor: pointer;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1040; 
+}
+
+.modal {
+  z-index: 1050;
+}

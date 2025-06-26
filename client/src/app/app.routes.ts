@@ -16,6 +16,8 @@ import { ExhibitionCreateWizardComponent } from './layout/dashboard/moderator/ga
 import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout.component';
 import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
 import { loginRedirectGuard } from './configs/guards/login-redirect.guard';
+import { ImpressumComponent } from './pages/impressum/impressum.component';
+import { DatenschutzComponent } from './pages/datenschutz/datenschutz.component';
 
 export const routes: Routes = [
     // Public Region
@@ -27,6 +29,8 @@ export const routes: Routes = [
             { path: 'gallery', component: GalleryComponent },
             { path: 'aboutme', component: AboutmeComponent },
             { path: 'contact', component: ContactComponent },
+            { path: 'impressum', component: ImpressumComponent },
+            { path: 'datenschutz', component: DatenschutzComponent },
             { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard]},
         ],
     },
@@ -57,10 +61,8 @@ export const routes: Routes = [
                 children: [
                     { path: 'gallery', component: GalleryPostComponent },
                     { path: 'latest', component: HomePostComponent },
-                    {
-                        path: 'exhibition/create',
-                        component: ExhibitionCreateWizardComponent,
-                    },
+                    { path: 'exhibition/create', component: ExhibitionCreateWizardComponent },
+                    { path: 'exhibition/:id', component: ExhibitionCreateWizardComponent},
                 ],
             },
 

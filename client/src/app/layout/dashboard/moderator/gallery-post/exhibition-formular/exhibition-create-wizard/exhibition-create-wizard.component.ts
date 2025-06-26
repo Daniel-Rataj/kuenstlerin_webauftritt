@@ -1,11 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { ExhibitionDto } from '../../../../../../models/dto/exhibition.dto';
 import { ExhibitionService } from '../../../../../../services/exhibition/exhibition.service';
 import { CommonModule } from '@angular/common';
 import { ExhibitionBasicFormComponent } from '../exhibition-basic-form/exhibition-basic-form.component';
 import { ExhibitionElementsUploadComponent } from '../exhibition-elements-upload/exhibition-elements-upload.component';
 import { ExhibitionPublishComponent } from '../exhibition-publish/exhibition-publish.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ExhibitionElement } from '../../../../../../models/dto/exhibition-element.dto';
 import { DashboardToolbarComponent } from '../../../../shared/dashboard-toolbar/dashboard-toolbar.component';
 
@@ -21,13 +21,12 @@ import { DashboardToolbarComponent } from '../../../../shared/dashboard-toolbar/
     DashboardToolbarComponent
   ],
 })
-export class ExhibitionCreateWizardComponent {
+export class ExhibitionCreateWizardComponent implements OnInit {
   step = 1;
   exhibitionDraft: ExhibitionDto;
   metadataList: ExhibitionElement[] = [];
 
   // ViewChilds
-
   @ViewChild(ExhibitionElementsUploadComponent)
   uploadStepComponent?: ExhibitionElementsUploadComponent;
 
@@ -35,20 +34,36 @@ export class ExhibitionCreateWizardComponent {
   @ViewChild(ExhibitionBasicFormComponent)
   basicFormComponent!: ExhibitionBasicFormComponent;
 
-  constructor(private readonly router: Router, private readonly exhibitionService: ExhibitionService) {
-    this.exhibitionDraft = ExhibitionDto.createEmptyExhibition()
+  constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly exhibitionService: ExhibitionService
+  ) {
+    this.exhibitionDraft = ExhibitionDto.createEmptyExhibition();
+  }
+
+  async ngOnInit(): Promise<void> {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      const id = Number(idParam);
+      try {
+        const exhibition = await this.exhibitionService.getByIdAsync(id);
+        this.exhibitionDraft = exhibition;
+        this.metadataList = exhibition.exhibitionElements ?? [];
+        this.step = 2; // direkt zum Schritt 2 (Bilder & Metadaten)
+      } catch (error) {
+        console.error('Fehler beim Laden der Ausstellung zur Bearbeitung:', error);
+        this.router.navigate(['/dashboard/moderator/gallery']);
+      }
+    }
   }
 
   async handleBasicDataSubmitted(data: Partial<ExhibitionDto>) {
-    // Ensure that the mandatory propertys are set
-    const draft: ExhibitionDto = {
-      title: data.title ?? '',
-      date: data.date ?? new Date(),
-      exhibitionElements: [],
-      status: 1,
+    this.exhibitionDraft = {
+      ...this.exhibitionDraft,
+      ...data,
+      exhibitionElements: this.metadataList,
     };
-
-    this.exhibitionDraft = draft;
     this.step = 2;
   }
 
@@ -56,12 +71,11 @@ export class ExhibitionCreateWizardComponent {
     this.basicFormComponent.onSubmit();
   }
 
-  assignExhibitionElements(exhibitionElements: ExhibitionElement[]) {   
+  assignExhibitionElements(exhibitionElements: ExhibitionElement[]) {
     this.metadataList = exhibitionElements;
     this.step = 3;
   }
 
-  // Step backward
   goBack(): void {
     if (this.step > 1) this.step--;
   }
@@ -77,14 +91,18 @@ export class ExhibitionCreateWizardComponent {
     this.uploadStepComponent.nextStep();
   }
 
-
   // Cancel: Go back to exhibition-list view
   cancelCreation(): void {
     const confirmed = confirm('Möchtest du die Ausstellung wirklich abbrechen? Nicht gespeicherte Daten gehen verloren.');
     if (confirmed) {
       this.router.navigate(['/dashboard/moderator/gallery']);
       this.exhibitionDraft = ExhibitionDto.createEmptyExhibition();
+      this.metadataList = [];
       this.step = 1;
     }
+  }
+
+  handleFinished(): void {
+    this.router.navigate(['/dashboard/moderator/gallery']);
   }
 }
