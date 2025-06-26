@@ -32,8 +32,10 @@
     <li class="page-item" [class.disabled]="currentPage === 1">
       <button class="page-link" (click)="setPage(currentPage - 1)">Zurück</button>
     </li>
-    <li class="page-item" *ngFor="let page of [].constructor(Math.ceil(users.length / pageSize)); let i = index"
-        [class.active]="currentPage === i + 1">
+    <li
+      class="page-item"
+      *ngFor="let page of [].constructor(Math.ceil(users.length / pageSize)); let i = index"
+      [class.active]="currentPage === i + 1">
       <button class="page-link" (click)="setPage(i + 1)">{{ i + 1 }}</button>
     </li>
     <li class="page-item" [class.disabled]="currentPage >= Math.ceil(users.length / pageSize)">
@@ -52,3 +54,14 @@
   (userCreated)="addUser($event)"
   (close)="showAddUserModal = false">
 </app-add-user-dialog>
+
+<!-- Confirm Delete Dialog -->
+<app-confirm-dialog
+  [show]="showConfirmDialog"
+  title="Benutzer löschen"
+  [message]="'Möchtest du den Benutzer »' + selectedUserToDelete?.username + '« wirklich löschen?'"
+  confirmText="Löschen"
+  cancelText="Abbrechen"
+  (confirm)="confirmDeleteUser()"
+  (cancel)="cancelDeleteUser()">
+</app-confirm-dialog>
