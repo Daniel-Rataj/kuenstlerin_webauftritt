@@ -22,7 +22,7 @@
 
   <div class="art-grid">
     <ng-container *ngIf="exhibitions.length > 0">
-      <ng-container *ngFor="let art of exhibitions[0].exhibitionElements.slice(0, 3)">
+      <ng-container *ngFor="let art of getPortfolioPreviewImages()">
         <div class="art-item" (click)="openModal(art)">
           <img [src]="art.imageUrl" [alt]="art.name" />
           <h3>{{ art.name }}</h3>
@@ -35,6 +35,7 @@
     <a routerLink="/gallery" class="btn-secondary">Mehr Kunstwerke ansehen</a>
   </div>
 </section>
+
 
 <section class="info-grid container">
   <div class="info-item">

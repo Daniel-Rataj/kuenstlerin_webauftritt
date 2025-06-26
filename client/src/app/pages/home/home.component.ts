@@ -37,13 +37,45 @@ export class HomeComponent implements OnInit {
   async loadExhibitions(): Promise<void> {
     try {
       const data = await this.exhibitionService.getAllPublishedAsync();
-      // Filtere Ausstellungen ohne ID und sortiere dann absteigend nach ID (neueste zuerst)
+      // Filtere Ausstellungen ohne ID und sortiere absteigend nach ID (neueste zuerst)
       this.exhibitions = data
         .filter(e => e.id !== undefined && e.id !== null)
         .sort((a, b) => b.id! - a.id!);
     } catch (error) {
       console.error('Fehler beim Laden der Ausstellungen', error);
     }
+  }
+
+  // NEU: Berechnung der anzuzeigenden Bilder nach deiner Logik
+  getPortfolioPreviewImages(): ExhibitionElement[] {
+    if (!this.exhibitions || this.exhibitions.length === 0) {
+      return [];
+    }
+
+    // Nimm die 3 neuesten Ausstellungen mit mindestens 1 Bild
+    const latestExhibitions = this.exhibitions
+      .filter(e => e.exhibitionElements && e.exhibitionElements.length > 0)
+      .slice(0, 3);
+
+    if (latestExhibitions.length === 1) {
+      // 1 Gallery → erste 3 Bilder
+      return latestExhibitions[0].exhibitionElements.slice(0, 3);
+    }
+
+    if (latestExhibitions.length === 2) {
+      // 2 Galleries → 2 Bilder aus der ersten, 1 aus der zweiten
+      return [
+        ...latestExhibitions[0].exhibitionElements.slice(0, 2),
+        ...latestExhibitions[1].exhibitionElements.slice(0, 1)
+      ];
+    }
+
+    if (latestExhibitions.length >= 3) {
+      // 3 oder mehr Galleries → je 1 Bild aus den 3 neuesten
+      return latestExhibitions.map(gallery => gallery.exhibitionElements[0]);
+    }
+
+    return [];
   }
 
   openModal(element: ExhibitionElement): void {
