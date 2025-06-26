@@ -16,45 +16,39 @@
     </div>
 
     <div class="col-lg-6">
-      <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)" class="bg-white p-4 rounded shadow-sm" novalidate>
-
+      <!-- TODO: "https://formspree.io/f/DEIN-FORMULAR-ID-HIER" muss ersetzt werden mit dem echten Formspree-Formular-Link -->
+      <form
+        action="https://formspree.io/f/DEIN-FORMULAR-ID-HIER"
+        method="POST"
+        class="bg-white p-4 rounded shadow-sm"
+      >
         <div class="mb-3">
           <label for="name" class="form-label fw-semibold">Name</label>
-          <input type="text" id="name" class="form-control" name="name" required ngModel #name="ngModel" />
-          <div *ngIf="name.invalid && name.touched" class="text-danger small">
-            Bitte geben Sie Ihren Namen ein.
-          </div>
+          <input type="text" id="name" class="form-control" name="name" required />
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label fw-semibold">E-Mail</label>
-          <input type="email" id="email" class="form-control" name="email" required ngModel email #email="ngModel" />
-          <div *ngIf="email.invalid && email.touched" class="text-danger small">
-            Bitte geben Sie eine gültige E-Mail-Adresse ein.
-          </div>
+          <input type="email" id="email" class="form-control" name="email" required />
         </div>
 
         <div class="mb-3">
           <label for="subject" class="form-label fw-semibold">Betreff</label>
-          <input type="text" id="subject" class="form-control" name="subject" required ngModel #subject="ngModel" />
-          <div *ngIf="subject.invalid && subject.touched" class="text-danger small">
-            Bitte geben Sie einen Betreff ein.
-          </div>
+          <input type="text" id="subject" class="form-control" name="subject" required />
         </div>
 
         <div class="mb-3">
           <label for="message" class="form-label fw-semibold">Nachricht</label>
-          <textarea id="message" rows="5" class="form-control" name="message" required ngModel #message="ngModel"></textarea>
-          <div *ngIf="message.invalid && message.touched" class="text-danger small">
-            Bitte geben Sie eine Nachricht ein.
-          </div>
+          <textarea
+            id="message"
+            rows="5"
+            class="form-control"
+            name="message"
+            required
+          ></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="contactForm.invalid">Absenden</button>
-
-        <div *ngIf="submitted" class="alert alert-success mt-3" role="alert">
-          Vielen Dank! Ihre Nachricht wurde gesendet.
-        </div>
+        <button type="submit" class="btn btn-primary">Absenden</button>
       </form>
     </div>
   </div>
