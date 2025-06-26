@@ -39,7 +39,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // Register (business)-logic services for dependendency injection
-builder.Services.AddScoped<IBaseLogic<dataTransfer.User>, UserLogic>();
+builder.Services.AddScoped<IBaseLogic<dataTransfer.Exhibition>, ExhibitionLogic>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 builder.Services.AddScoped<IExhibitionLogic, ExhibitionLogic>();
