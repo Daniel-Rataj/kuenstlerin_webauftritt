@@ -31,5 +31,41 @@ namespace server.Repositories
                 .Include(e => e.ExhibitionElements)
                 .ToListAsync();
         }
+
+        public async Task<bool> DeleteExhibitionElementsBulkAsync(int exhibitionId, List<int> deletedElementIds)
+        {
+            try
+            {
+                // Load the exhibition with its elements
+                var exhibition = await _dbSet
+                    .Include(e => e.ExhibitionElements)
+                    .FirstOrDefaultAsync(e => e.Id == exhibitionId);
+
+                if (exhibition == null)
+                    return false;
+
+                // Filter elements that should be deleted
+                var elementsToDelete = exhibition.ExhibitionElements
+                    .Where(el => deletedElementIds.Contains(el.Id))
+                    .ToList();
+
+                if (elementsToDelete.Count != deletedElementIds.Count)
+                {
+                    // Mismatch: some elements not found → fail safe
+                    return false;
+                }
+
+                // Remove elements from context
+                _context.ExhibitionElements.RemoveRange(elementsToDelete);
+
+                // Save changes
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

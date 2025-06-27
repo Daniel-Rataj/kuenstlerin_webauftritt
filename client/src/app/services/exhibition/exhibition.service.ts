@@ -9,10 +9,9 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class ExhibitionService extends BaseService<
-  ExhibitionDto,
-  ExhibitionDto
-> {
+export class ExhibitionService extends BaseService<ExhibitionDto, ExhibitionDto> {
+  
+  
   constructor(http: HttpClient) {
     super(http, 'exhibition');
   }
@@ -43,7 +42,7 @@ export class ExhibitionService extends BaseService<
 
     // Wenn es sich um einen statischen Pfad wie /uploads/... handelt, KEIN /api
     return `${environment.serverBaseUrl}${imageUrl}`;
-}
+  }
 
   async uploadElementsBulk(id: number, elements: ExhibitionElement[]): Promise<ExhibitionDto> {
     const url = `${this.baseUrl}/${id}/elements/bulk`;
@@ -69,14 +68,43 @@ export class ExhibitionService extends BaseService<
     formData.append('exhibitionElementsJson', JSON.stringify(metadata));
 
     try {
-      return await firstValueFrom(this.http.post<ExhibitionDto>(url, formData));
+      return firstValueFrom(this.http.post<ExhibitionDto>(url, formData));
     } catch (error) {
-      console.error('Fehler beim Hochladen der Ausstellungselemente:', error);
-      throw error;
+      const customMessage = 'Fehler beim Hochladen der Ausstellungselemente:';
+      this.handleError(error, customMessage)
+    }
+  }
+
+  async updateExhibitionElementsBulk(exhibitionId: number, updatedElements: ExhibitionElement[]): Promise<void> {
+    const url = `${this.baseUrl}/${exhibitionId}/elements/update`;
+
+    try {
+      await firstValueFrom(this.http.put<void>(url, updatedElements));
+    } catch (error) {
+      const message = 'Fehler beim Aktualisieren der Ausstellungselemente im Bearbeitungsmodus:';
+      this.handleError(error, message);
+    }
+  }
+
+  async deleteExhibitionElementsBulk(exhibitionId: number, deletedElementIds: number[]) {
+    const url = `${this.baseUrl}/${exhibitionId}/elements/delete`
+
+    try {
+      return firstValueFrom(this.http.post<void>(url, deletedElementIds));
+    } catch (error) {
+      const customMessage = 'Fehler beim Löschen der Ausstellungselemente im Editierungsmodus:'
+      this.handleError(error, customMessage)
     }
   }
 
   async publishAsync(id: number, item: ExhibitionDto): Promise<void> {
-    this.http.post<ExhibitionDto>(`/api/exhibitions/publish/${id}`, item);
+    const url = `${this.baseUrl}/publish/${id}`
+
+    try {
+      return firstValueFrom(this.http.post<void>(url, item));
+    } catch (error) {
+      const customMessage = 'Fehler beim Veröffentlichen der Ausstellung:'
+      this.handleError(error, customMessage)
+    }
   }
 }

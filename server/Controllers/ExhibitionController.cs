@@ -5,6 +5,7 @@ using server.Controllers.Base;
 using server.Logic.Interfaces;
 using server.Models.DataTransfer;
 using server.Models.Enums;
+using server.Models.Requests;
 using dataAccess = server.Models.DataAccess;
 using dataTransfer = server.Models.DataTransfer;
 
@@ -36,6 +37,21 @@ namespace server.Controllers
             }
         }
 
+        [HttpPut("{id}/elements/update")]
+        public async Task<IActionResult> UpdateExhibitionElementsBulk([FromRoute] int id, [FromBody] List<UpdateExhibitionElementRequest> updatedElements)
+        {
+            try
+            {
+                var success = await _logic.UpdateExhibitionElementsBulkAsync(id, updatedElements);
+                if (!success) return BadRequest("Failed to update one or more exhibition elements.");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
         [AllowAnonymous]
         [HttpGet("getAllPublished")]
         public async Task<ActionResult<IEnumerable<dataTransfer.Exhibition>>> GetAllPublishedAsync()
@@ -44,6 +60,20 @@ namespace server.Controllers
             {
                 var result = await _logic.GetAllPublishedAsync();
                 return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { error = e.Message });
+            }
+        }
+
+        [HttpPost("{id}/elements/delete")]
+        public async Task<ActionResult<bool>> DeleteExhibitionElementsBulk([FromRoute] int id, [FromBody] List<int> deletedElementIds)
+        {
+            try
+            {
+                var success = await _logic.DeleteExhibitionElementsBulkAsync(id, deletedElementIds);
+                return Ok(success); // returns true if successful
             }
             catch (Exception e)
             {

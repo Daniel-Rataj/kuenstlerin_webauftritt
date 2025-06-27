@@ -12,11 +12,14 @@
     <app-exhibition-elements-upload
       *ngSwitchCase="2"
       [exhibitionDraft]="exhibitionDraft"
+      [isEditMode]="isEditMode"
       (exhibitionElementsSubmitted)="assignExhibitionElements($event)" />
     <app-exhibition-publish
       *ngSwitchCase="3"
       [exhibitionDraft]="exhibitionDraft"
       [metadataList]="metadataList"
+      [isEditMode]="isEditMode"
+      [deletedElementIds]="getDeletedElementIds()"
       (finished)="handleFinished()"/>
   </ng-container>
 

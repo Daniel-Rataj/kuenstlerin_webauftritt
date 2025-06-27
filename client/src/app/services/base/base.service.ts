@@ -69,12 +69,17 @@ export class BaseService<TRead, TWrite = TRead> {
     }
   }
 
-  protected handleError(error: unknown): never {
+  protected handleError(error: unknown, customMessage?: string): never {
     if (error instanceof HttpErrorResponse) {
-      console.error(`HTTP Error (${error.status}): ${error.message}`);
+      if (customMessage) {
+        console.error(`HTTP Error ${error.status}): ${customMessage} ${error.message}'`, error);
+      } else {
+        console.error(`HTTP Error (${error.status}): ${error.message}`, error);
+      }
     } else {
-      console.error('Unknown Error:', error);
+        console.error('Unknown Error:', error);
     }
+    
     throw error;
   }
 }

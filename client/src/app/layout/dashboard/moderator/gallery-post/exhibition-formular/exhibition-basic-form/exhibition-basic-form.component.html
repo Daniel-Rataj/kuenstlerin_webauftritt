@@ -20,12 +20,18 @@
       type="date"
       formControlName="date"
       class="form-control d-block w-200"
-      [readonly]="true"
+      [class.is-invalid]="form.get('date')?.invalid && (form.get('date')?.touched || form.get('date')?.dirty)"
     />
+    <div class="invalid-feedback" *ngIf="form.get('date')?.hasError('invalidDate') && form.get('date')?.touched">
+      Ungültiges Datumsformat.
+    </div>
+    <div class="invalid-feedback" *ngIf="form.get('date')?.hasError('futureDate') && (form.get('date')?.touched || form.get('date')?.dirty)">
+      Das Datum darf nicht in der Zukunft liegen.
+    </div>
     <div class="form-text text-muted">
       {{ form.get('date')?.value
-        ? 'Datum wurde automatisch gesetzt.'
-        : 'Optional: Wird automatisch gesetzt bei Fertigstellung des Entwurfs oder der Veröffentlichung.' }}
+        ? 'Datum wird bei der Veröffentlichung der Ausstellung in der Galerie angezeigt'
+        : 'Optional: Wird kein Datum gesetzt, wird beim Speichern das aktuelle verwendet.' }}
     </div>
   </div>
 </form>

@@ -27,6 +27,8 @@ export class ExhibitionCreateWizardComponent implements OnInit {
   step = 1;
   exhibitionDraft: ExhibitionDto;
   metadataList: ExhibitionElement[] = [];
+  isEditMode = false;
+  initialElementIds: number[] = [];
 
   // ViewChilds
   @ViewChild(ExhibitionElementsUploadComponent)
@@ -44,17 +46,28 @@ export class ExhibitionCreateWizardComponent implements OnInit {
     this.exhibitionDraft = ExhibitionDto.createEmptyExhibition();
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void{
+    this.initialize();
+  }
+
+  async initialize(): Promise<void> {
     const idParam = this.route.snapshot.paramMap.get('id');
+
     if (idParam) {
       const id = Number(idParam);
+      this.isEditMode = true; // Edit mode enabled if an ID is present in the route
+
       try {
         const exhibition = await this.exhibitionService.getByIdAsync(id);
         this.exhibitionDraft = exhibition;
         this.metadataList = exhibition.exhibitionElements ?? [];
-        this.step = 2; // direkt zum Schritt 2 (Bilder & Metadaten)
+
+        // Store original element IDs to detect deletions later
+        this.initialElementIds = this.metadataList.map(el => el.id!).filter(Boolean);
+
+        this.step = 1; // Always start at step 1, even when editing
       } catch (error) {
-        console.error('Fehler beim Laden der Ausstellung zur Bearbeitung:', error);
+        console.error('Failed to load exhibition for editing:', error);
         this.router.navigate(['/dashboard/moderator/gallery']);
       }
     }
@@ -91,6 +104,12 @@ export class ExhibitionCreateWizardComponent implements OnInit {
     }
 
     this.uploadStepComponent.nextStep();
+  }
+
+  // Returns a list of element IDs that were originally present but have been removed in the current state
+  getDeletedElementIds(): number[] {
+    const currentIds = this.metadataList.filter(el => el.id).map(el => el.id!);
+    return this.initialElementIds.filter(id => !currentIds.includes(id));
   }
 
   // Cancel: Go back to exhibition-list view

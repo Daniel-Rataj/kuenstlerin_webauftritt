@@ -8,7 +8,7 @@
         public string ImageUrl { get; set; } = string.Empty;
         public bool AvailableToBuy { get; set; }
         public int ExhibitionId { get; set; }
-        public int PriceTag { get; set; }
+        public decimal? PriceTag { get; set; }
         public int Length { get; set; }
         public int Width { get; set; }
     }

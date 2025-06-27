@@ -2,8 +2,10 @@
 using server.Helper;
 using server.Logic.Base;
 using server.Logic.Interfaces;
+using server.Models.DataAccess;
 using server.Models.DataTransfer;
 using server.Models.Enums;
+using server.Models.Requests;
 using server.Repositories;
 using server.Repositories.Interfaces;
 using System.Text.Json;
@@ -104,8 +106,48 @@ namespace server.Logic
             return result.Select(MapToDto);
 
         }
+        public async Task<bool> UpdateExhibitionElementsBulkAsync(int exhibitionId, List<UpdateExhibitionElementRequest> updatedElements)
+        {   
 
-        public async Task<Exhibition> PublishAsync(int exhibitionId)
+            foreach (var element in updatedElements)
+            {
+                var dto = MapUpdateRequestToDto(element);
+                var entity = await _exhibitionElementRepository.GetByIdAsync(dto.Id);
+                if (entity == null || entity.ExhibitionId != exhibitionId)
+                    return false;
+
+                // Update relevant fields
+                entity.Name = dto.Name;
+                entity.Description = dto.Description;
+                entity.AvailableToBuy = dto.AvailableToBuy;
+                entity.PriceTag = dto.PriceTag;
+                entity.Width = dto.Width;
+                entity.Length = dto.Length;
+
+                await _exhibitionElementRepository.UpdateAsync(entity);
+            }
+            return true;
+        }
+
+        public async Task<bool> DeleteExhibitionElementsBulkAsync(int exhibitionId, List<int> deletedElementIds)
+        {
+            foreach (var elementId in deletedElementIds)
+            {
+                var element = await GetAndValidateElementAsync(exhibitionId, elementId);
+                if (element == null)
+                    return false;
+
+                DeleteElementImageFile(element.ImageUrl);
+
+                var success = await _exhibitionElementRepository.DeleteAsync(elementId);
+                if (!success)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public async Task<dataTransfer.Exhibition> PublishAsync(int exhibitionId)
         {
             var toPublish = await _repository.GetByIdAsync(exhibitionId);
             if (toPublish == null)
@@ -140,6 +182,47 @@ namespace server.Logic
         protected dataAccess.ExhibitionElement MapExhibitionElementToEntity(dataTransfer.ExhibitionElement dto)
         {
             return ExhibitionElementHelper.ToEntity(dto);
+        }
+
+        private dataTransfer.ExhibitionElement MapUpdateRequestToDto(UpdateExhibitionElementRequest dto)
+        {
+            return new dataTransfer.ExhibitionElement
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Description = dto.Description,
+                AvailableToBuy = dto.AvailableToBuy,
+                PriceTag = dto.PriceTag,
+                Width = dto.Width,
+                Length = dto.Length
+            };
+        }
+
+        private async Task<dataAccess.ExhibitionElement?> GetAndValidateElementAsync(int exhibitionId, int elementId)
+        {
+            var element = await _exhibitionElementRepository.GetByIdAsync(elementId);
+
+            // Ensure element exists and belongs to the correct exhibition
+            if (element == null || element.ExhibitionId != exhibitionId)
+            {
+                return null;
+            }
+
+            return element;
+        }
+
+        private void DeleteElementImageFile(string imageUrl)
+        {
+            if (string.IsNullOrWhiteSpace(imageUrl))
+                return;
+
+            var relativePath = imageUrl.TrimStart('/').Replace("/", Path.DirectorySeparatorChar.ToString());
+            var fullPath = Path.Combine(_env.ContentRootPath, relativePath);
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
         }
     }
 }
