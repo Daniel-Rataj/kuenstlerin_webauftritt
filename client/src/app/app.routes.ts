@@ -31,7 +31,7 @@ export const routes: Routes = [
             { path: 'contact', component: ContactComponent },
             { path: 'impressum', component: ImpressumComponent },
             { path: 'datenschutz', component: DatenschutzComponent },
-            { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard]},
+            { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard] },
         ],
     },
 
@@ -62,7 +62,7 @@ export const routes: Routes = [
                     { path: 'gallery', component: GalleryPostComponent },
                     { path: 'latest', component: HomePostComponent },
                     { path: 'exhibition/create', component: ExhibitionCreateWizardComponent },
-                    { path: 'exhibition/:id', component: ExhibitionCreateWizardComponent},
+                    { path: 'exhibition/:id', component: ExhibitionCreateWizardComponent },
                 ],
             },
 
