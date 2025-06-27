@@ -1,3 +1,9 @@
+# Lokale Konfigurationen
+.vscode/*
+!.vscode/extensions.json
+!.vscode/tasks.json          # Falls du Build-Tasks teilst
+!.vscode/settings.json       # Falls du Workspace-Settings teilst
+
 # Angular
 /client/node_modules
 /client/dist
