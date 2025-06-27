@@ -1,0 +1,54 @@
+<!-- Optionaler Add-Button -->
+<app-post-list-add-button
+  *ngIf="addButton"
+  [label]="addButton.label"
+  [action]="addButton.action"
+/>
+
+<!-- Liste -->
+<div class="list-group">
+  <div
+    *ngFor="let item of pagedItems()"
+    class="list-group-item d-flex justify-content-between align-items-center"
+  >
+    <div>
+      <strong>{{ getTitle(item) }}</strong>
+      <div class="text-muted small">{{ getSubtitle(item) }}</div>
+    </div>
+    <div class="d-flex align-items-center">
+      <span class="badge me-2" [ngClass]="getBadgeClass(item)">
+        {{ getBadge(item) }}
+      </span>
+      <span class="text-muted me-3">{{ getElementCount(item) }} Elemente</span>
+
+      <div class="dropdown" *ngIf="actions.length > 0">
+        <button
+          class="btn btn-sm border-0 bg-transparent px-1"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-ellipsis-vertical text-secondary dropdown-icon-hover"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li *ngFor="let a of actions">
+            <app-post-list-action-item
+              [label]="a.label"
+              [iconClass]="a.iconClass"
+              [isDanger]="a.isDanger ?? false"
+              [action]="getWrappedAction(a, item)"
+            />
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pagination -->
+<app-pagination
+  [currentPage]="page()"
+  [pageSize]="pageSize"
+  [totalItems]="items.length"
+  (pageChange)="page.set($event)"
+/>

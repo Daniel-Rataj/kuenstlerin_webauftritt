@@ -30,12 +30,6 @@ export class GalleryComponent {
       const data = await this.exhibitionService.getAllPublishedAsync();
 
       this.exhibitions = data;
-      // Debug-Ausgabe
-      this.exhibitions.forEach(ex => {
-        ex.exhibitionElements.forEach(el => {
-          console.log('Image URL:', el.imageUrl);
-        });
-      });
     } catch (err) {
       console.error('Fehler beim Laden der Ausstellungen', err);
     }

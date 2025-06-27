@@ -1,133 +1,41 @@
-<!-- Section: Drafts -->
+<!-- Drafts Section -->
 <div *ngIf="drafts().length > 0" class="mb-5">
   <div class="mb-3">
     <i class="fa-solid fa-pen-ruler" style="color: #ff8800"></i>
     Entwürfe
   </div>
-  <div class="list-group">
-    <div
-      *ngFor="let exhibition of getPagedDrafts()"
-      class="list-group-item d-flex justify-content-between align-items-center"
-    >
-      <div>
-        <strong>{{ exhibition.title }}</strong>
-        <div class="text-muted small">
-          {{ getFormattedDate(exhibition?.date) }}
-        </div>
-      </div>
-      <div class="d-flex align-items-center">
-        <span class="badge bg-secondary me-2">
-          {{ getStatusLabel(exhibition.status) }}
-        </span>
-        <span class="text-muted me-3">
-          {{ getElementCount(exhibition) }} Elemente
-        </span>
 
-        <!-- Dropdown-Button -->
-        <div class="dropdown" *ngIf="exhibition.id != null">
-          <button
-            class="btn btn-sm border-0 bg-transparent px-1"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="fa-solid fa-ellipsis-vertical text-secondary dropdown-icon-hover"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item" (click)="navigateToEdit(exhibition.id!)">
-                <i class="fa-solid fa-pen-to-square me-2"></i> Bearbeiten
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item text-danger"
-                (click)="openConfirmDeleteModal(exhibition)"
-              >
-                <i class="fa-solid fa-trash me-2"></i> Löschen
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Pagination for Drafts -->
-  <app-pagination
-    [currentPage]="draftPage"
-    [pageSize]="pageSize"
-    [totalItems]="drafts().length"
-    (pageChange)="draftPage = $event"
-  >
-  </app-pagination>
+  <app-post-list
+    [items]="drafts()"
+    [getTitle]="getTitle"
+    [getSubtitle]="getSubtitle"
+    [getBadge]="getBadge"
+    [getBadgeClass]="getBadgeClassDraft"
+    [getElementCount]="getElementCount"
+    [actions]="getExhibitionActions()"
+    [addButton]="getAddButton()"
+  />
 </div>
 
-<!-- Section: Published -->
+<!-- Published Section -->
 <div *ngIf="published().length > 0">
   <div class="mb-3">
     <i class="fa-solid fa-arrow-up-from-bracket" style="color: #008000"></i>
     Veröffentlicht
   </div>
-  <div class="list-group">
-    <div
-      *ngFor="let exhibition of getPagedPublished()"
-      class="list-group-item d-flex justify-content-between align-items-center"
-    >
-      <div>
-        <strong>{{ exhibition.title }}</strong>
-        <div class="text-muted small">{{ getFormattedDate(exhibition?.date) }}</div>
-      </div>
-      <div class="d-flex align-items-center">
-        <span class="badge bg-success me-2">{{ getStatusLabel(exhibition.status) }}</span>
-        <span class="text-muted me-3">{{ getElementCount(exhibition) }} Elemente</span>
 
-        <!-- Dropdown-Button -->
-        <div class="dropdown" *ngIf="exhibition.id != null">
-          <button
-            class="btn btn-sm border-0 bg-transparent px-1"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="fa-solid fa-ellipsis-vertical text-secondary dropdown-icon-hover"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item" (click)="navigateToEdit(exhibition.id!)">
-                <i class="fa-solid fa-pen-to-square me-2"></i> Bearbeiten
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item text-danger"
-                (click)="openConfirmDeleteModal(exhibition)"
-              >
-                <i class="fa-solid fa-trash me-2"></i> Löschen
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Pagination for Published -->
-  <app-pagination
-    [currentPage]="publishedPage"
-    [pageSize]="pageSize"
-    [totalItems]="published().length"
-    (pageChange)="publishedPage = $event"
-  >
-  </app-pagination>
+  <app-post-list
+    [items]="published()"
+    [getTitle]="getTitle"
+    [getSubtitle]="getSubtitle"
+    [getBadge]="getBadge"
+    [getBadgeClass]="getBadgeClassPublished"
+    [getElementCount]="getElementCount"
+    [actions]="getExhibitionActions()"
+  />
 </div>
 
-<!-- Fallback -->
-<ng-template #noData>
-  <p>Keine Ausstellungen gefunden.</p>
-</ng-template>
-
-<!-- Bestätigungsmodal für Löschen -->
+<!-- Confirm Dialog -->
 <app-confirm-dialog
   [show]="showConfirmDelete"
   [title]="'Löschen bestätigen'"
@@ -136,4 +44,4 @@
   [cancelText]="'Abbrechen'"
   (confirm)="confirmDelete()"
   (cancel)="closeConfirmDeleteModal()"
-></app-confirm-dialog>
+/>
