@@ -1,5 +1,5 @@
 <!-- Drafts Section -->
-<div *ngIf="drafts().length > 0" class="mb-5">
+<div class="mb-5">
   <div class="mb-3">
     <i class="fa-solid fa-pen-ruler" style="color: #ff8800"></i>
     Entwürfe
@@ -10,15 +10,15 @@
     [getTitle]="getTitle"
     [getSubtitle]="getSubtitle"
     [getBadge]="getBadge"
-    [getBadgeClass]="getBadgeClassDraft"
+    [getBadgeClass]="getBadgeClass"
     [getElementCount]="getElementCount"
-    [actions]="getExhibitionActions()"
+    [actions]="getDraftActions()"
     [addButton]="getAddButton()"
   />
 </div>
 
 <!-- Published Section -->
-<div *ngIf="published().length > 0">
+<div>
   <div class="mb-3">
     <i class="fa-solid fa-arrow-up-from-bracket" style="color: #008000"></i>
     Veröffentlicht
@@ -29,9 +29,9 @@
     [getTitle]="getTitle"
     [getSubtitle]="getSubtitle"
     [getBadge]="getBadge"
-    [getBadgeClass]="getBadgeClassPublished"
+    [getBadgeClass]="getBadgeClass"
     [getElementCount]="getElementCount"
-    [actions]="getExhibitionActions()"
+    [actions]="getPublishedActions()"
   />
 </div>
 

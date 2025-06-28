@@ -1,90 +1,18 @@
+<app-dashboard-header [title]="'Artikel der Startseite zuweisen'"></app-dashboard-header>
+
+<!-- Breadcrumb and Backnavigation -->
+<app-dashboard-toolbar [breadcrumbs]="['Dashboard', 'Artikel zuweisen']"></app-dashboard-toolbar>
+
 <div class="row">
-  <div class="col-md-3 mb-4" *ngFor="let card of homepageCards">
-    <div class="card h-100 text-center shadow-sm" (click)="selectSection(card.section)" style="cursor: pointer">
-      <div class="card-body">
-        <i class="{{ card.icon }} fa-3x text-primary mb-3"></i>
-        <h5 class="card-title">{{ card.title }}</h5>
-        <p class="card-text">{{ card.description }}</p>
-        <button class="btn btn-outline-primary">Auswählen</button>
+  <div  class="col-md-4 mb-4" *ngFor="let section of sections; let i = index">
+    <div class="card">
+      <div class="card-body d-flex flex-column">
+        <div class="me-3 mb-0">{{ section.label }}</div>
+        <p class="card-text">Diesem Abschnitt kann ein Artikel zugewiesen werden.</p>
+        <button class="btn btn-primary mt-auto align-self-start" (click)="navigateToAssignment(i.toString())">Zuweisen</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FORMULAR erscheint hier dynamisch -->
-<form *ngIf="selectedSection" (ngSubmit)="onSubmit()" class="p-3 border rounded shadow-sm bg-light">
-
-  <!-- AUSTELLUNGEN -->
-  <ng-container *ngIf="selectedSection === 'ausstellungen'">
-    <h4>Ausstellungen</h4>
-    <div class="mb-3">
-      <label class="form-label">Titel</label>
-      <input type="text" class="form-control" [(ngModel)]="post.ausstellungen.title" name="ausstellungenTitle" />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Text</label>
-      <textarea class="form-control" rows="5" [(ngModel)]="post.ausstellungen.text" name="ausstellungenText"></textarea>
-    </div>
-  </ng-container>
-
-  <!-- NEUIGKEITEN -->
-  <ng-container *ngIf="selectedSection === 'neuigkeiten'">
-    <h4>Neuigkeiten</h4>
-    <div class="mb-3">
-      <label class="form-label">Titel</label>
-      <input type="text" class="form-control" [(ngModel)]="post.neuigkeiten.title" name="neuigkeitenTitle" />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Text</label>
-      <textarea class="form-control" rows="5" [(ngModel)]="post.neuigkeiten.text" name="neuigkeitenText"></textarea>
-    </div>
-  </ng-container>
-
-  <!-- ÜBER MICH -->
-  <ng-container *ngIf="selectedSection === 'ueber-mich'">
-    <h4>Über mich</h4>
-    <div class="mb-3">
-      <label class="form-label">Bild</label>
-      <input type="file" class="form-control" (change)="onImageSelected($event, 'ueberMich')" />
-      <img *ngIf="post.ueberMich.imagePreview" [src]="post.ueberMich.imagePreview" class="img-thumbnail mt-2" style="max-height: 200px;" />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Text</label>
-      <textarea class="form-control" rows="5" [(ngModel)]="post.ueberMich.text" name="ueberMichText"></textarea>
-    </div>
-  </ng-container>
-
-  <!-- STARTSEITE -->
-  <ng-container *ngIf="selectedSection === 'startseite'">
-    <h4>Startseite</h4>
-    <div class="mb-3">
-      <label class="form-label">Bild</label>
-      <input type="file" class="form-control" (change)="onImageSelected($event, 'startseite')" />
-      <img *ngIf="post.startseite.imagePreview" [src]="post.startseite.imagePreview" class="img-thumbnail mt-2" style="max-height: 200px;" />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Titel</label>
-      <input type="text" class="form-control" [(ngModel)]="post.startseite.title" name="startTitle" />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Text</label>
-      <textarea class="form-control" rows="5" [(ngModel)]="post.startseite.text" name="startText"></textarea>
-    </div>
-    <div class="form-check mb-3">
-      <input type="checkbox" class="form-check-input" [(ngModel)]="post.startseite.showButton" name="showButton" />
-      <label class="form-check-label">Button anzeigen</label>
-    </div>
-    <div *ngIf="post.startseite.showButton">
-      <div class="mb-2">
-        <label class="form-label">Button Text</label>
-        <input type="text" class="form-control" [(ngModel)]="post.startseite.buttonText" name="buttonText" />
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Button Link</label>
-        <input type="text" class="form-control" [(ngModel)]="post.startseite.buttonLink" name="buttonLink" />
-      </div>
-    </div>
-  </ng-container>
-
-  <button type="submit" class="btn btn-success mt-3">Speichern</button>
-</form>
+<router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-import { Component, Input, signal, computed } from '@angular/core';
+import { Component, Input, signal, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PostListActionItemComponent } from '../post-list-action-item/post-list-action-item.component';
@@ -21,7 +21,7 @@ import { PostListAddButtonComponent } from '../post-list-add-button/post-list-ad
   styleUrls: ['./post-list.component.scss'],
 })
 export class PostListComponent<T> {
-  @Input() items: T[] = [];
+  items = input.required<T[]>();
   @Input() getTitle!: (item: T) => string;
   @Input() getSubtitle!: (item: T) => string;
   @Input() getBadge!: (item: T) => string;
@@ -35,7 +35,7 @@ export class PostListComponent<T> {
 
   pagedItems = computed(() => {
     const start = this.page() * this.pageSize;
-    return this.items.slice(start, start + this.pageSize);
+    return this.items().slice(start, start + this.pageSize);
   });
 
   getWrappedAction = (a: PostListAction<T>, item: T): (() => void) => {

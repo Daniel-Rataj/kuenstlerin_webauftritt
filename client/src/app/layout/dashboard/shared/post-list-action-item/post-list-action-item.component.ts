@@ -11,7 +11,7 @@ export class PostListActionItemComponent {
   @Input() label!: string;
   @Input() iconClass!: string;
   @Input() isDanger = false;
-  @Input() action!: () => void;
+  @Input() action!: () => void | Promise<void>;
 
   onClick(): void {
     this.action();

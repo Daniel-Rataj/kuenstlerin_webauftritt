@@ -47,8 +47,9 @@
 
 <!-- Pagination -->
 <app-pagination
+  *ngIf="items().length > 0"
   [currentPage]="page()"
   [pageSize]="pageSize"
-  [totalItems]="items.length"
+  [totalItems]="items().length"
   (pageChange)="page.set($event)"
 />

@@ -19,9 +19,4 @@ import { DashboardHeaderComponent } from '../../shared/dashboard-header/dashboar
 export class GalleryPostComponent {
 
   constructor(private readonly router: Router, private readonly route: ActivatedRoute) {}
-
-  navigateToCreateWizard() {
-    this.router.navigate(['/dashboard/moderator/exhibition/create']);
-  }
-
 }
