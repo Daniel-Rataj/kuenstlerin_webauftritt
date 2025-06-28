@@ -18,6 +18,9 @@ import { PublicLayoutComponent } from './layout/public-layout/public-layout.comp
 import { loginRedirectGuard } from './configs/guards/login-redirect.guard';
 import { ImpressumComponent } from './pages/impressum/impressum.component';
 import { DatenschutzComponent } from './pages/datenschutz/datenschutz.component';
+import { ArticlePostComponent } from './layout/dashboard/moderator/article-post/article-post.component';
+import { AssignArticleComponent } from './layout/dashboard/moderator/home-post/assign-article/assign-article.component';
+import { ProfileDataPostComponent } from './layout/dashboard/moderator/profile-data-post/profile-data-post.component';
 
 export const routes: Routes = [
     // Public Region
@@ -53,14 +56,16 @@ export const routes: Routes = [
                     { path: 'insights', component: InsightsComponent },
                 ],
             },
-
             // Moderator-Routes
             {
                 path: 'moderator',
                 canActivate: [roleGuard([UserRole.Moderator])],
                 children: [
                     { path: 'gallery', component: GalleryPostComponent },
-                    { path: 'latest', component: HomePostComponent },
+                    { path: 'assignments', component: HomePostComponent },
+                    { path: 'article', component: ArticlePostComponent },
+                    { path: 'profile', component: ProfileDataPostComponent },
+                    { path: 'assign/:id', component: AssignArticleComponent },
                     { path: 'exhibition/create', component: ExhibitionCreateWizardComponent },
                     { path: 'exhibition/:id', component: ExhibitionCreateWizardComponent },
                 ],

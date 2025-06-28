@@ -1,0 +1,29 @@
+<!-- Drafts Section -->
+<div class="mb-5">
+  <div class="mb-3">
+    <i class="fa-solid fa-paragraph" style="color: #ff8800"></i>
+    Artikel
+  </div>
+
+  <app-post-list
+    [items]="getArticles()"
+    [getTitle]="getTitle"
+    [getSubtitle]="getSubtitle"
+    [getBadge]="getBadge"
+    [getBadgeClass]="getBadgeClass"
+    [getElementCount]="getElementCount"
+    [actions]="getActions()"
+    [addButton]="getAddButton()"
+  />
+</div>
+
+<!-- Confirm Dialog -->
+<app-confirm-dialog
+  [show]="showConfirmDelete"
+  [title]="'Löschen bestätigen'"
+  [message]="'Möchtest du den Artikel: ' + selectedArticle?.title + ' wirklich löschen?'"
+  [confirmText]="'Löschen'"
+  [cancelText]="'Abbrechen'"
+  (confirm)="confirmDelete()"
+  (cancel)="closeConfirmDeleteModal()"
+/>

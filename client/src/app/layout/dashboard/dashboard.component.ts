@@ -21,19 +21,33 @@ export class DashboardComponent {
   // Define all available dashboard cards with their metadata and access roles
   private readonly allCards = [
     {
-      title: 'Gallerie Posts',
-      description:
-        'Durchsuchen, bearbeiten und erstellen neuer Inhalte für die Gallerie',
+      title: 'Ausstellungen',
+      description: 'Durchsuchen, bearbeiten und erstellen neuer Inhalte für die Gallerie',
       icon: 'fas fa-images',
       route: '/dashboard/moderator/gallery',
       roles: [UserRole.Moderator],
     },
     {
-      title: 'Homepage Posts',
+      title: 'Inhalte der Startseite zuweisen',
+      description: 'Zuweisen von Artikeln und Bildern für die Abschnitte der Startseite',
+      icon: 'fas fa-house-circle-check',
+      route: '/dashboard/moderator/assignments',
+      roles: [UserRole.Moderator],
+    },
+    {
+      title: 'Artikel erstellen',
       description:
-        'Durchsuchen, bearbeiten und erstellen neuer Inhalte für den Abschnitt "Aktuelles" der Homepage',
-      icon: 'fas fa-images',
-      route: '/dashboard/moderator/latest',
+        'Durchsuchen, bearbeiten und erstellen neuer Artikel für die Startseite und Blog',
+      icon: 'fas fa-newspaper',
+      route: '/dashboard/moderator/article',
+      roles: [UserRole.Moderator],
+    },
+    {
+      title: 'Persönliche Daten pflegen',
+      description:
+        'Pflege von persönlichen Daten wie Telefonnummer, Adresse und Portaitbild',
+      icon: 'fas fa-newspaper',
+      route: '/dashboard/moderator/profile',
       roles: [UserRole.Moderator],
     },
     {

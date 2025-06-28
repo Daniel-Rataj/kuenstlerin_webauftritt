@@ -87,12 +87,7 @@ namespace server.Controllers
             try
             {
                 var existing = await _logic.PublishAsync(id);
-                if (existing is null) return NotFound();
-
-                existing.Status = ExhibitionStatus.Public;
-                var updated = await _logic.UpdateAsync(existing);
-
-                return Ok(updated);
+                return Ok(existing);
             }
             catch (Exception ex)
             {
