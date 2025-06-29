@@ -10,6 +10,6 @@ import { HttpClient } from '@angular/common/http';
 export class ArticleService extends BaseService<Article, CreateArticleDto>{
 
   constructor(http: HttpClient) {
-      super(http, 'exhibition');
+      super(http, 'article');
     }
 }

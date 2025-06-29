@@ -21,18 +21,19 @@ import { AssignArticleComponent } from './assign-article/assign-article.componen
   ],
 })
 export class HomePostComponent {
-  sections = [
-    { id: 0, label: 'Startseite Block 1' },
-    { id: 1, label: 'Startseite Block 2' },
-    { id: 2, label: 'Startseite Block 3' },
+  homepageBlock = [
+    { id: 1, placeInHomepage: 'Startseite Block 1' },
+    { id: 2, placeInHomepage: 'Startseite Block 2' },
+    { id: 3, placeInHomepage: 'Startseite Block 3' },
   ];
   constructor(private readonly router: Router) {}
 
-  navigateToAssignment(articleAssignmentId: string) {
-    const index = parseInt(articleAssignmentId, 10);
-    const sectionLabel = this.sections[index]?.label ?? '';
-    this.router.navigate([`/dashboard/moderator/assign/${articleAssignmentId}`], {
-      queryParams: { sectionLabel: sectionLabel },
+
+  navigateToAssignment(index: number) {
+    const homepageBlockId = this.homepageBlock[index].id;
+    const placeInHomepage = this.homepageBlock[index].placeInHomepage ?? '';
+    this.router.navigate([`/dashboard/moderator/assign/${homepageBlockId}`], {
+      queryParams: { placeInHomepage: placeInHomepage },
     });
   }
 }

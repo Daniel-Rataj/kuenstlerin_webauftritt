@@ -21,6 +21,7 @@ import { DatenschutzComponent } from './pages/datenschutz/datenschutz.component'
 import { ArticlePostComponent } from './layout/dashboard/moderator/article-post/article-post.component';
 import { AssignArticleComponent } from './layout/dashboard/moderator/home-post/assign-article/assign-article.component';
 import { ProfileDataPostComponent } from './layout/dashboard/moderator/profile-data-post/profile-data-post.component';
+import { ArticleFormComponent } from './layout/dashboard/moderator/article-post/article-create/article-form.component';
 
 export const routes: Routes = [
     // Public Region
@@ -64,6 +65,8 @@ export const routes: Routes = [
                     { path: 'gallery', component: GalleryPostComponent },
                     { path: 'assignments', component: HomePostComponent },
                     { path: 'article', component: ArticlePostComponent },
+                    { path: 'article/create', component: ArticleFormComponent },
+                    { path: 'article/:id/edit', component: ArticleFormComponent },
                     { path: 'profile', component: ProfileDataPostComponent },
                     { path: 'assign/:id', component: AssignArticleComponent },
                     { path: 'exhibition/create', component: ExhibitionCreateWizardComponent },

@@ -10,34 +10,34 @@ export interface PostListHost<T> {
    * Returns the main title for the list item.
    * Example: item.title
    */
-  getTitle(item: T): string;
+  getTitle(item: T): string | Promise<string>;
 
   /**
    * Returns a secondary line of text, e.g., a formatted date or description.
    */
-  getSubtitle(item: T): string;
+  getSubtitle(item: T): string | Promise<string>;
 
   /**
    * Returns the text label for the status badge.
    * Example: status string like "Draft" or "Published"
    */
-  getBadge(item: T): string;
+  getBadge(item: T): string | Promise<string>;
 
   /**
    * Returns the CSS class for the badge.
    * Example: "bg-success", "bg-secondary"
    */
-  getBadgeClass(item: T): string;
+  getBadgeClass(item: T): string | Promise<string>;
 
   /**
    * Returns the number of elements associated with the item.
    * Example: item.elements.length
    */
-  getElementCount(item: T): number;
+  getElementCount(item: T): number | Promise<string>;
 
   /**
    * Optional: returns configuration for the add button displayed above the list.
    * If not provided, the button will be omitted.
    */
-  getAddButton?(): PostListAddConfig;
+  getAddButton?(): PostListAddConfig | Promise<PostListAddConfig>;
 }

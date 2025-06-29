@@ -1,32 +1,52 @@
 <app-dashboard-header [title]="'Artikel der Startseite zuweisen'"></app-dashboard-header>
 
-<!-- Breadcrumb and Backnavigation -->
-<app-dashboard-toolbar *ngIf="sectionLabel" [breadcrumbs]="['Dashboard', 'Artikel zuweisen', sectionLabel]"></app-dashboard-toolbar>
+<app-dashboard-toolbar
+  *ngIf="sectionLabel"
+  [breadcrumbs]="['Dashboard', 'Artikel zuweisen', sectionLabel]"
+></app-dashboard-toolbar>
 
 <div class="mb-3" style="max-width: 50%;">
-<label>Artikel auswählen
-    <select class="form-select d-block w-200" [(ngModel)]="selectedArticle">
-        <option [ngValue]="null" disabled selected>-- auswählen --</option>
-        <option *ngFor="let a of articles" [ngValue]="a">{{ a }}</option>
-    </select>
-</label>
-<div class="form-text text-muted"> Der ausgewählte Artikel wird auf der Startseite angezeigt</div>
+  <label for="articleSelect">Artikel auswählen</label>
+  <select
+    id="articleSelect"
+    class="form-select"
+    [(ngModel)]="selectedArticleId"
+    [ngModelOptions]="{ standalone: true }"
+  >
+    <option [ngValue]="null" disabled>-- auswählen --</option>
+    <option *ngFor="let a of articles" [ngValue]="a.id">{{ a.title }}</option>
+  </select>
+  <div class="form-text text-muted">
+    Der ausgewählte Artikel wird auf der Startseite angezeigt
+  </div>
 </div>
 
 <div class="form-check mb-2">
-<input class="form-check-input" type="checkbox" [(ngModel)]="showButtonOptions" id="btnAdd">
-<label class="form-check-label" for="btnAdd">Button hinzufügen</label>
+  <input
+    class="form-check-input"
+    type="checkbox"
+    [(ngModel)]="showButton"
+    [ngModelOptions]="{ standalone: true }"
+    id="btnAdd"
+  />
+  <label class="form-check-label" for="btnAdd">Button hinzufügen</label>
 </div>
 
-<div *ngIf="showButtonOptions" class="mb-3" style="max-width: 50%;">
-<label>Auf welche Seite soll der Button führen?
-<select class="form-select d-block w-200" [(ngModel)]="selectedButtonArticle">
-    <option [ngValue]="null" disabled selected>-- auswählen --</option>
+<div *ngIf="showButton" class="mb-3" style="max-width: 50%;">
+  <label for="targetRouteSelect">Auf welche Seite soll der Button führen?</label>
+  <select
+    id="targetRouteSelect"
+    class="form-select"
+    [(ngModel)]="buttonTargetRoute"
+    [ngModelOptions]="{ standalone: true }"
+  >
+    <option [ngValue]="null" disabled>-- auswählen --</option>
     <option *ngFor="let route of pageRoutes" [ngValue]="route.path">
       {{ route.label }}
     </option>
-</select>
-</label>
+  </select>
 </div>
 
-<button class="btn btn-primary" onkeypress="saveArticleAssignment()">Speichern</button>
+<button class="btn btn-primary" (click)="saveArticleAssignment()">
+  Speichern
+</button>

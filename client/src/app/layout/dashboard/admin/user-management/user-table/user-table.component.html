@@ -61,6 +61,7 @@
   title="Benutzer löschen"
   [message]="'Möchtest du den Benutzer »' + selectedUserToDelete?.username + '« wirklich löschen?'"
   confirmText="Löschen"
+  [confirmClass]="'btn-danger'"
   cancelText="Abbrechen"
   (confirm)="confirmDeleteUser()"
   (cancel)="cancelDeleteUser()">

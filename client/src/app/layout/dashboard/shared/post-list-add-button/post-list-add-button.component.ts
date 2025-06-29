@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PostListAddButtonComponent {
   @Input() label: string = 'Hinzufügen';
-  @Input() action!: () => void;
+  @Input() action!: () => void | Promise<void>;
 
   onClick(): void {
     this.action();

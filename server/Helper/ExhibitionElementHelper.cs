@@ -38,6 +38,11 @@ namespace server.Helper
                 ExhibitionId = entity.ExhibitionId,
             };
         }
+
+        internal static void MapToExistingEntity(dataTransfer.ExhibitionElement dto, dataAccess.ExhibitionElement entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

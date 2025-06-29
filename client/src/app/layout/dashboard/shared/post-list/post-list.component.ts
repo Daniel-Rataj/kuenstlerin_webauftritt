@@ -22,11 +22,11 @@ import { PostListAddButtonComponent } from '../post-list-add-button/post-list-ad
 })
 export class PostListComponent<T> {
   items = input.required<T[]>();
-  @Input() getTitle!: (item: T) => string;
-  @Input() getSubtitle!: (item: T) => string;
-  @Input() getBadge!: (item: T) => string;
-  @Input() getBadgeClass!: (item: T) => string;
-  @Input() getElementCount!: (item: T) => number;
+  @Input() getTitle!: (item: T) => string | Promise<string>;
+  @Input() getSubtitle!: (item: T) => string | Promise<string>;
+  @Input() getBadge!: (item: T) => string | Promise<string>;
+  @Input() getBadgeClass!: (item: T) => string | Promise<string>;
+  @Input() getElementCount!: (item: T) => number | Promise<number>;
   @Input() actions: PostListAction<T>[] = [];
   @Input() addButton?: PostListAddConfig;
 
@@ -38,7 +38,7 @@ export class PostListComponent<T> {
     return this.items().slice(start, start + this.pageSize);
   });
 
-  getWrappedAction = (a: PostListAction<T>, item: T): (() => void) => {
+  getWrappedAction = (a: PostListAction<T>, item: T): (() => void) | (() => Promise<void>) => {
     return () => a.action?.(item);
   };
 }

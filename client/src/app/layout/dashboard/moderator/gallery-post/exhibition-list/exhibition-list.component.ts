@@ -9,7 +9,6 @@ import { PostListComponent } from '../../../shared/post-list/post-list.component
 import { PostListAction } from '../../../shared/configs/post-list-action';
 import { PostListAddConfig } from '../../../shared/configs/post-list-add-button';
 import { PostListHost } from '../../../shared/configs/post-list';
-import { PostListActionItemComponent } from '../../../shared/post-list-action-item/post-list-action-item.component';
 
 @Component({
   selector: 'app-exhibition-list',

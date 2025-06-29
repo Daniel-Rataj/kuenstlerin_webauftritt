@@ -1,0 +1,31 @@
+<app-dashboard-header [title]="'Artikel erstellen'"></app-dashboard-header>
+
+<!-- Breadcrumb and Backnavigation -->
+<app-dashboard-toolbar [breadcrumbs]="['Dashboard', 'Artikelübersicht', 'Neuen Artikel erstellen']"></app-dashboard-toolbar>
+
+<form #articleForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+  <div class="mb-3">
+    <label for="title" class="form-label">Titel des Artikels</label>
+    <input type="text" id="title" name="title" class="form-control" required [(ngModel)]="article.title" #title="ngModel">
+    <div class="text-danger" *ngIf="title.invalid && title.touched">Title ist erforderlich.</div>
+  </div>
+  <div class="mb-3">
+    <label for="content" class="form-label">Inhalt des Artikels</label>
+    <textarea id="content" name="content" class="form-control" required [(ngModel)]="article.content" #content="ngModel"></textarea>
+    <div class="text-danger" *ngIf="content.invalid && content.touched">Content ist erforderlich.</div>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="articleForm.invalid">Speichern</button>
+</form>
+
+<app-confirm-dialog
+  [show]="showConfirmDialog"
+  [title]="articleId ? 'Artikel aktualisieren' : 'Artikel erstellen'"
+  [message]="articleId 
+    ? 'Möchtest du den Artikel »' + article.title + '« wirklich aktualisieren?' 
+    : 'Möchtest du den Artikel »' + article.title + '« wirklich erstellen?'"
+  [confirmText]="articleId ? 'Aktualisieren' : 'Erstellen'"
+  cancelText="Abbrechen"
+  (confirm)="confirmCreate()"
+  (cancel)="cancelCreate()">
+</app-confirm-dialog>
+

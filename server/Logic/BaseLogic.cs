@@ -48,6 +48,8 @@ namespace server.Logic.Base
 
         protected abstract TEntity MapToEntity(TDto dto);
         protected abstract TDto MapToDto(TEntity entity);
+        protected abstract void MapToExistingEntity(TDto dto, TEntity entity);
+        
     }
 
 }

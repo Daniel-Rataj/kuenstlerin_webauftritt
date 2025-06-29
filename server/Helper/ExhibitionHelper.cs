@@ -38,5 +38,14 @@ namespace server.Helper
                 Status = entity.Status,
             };
         }
+
+        internal static void MapToExistingEntity(dataTransfer.Exhibition dto, dataAccess.Exhibition entity)
+        {
+            entity.Title = dto.Title;
+            entity.Date = dto.Date;
+            entity.Status = dto.Status;
+
+            // ExhibitionElements Mapping optional, je nach Logik (merge/replace)
+        }
     }
 }

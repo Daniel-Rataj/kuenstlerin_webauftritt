@@ -21,8 +21,9 @@
 <app-confirm-dialog
   [show]="showConfirmDelete"
   [title]="'Löschen bestätigen'"
-  [message]="'Möchtest du den Artikel: ' + selectedArticle?.title + ' wirklich löschen?'"
+  [message]="'Möchtest du den Artikel ' + selectedArticle?.title + ' wirklich löschen?'"
   [confirmText]="'Löschen'"
+  [confirmClass]="'btn-danger'"
   [cancelText]="'Abbrechen'"
   (confirm)="confirmDelete()"
   (cancel)="closeConfirmDeleteModal()"

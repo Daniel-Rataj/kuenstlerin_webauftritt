@@ -41,6 +41,7 @@
   [title]="'Löschen bestätigen'"
   [message]="'Möchtest du die Ausstellung ' + selectedExhibition?.title + ' wirklich löschen?'"
   [confirmText]="'Löschen'"
+  [confirmClass]="'btn-danger'"
   [cancelText]="'Abbrechen'"
   (confirm)="confirmDelete()"
   (cancel)="closeConfirmDeleteModal()"

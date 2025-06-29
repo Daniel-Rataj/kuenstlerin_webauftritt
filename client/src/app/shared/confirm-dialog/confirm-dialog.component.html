@@ -1,20 +1,9 @@
 <!-- Modal backdrop -->
-<div
-  class="modal-backdrop fade"
-  [class.show]="show"
-  *ngIf="show"
-></div>
+<div class="modal-backdrop fade" [class.show]="show" *ngIf="show"></div>
 
 <!-- Modal dialog -->
-<div
-  class="modal fade"
-  tabindex="-1"
-  [class.show]="show"
-  [style.display]="show ? 'block' : 'none'"
-  (click)="onBackdropClick()"
-  aria-modal="true"
-  role="dialog"
->
+<div class="modal fade" tabindex="-1" [class.show]="show" [style.display]="show ? 'block' : 'none'"
+  (click)="onBackdropClick()" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
     <div class="modal-content">
       <div class="modal-header">
@@ -28,7 +17,7 @@
         <button type="button" class="btn btn-secondary rounded-pill btn-sm" (click)="onCancelClick()">
           {{ cancelText }}
         </button>
-        <button type="button" class="btn btn-danger rounded-pill btn-sm" (click)="onConfirmClick()">
+        <button type="button" class="btn rounded-pill btn-sm" [ngClass]="confirmClass" (click)="onConfirmClick()">
           {{ confirmText }}
         </button>
       </div>

@@ -9,6 +9,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   standalone:true
 })
 export class ConfirmDialogComponent {
+  @Input() confirmClass = 'btn-primary';
   @Input() show = false;
   @Input() title = 'Bestätigung';
   @Input() message = 'Bist du sicher?';

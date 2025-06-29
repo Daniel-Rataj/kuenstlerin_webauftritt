@@ -43,7 +43,9 @@ builder.Services.AddScoped<IBaseLogic<dataTransfer.Exhibition>, ExhibitionLogic>
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAuthLogic, AuthLogic>();
 builder.Services.AddScoped<IExhibitionLogic, ExhibitionLogic>();
-builder.Services.AddScoped<IExhibitionElementLogic, ExhibitionElementLogic>(); 
+builder.Services.AddScoped<IExhibitionElementLogic, ExhibitionElementLogic>();
+builder.Services.AddScoped<IArticleLogic, ArticleLogic>();
+builder.Services.AddScoped<IArticleAssignmentLogic, ArticleAssignmentLogic>();
 
 // Register generic repository services for dependency injection.
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -53,6 +55,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IExhibitionRepository, ExhibitionRepository>();
 builder.Services.AddScoped<IExhibitionElementRepository, ExhibitionElementRepository>();
+builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
+builder.Services.AddScoped<IArticleAssignmentRepository, ArticleAssignmentRepository>();
 
 // Register the application's database context and configure it to use SQLite.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

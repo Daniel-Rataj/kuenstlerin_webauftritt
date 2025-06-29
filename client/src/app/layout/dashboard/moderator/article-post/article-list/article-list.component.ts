@@ -8,6 +8,7 @@ import { ConfirmDialogComponent } from '../../../../../shared/confirm-dialog/con
 import { CommonModule } from '@angular/common';
 import { PostListComponent } from '../../../shared/post-list/post-list.component';
 import { PostListAction } from '../../../shared/configs/post-list-action';
+import { ArticleAssignmentService } from '../../../../../services/articleAssignment/article-assignment.service';
 
 @Component({
   selector: 'app-article-list',
@@ -18,23 +19,41 @@ import { PostListAction } from '../../../shared/configs/post-list-action';
 })
 export class ArticleListComponent implements PostListHost<Article>, OnInit {
   private readonly articles = signal<Article[]>([]);
+  private readonly assignments = signal<{ articleId: number }[]>([]);
   selectedArticle?: Article;
   showConfirmDelete = false;
 
 
-  constructor(private readonly router: Router, private readonly articleService: ArticleService) {}
+  constructor(private readonly router: Router,
+    private readonly articleService: ArticleService,
+    private readonly articleAssignmentService: ArticleAssignmentService
+  ) {}
 
   ngOnInit(): void {
     this.loadArticles();
   }
 
   async loadArticles(): Promise<void> {
-    //const data = await this.articleService.getAllAsync();
-    // this.articles.set(data);
+    try {
+      const [articles, assignments] = await Promise.all([
+        this.articleService.getAllAsync(),
+        this.articleAssignmentService.getAllAsync()
+      ]);
+      this.articles.set(articles);
+      this.assignments.set(assignments);
+    } catch (error) {
+      console.error("Fehler beim Laden", error);
+    } finally {
+      console.log("TODO: Toastservice");
+    }
   }
 
   getArticles(): Article[] {
     return this.articles();
+  }
+
+  isArticleAssigned(article: Article): boolean {
+    return this.assignments().some(a => a.articleId === article.id);
   }
 
   public navigateToCreate(): void {
@@ -54,12 +73,18 @@ export class ArticleListComponent implements PostListHost<Article>, OnInit {
   
     async confirmDelete(): Promise<void> {
       if (!this.selectedArticle) return;
-  
-      await this.articleService.deleteAsync(this.selectedArticle.id);
-      this.articles.set(
-        this.articles().filter(e => e.id !== this.selectedArticle!.id)
-      );
-      this.closeConfirmDeleteModal();
+      
+      try {
+        await this.articleService.deleteAsync(this.selectedArticle.id);
+        this.articles.set(
+          this.articles().filter(e => e.id !== this.selectedArticle!.id)
+        );
+      } catch(error) {
+        console.error("Fehler beim Löschen des Artikels", error)
+      } finally {
+        console.log("TODO: Toastservice")
+        this.closeConfirmDeleteModal();
+      }
     }
     //#endregion
   
@@ -67,16 +92,13 @@ export class ArticleListComponent implements PostListHost<Article>, OnInit {
 
   getSubtitle = (article: Article) => "";
 
-  getBadge(item: Article): string {
-    // Ist Article einem PageBlock zugewiesen, dann zeige Assigned an ansonsten nichts
-
-    throw new Error('Method not implemented.');
+  getBadge = (article: Article): string => {
+    return this.isArticleAssigned(article) ? "Assigned" : "Not Assigned"
   }
 
-  getBadgeClass(item: Article): string {
-    // Ist Article einem PageBlock zugewiesen, dann soll bg-info als Class verwendet werden
-    throw new Error('Method not implemented.');
-  }
+  getBadgeClass = (article: Article): string => {
+    return this.isArticleAssigned(article) ? "bg-success" : "bg-info";
+  } 
 
   getElementCount = (article: Article) => 1;
 
@@ -96,8 +118,8 @@ export class ArticleListComponent implements PostListHost<Article>, OnInit {
     return [editAction, deleteAction]
   }
 
-  navigateToEdit(arg0: number): void | Promise<void> {
-    throw new Error('Method not implemented.');
+  navigateToEdit(articleId: number): void | Promise<void> {
+    this.router.navigate([`/dashboard/moderator/article/${articleId}/edit`]);
   }
 
   getAddButton(): PostListAddConfig {

@@ -224,5 +224,10 @@ namespace server.Logic
                 File.Delete(fullPath);
             }
         }
+
+        protected override void MapToExistingEntity(dataTransfer.Exhibition dto, dataAccess.Exhibition entity)
+        {
+            ExhibitionHelper.MapToExistingEntity(dto, entity);
+        }
     }
 }

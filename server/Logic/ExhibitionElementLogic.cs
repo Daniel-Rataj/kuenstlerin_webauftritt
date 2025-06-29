@@ -24,5 +24,10 @@ namespace server.Logic
         {
             return ExhibitionElementHelper.ToEntity(dto);
         }
+
+        protected override void MapToExistingEntity(dataTransfer.ExhibitionElement dto, ExhibitionElement entity)
+        {
+            ExhibitionElementHelper.MapToExistingEntity(dto, entity);
+        }
     }
 }
