@@ -1,0 +1,49 @@
+/* Button bleibt unverändert und separat */
+.btn-wrapper {
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-secondary {
+  background-color: #000;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  text-decoration: none;
+  border: none;
+  display: inline-block;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #333;
+    color: #fff;
+  }
+}
+
+.info-item {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+  flex: 1 1 320px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.info-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1c1c1c;
+  font-weight: 600;
+  text-align: center;
+}
+
+.info-item p {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.6;
+  font-weight: 300;
+  text-align: left;
+}

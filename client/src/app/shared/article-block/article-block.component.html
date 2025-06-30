@@ -1,0 +1,10 @@
+<div class="info-item" *ngIf="article">
+  <h3>{{ article.title }}</h3>
+  <p>{{ article.content }}</p>
+
+  <div class="btn-wrapper" *ngIf="showButton && buttonTargetRoute && buttonLabel">
+    <a [routerLink]="buttonTargetRoute" class="btn-secondary">
+      {{ buttonLabel }}
+    </a>
+  </div>
+</div>

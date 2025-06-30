@@ -5,6 +5,7 @@ import { ExhibitionService } from '../../services/exhibition/exhibition.service'
 import { ExhibitionDto, ExhibitionElement } from '../../models/dto/exhibition.dto';
 import { ExhibitionGridComponent } from '../../shared/exhibition-grid/exhibition-grid.component';
 import { ExhibitionElementsModalComponent } from '../../shared/exhibition-elements-modal/exhibition-elements-modal.component';
+import { ArticleBlockComponent } from '../../shared/article-block/article-block.component';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ import { ExhibitionElementsModalComponent } from '../../shared/exhibition-elemen
     CommonModule,
     RouterModule,
     ExhibitionGridComponent,
-    ExhibitionElementsModalComponent
+    ExhibitionElementsModalComponent,
+    ArticleBlockComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']

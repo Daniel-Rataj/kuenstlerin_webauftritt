@@ -1,20 +1,5 @@
-<section class="favorite container centered">
-  <div class="favorite-art">
-    <div class="art-item favorite" (click)="openFavoriteArtModal()">
-      <img [src]="favoriteArt.img" [alt]="favoriteArt.title" />
-    </div>
-  </div>
-
-  <div class="info-item favorite-text-block">
-    <h3>Mein Lieblingsbild</h3>
-    <p>
-      Dieses Werk ist mein persönliches Lieblingsbild. Es entstand in einer besonders intensiven Phase meines Lebens und vereint Erinnerungen, Emotionen und Farben, die mir sehr am Herzen liegen. Jede Linie und jeder Farbton erzählt meine Geschichte – kraftvoll und zugleich verletzlich.
-    </p>
-  </div>
-
-  <div class="btn-wrapper">
-    <a routerLink="/aboutme" class="btn-secondary">Erfahre mehr über mich</a>
-  </div>
+<section class="info-grid container centered">
+    <app-article-block class="info-item" [pageBlockId]="1"></app-article-block>
 </section>
 
 <section class="portfolio-preview container">
@@ -37,25 +22,10 @@
 </section>
 
 
-<section class="info-grid container">
-  <div class="info-item">
-    <h3>Ausstellungen</h3>
-    <p>
-      Informieren Sie sich über aktuelle und vergangene Ausstellungen meiner
-      Werke in verschiedenen Galerien und Kunsthäusern.
-    </p>
-  </div>
-  <div class="info-item">
-    <h3>Neuigkeiten</h3>
-    <p>
-      Bleiben Sie auf dem Laufenden über neue Projekte, kommende Events oder
-      Veröffentlichungen rund um meine Kunst.
-    </p>
-  </div>
+<section class="info-grid container centered">
+    <app-article-block class="info-item" [pageBlockId]="2"></app-article-block>
+    <app-article-block class="info-item" [pageBlockId]="3"></app-article-block>
 </section>
 
-<app-exhibition-elements-modal
-  *ngIf="selectedElement"
-  [element]="selectedElement"
-  (close)="closeModal()">
+<app-exhibition-elements-modal *ngIf="selectedElement" [element]="selectedElement" (close)="closeModal()">
 </app-exhibition-elements-modal>
