@@ -1,8 +1,7 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Benutzerverwaltung</h3>
-  </div>
+<app-dashboard-header [title]="'Benutzerverwaltung'"></app-dashboard-header>
 
+<!-- Breadcrumb and Backnavigation -->
+<app-dashboard-toolbar [breadcrumbs]="['Dashboard', 'Benutzerverwaltung']"></app-dashboard-toolbar>
 
-  <app-user-table></app-user-table>
-</div>
+<app-user-table></app-user-table>
+<router-outlet></router-outlet>
