@@ -22,6 +22,7 @@ import { ArticlePostComponent } from './layout/dashboard/moderator/article-post/
 import { AssignArticleComponent } from './layout/dashboard/moderator/home-post/assign-article/assign-article.component';
 import { ProfileDataPostComponent } from './layout/dashboard/moderator/profile-data-post/profile-data-post.component';
 import { ArticleFormComponent } from './layout/dashboard/moderator/article-post/article-create/article-form.component';
+import { BlogComponent } from './pages/blog/blog.component';
 
 export const routes: Routes = [
     // Public Region
@@ -33,6 +34,7 @@ export const routes: Routes = [
             { path: 'gallery', component: GalleryComponent },
             { path: 'aboutme', component: AboutmeComponent },
             { path: 'contact', component: ContactComponent },
+            { path: 'blog', component: BlogComponent },
             { path: 'impressum', component: ImpressumComponent },
             { path: 'datenschutz', component: DatenschutzComponent },
             { path: 'login', component: LoginComponent, canActivate: [loginRedirectGuard] },

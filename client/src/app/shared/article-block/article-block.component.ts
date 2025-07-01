@@ -14,7 +14,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './article-block.component.scss'
 })
 export class ArticleBlockComponent implements OnInit {
-  @Input() pageBlockId!: number;
+  @Input() pageBlockId?: number;
+  @Input() articleId?: number;
+
 
   article: Article | null = null;
   showButton = false;
@@ -27,20 +29,33 @@ export class ArticleBlockComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.inintialize();
+    this.initialize();
   }
    
-  async inintialize() {
-    const assignments = await this.assignmentService.getAllAsync();
-    const assignment = assignments.find(a => a.pageBlockId === this.pageBlockId);
-    if (!assignment) return;
+    async initialize() {
+    if (this.pageBlockId != null) {
+      const assignments = await this.assignmentService.getAllAsync();
+      const assignment = assignments.find(a => a.pageBlockId === this.pageBlockId);
+      if (!assignment) return;
 
-    this.showButton = assignment.showButton;
-    this.buttonTargetRoute = assignment.buttonTargetRoute || null;
-    this.buttonLabel = this.buttonTargetRoute
-      ? PageRouteMapping.getLabel(this.buttonTargetRoute)
-      : null;
+      this.showButton = assignment.showButton;
+      this.buttonTargetRoute = assignment.buttonTargetRoute || null;
+      this.buttonLabel = this.buttonTargetRoute
+        ? PageRouteMapping.getLabel(this.buttonTargetRoute)
+        : null;
 
-    this.article = await this.articleService.getByIdAsync(assignment.articleId);
+      this.article = await this.articleService.getByIdAsync(assignment.articleId);
+
+    } else if (this.articleId != null) {
+      this.article = await this.articleService.getByIdAsync(this.articleId);
+      this.showButton = false;
+      this.buttonTargetRoute = null;
+      this.buttonLabel = null;
+
+    } else {
+      console.warn(
+        'ArticleBlockComponent: Neither pageBlockId nor articleId was provided. Component will not render anything.'
+      );
+    }
   }
 }

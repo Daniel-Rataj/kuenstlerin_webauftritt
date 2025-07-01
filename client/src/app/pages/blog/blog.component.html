@@ -1,0 +1,9 @@
+<section class="container pt-5">
+  <div class="row g-4">
+    <div class="col-md-6" *ngFor="let article of articles">
+      <div class="article-hover p-3 h-100">
+        <app-article-block [articleId]="article.id" class="info-item d-block h-100"></app-article-block>
+      </div>
+    </div>
+  </div>
+</section>
