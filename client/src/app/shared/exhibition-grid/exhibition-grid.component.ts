@@ -13,6 +13,14 @@ export class ExhibitionGridComponent {
   @Input() exhibition!: ExhibitionDto;
   @Output() elementClicked = new EventEmitter<ExhibitionElement>();
 
+  get getFormattedDate(): string | undefined {
+    let formattedDate;
+    if(this.exhibition?.date){
+      formattedDate =  this.exhibition.date?.toLocaleDateString('de-DE');
+    }
+    return formattedDate;
+  }
+
   isOpen = true;
 
   toggleOpen(): void {

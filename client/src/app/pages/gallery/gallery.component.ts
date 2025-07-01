@@ -28,6 +28,10 @@ export class GalleryComponent {
   async initialize(): Promise<void> {
     try {
       const data = await this.exhibitionService.getAllPublishedAsync();
+      // sort after release date
+      data.sort((a, b) => 
+        new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime()
+      );
 
       this.exhibitions = data;
     } catch (err) {

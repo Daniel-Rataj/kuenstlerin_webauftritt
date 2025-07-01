@@ -37,6 +37,11 @@ export class ExhibitionBasicFormComponent implements OnInit, OnChanges{
 
   onSubmit() {
     if (this.form.valid) {
+      // If no Date is set, set the date to today
+      if (!this.form.value.date) {
+        const today = this.formatDate(new Date());
+        this.form.patchValue({ date: today });
+      }
       this.exhibitionDraftSubmitted.emit(this.form.value);
     } else {
       this.form.markAllAsTouched();
@@ -53,7 +58,8 @@ export class ExhibitionBasicFormComponent implements OnInit, OnChanges{
     const inputDate = new Date(control.value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    if (control.value && inputDate > today) {
+    inputDate.setHours(0, 0, 0, 0);
+    if (inputDate > today) {
       return { futureDate: true };
     }
     return null;

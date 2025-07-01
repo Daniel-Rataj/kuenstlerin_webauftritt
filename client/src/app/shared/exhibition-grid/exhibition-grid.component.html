@@ -2,7 +2,7 @@
     <div class="exhibition-header d-flex justify-content-between align-items-center mb-3" (click)="toggleOpen()" (keydown.enter)="toggleOpen()"
         style="cursor: pointer;">
         <h5 class="fw-semibold mb-0">
-            {{ exhibition.title }} – {{ exhibition.date | date: 'mediumDate' }}
+            {{ exhibition.title }} – {{ exhibition.date | date: 'dd.MM.yyyy' }}
         </h5>
         <i class="fas" [ngClass]="isOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
     </div>
