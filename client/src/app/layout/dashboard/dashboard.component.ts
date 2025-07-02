@@ -22,7 +22,7 @@ export class DashboardComponent {
   private readonly allCards = [
     {
       title: 'Ausstellungen',
-      description: 'Durchsuchen, bearbeiten und erstellen neuer Inhalte für die Gallerie',
+      description: 'Durchsuchen, bearbeiten und erstellen neuer Inhalte für die Galerie',
       icon: 'fas fa-images',
       route: '/dashboard/moderator/gallery',
       roles: [UserRole.Moderator],

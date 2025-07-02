@@ -66,7 +66,7 @@ public abstract class CrudBaseController<T> : ControllerBase where T : class
     {
         try
         {
-            var updated = await _logic.UpdateAsync(dto);
+            var updated = await _logic.UpdateAsync(id, dto);
             return Ok(updated);
         }
         catch (Exception exception)

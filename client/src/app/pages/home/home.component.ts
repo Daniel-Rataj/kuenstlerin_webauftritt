@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
     }
 
     if (latestExhibitions.length === 2) {
-      // 2 Galleries → 2 Bilder aus der ersten, 1 aus der zweiten
+      // 2 Galeries → 2 Bilder aus der ersten, 1 aus der zweiten
       return [
         ...latestExhibitions[0].exhibitionElements.slice(0, 2),
         ...latestExhibitions[1].exhibitionElements.slice(0, 1)
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
     }
 
     if (latestExhibitions.length >= 3) {
-      // 3 oder mehr Galleries → je 1 Bild aus den 3 neuesten
+      // 3 oder mehr Galeries → je 1 Bild aus den 3 neuesten
       return latestExhibitions.map(gallery => gallery.exhibitionElements[0]);
     }
 

@@ -28,8 +28,8 @@ namespace server.Helper
 
         public static void MapToExistingEntity(dataTransfer.Article dto, dataAccess.Article entity)
         {
-            dto.Title = entity.Title;
-            dto.Content = entity.Content;
+            entity.Title = dto.Title;
+            entity.Content = dto.Content;
         }
     }
 }

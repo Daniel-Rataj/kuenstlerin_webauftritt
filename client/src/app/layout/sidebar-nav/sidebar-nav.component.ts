@@ -46,7 +46,7 @@ export class SidebarNavigationComponent implements OnInit {
 
     // Optionally always include public routes like contact
     this.navItems.push(
-      { routerLink: '/gallery', label: 'Gallerie', icon: 'fa-panorama' },
+      { routerLink: '/gallery', label: 'Galerie', icon: 'fa-panorama' },
     );
   }
 

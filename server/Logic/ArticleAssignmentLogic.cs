@@ -16,7 +16,7 @@ namespace server.Logic
             _articleassignmentRepository = repository;
         }
 
-        public override async Task<dataTransfer.ArticleAssignment> UpdateAsync(dataTransfer.ArticleAssignment dto)
+        public override async Task<dataTransfer.ArticleAssignment> UpdateAsync(int id, dataTransfer.ArticleAssignment dto)
         {
             var existing = await _repository.GetByIdAsync(dto.Id);
             if (existing == null) throw new KeyNotFoundException($"Entity with ID {dto.Id} not found.");

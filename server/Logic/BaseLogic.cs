@@ -34,10 +34,13 @@ namespace server.Logic.Base
             return MapToDto(created);
         }
 
-        public virtual async Task<TDto> UpdateAsync(TDto dto)
+        public virtual async Task<TDto> UpdateAsync(int id,TDto dto)
         {
-            var entity = MapToEntity(dto);
-            var updated = await _repository.UpdateAsync(entity);
+            var existing = await _repository.GetByIdAsync(id);
+            if (existing == null) throw new KeyNotFoundException($"Entity with ID {id} not found.");
+
+            MapToExistingEntity(dto, existing);
+            var updated = await _repository.UpdateAsync(existing);
             return MapToDto(updated);
         }
 

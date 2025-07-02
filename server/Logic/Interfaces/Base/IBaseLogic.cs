@@ -34,7 +34,7 @@ namespace server.Logic.Interfaces.Base
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         /// <returns>The updated entity.</returns>
-        Task<TDto> UpdateAsync(TDto entity);
+        Task<TDto> UpdateAsync(int id, TDto entity);
 
         /// <summary>
         /// Asynchronously deletes an entity by its ID.
