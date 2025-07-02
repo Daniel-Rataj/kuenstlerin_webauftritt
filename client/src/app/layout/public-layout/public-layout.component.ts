@@ -76,7 +76,7 @@ export class PublicLayoutComponent implements OnInit {
     const path = this.router.url;
 
     if (path === '/' || path === '' || path.includes('home')) {
-      this.heroText = 'Willkommen bei der Künstlerin!';
+      this.heroText = 'Willkommen bei Tatjana Lindenau!';
     } else if (path.includes('gallery')) {
       this.heroText = 'Entdecke die Galerie!';
     } else if (path.includes('aboutme')) {

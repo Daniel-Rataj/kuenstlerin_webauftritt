@@ -4,7 +4,8 @@ export class PageRouteMapping {
     { path: '/aboutme', label: 'Über mich' },
     { path: '/contact', label: 'Kontakt' },
     { path: '/impressum', label: 'Impressum' },
-    { path: '/datenschutz', label: 'Datenschutz' }
+    { path: '/datenschutz', label: 'Datenschutz' },
+    { path: '/blog', label: 'Blog'}
   ];
 
   static getLabel(path: string): string {
