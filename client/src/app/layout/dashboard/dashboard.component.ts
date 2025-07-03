@@ -46,7 +46,7 @@ export class DashboardComponent {
       title: 'Persönliche Daten pflegen',
       description:
         'Pflege von persönlichen Daten wie Telefonnummer, Adresse und Portaitbild',
-      icon: 'fas fa-newspaper',
+      icon: 'fas fa-circle-user',
       route: '/dashboard/moderator/profile',
       roles: [UserRole.Moderator],
     },
