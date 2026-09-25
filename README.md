@@ -1,29 +1,29 @@
 
-# 🖼️ Art-Website – Setup Guide für Entwickler
+# Art-Website – Setup Guide für Entwickler
 
 Dies ist eine Fullstack-Webanwendung mit Angular (Frontend) und ASP.NET Core + SQLite (Backend), organisiert als Monorepo.
 
 ---
 
-## 📦 Voraussetzungen
+## Voraussetzungen
 
-### 🔧 Backend (.NET)
+### Backend (.NET)
 - [.NET SDK 6+](https://dotnet.microsoft.com/download)
 - Optional: Visual Studio 2022 oder VS Code
 
-### 🌐 Frontend (Angular)
+### Frontend (Angular)
 - [Node.js LTS](https://nodejs.org/)
 - Angular CLI:  
   ```bash
   npm install -g @angular/cli
   ```
 
-### 🔁 Git
+### Git
 - Git muss installiert sein
 
 ---
 
-## 🚀 Setup nach dem Klonen des Repos
+## Setup nach dem Klonen des Repos
 
 ```bash
 git clone https://gitlab.com/dein-benutzername/art-website.git
@@ -32,7 +32,7 @@ cd art-website
 
 ---
 
-### 1️⃣ Backend vorbereiten (ASP.NET Core + SQLite)
+### 1. Backend vorbereiten (ASP.NET Core + SQLite)
 
 ```bash
 cd server
@@ -51,7 +51,7 @@ Falls `art.db` bereits im Repo liegt, kann dieser Schritt entfallen.
 
 ---
 
-### 2️⃣ Frontend vorbereiten (Angular)
+### 2. Frontend vorbereiten (Angular)
 
 ```bash
 cd ../client
@@ -64,11 +64,11 @@ ng serve
 ```
 
 Frontend ist erreichbar unter:  
-👉 http://localhost:4200
+http://localhost:4200
 
 ---
 
-### 3️⃣ Uploads-Ordner manuell anlegen (für Bild-Uploads)
+### 3. Uploads-Ordner manuell anlegen (für Bild-Uploads)
 
 ```bash
 cd ..
@@ -77,7 +77,7 @@ mkdir uploads
 
 ---
 
-## 📂 Ordnerstruktur
+## Ordnerstruktur
 
 ```
 art-website/
@@ -113,4 +113,3 @@ art-website/
 
 ---
 
-Viel Spaß beim Entwickeln! 💻🎨
